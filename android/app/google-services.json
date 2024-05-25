@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "588556284203",
+    "project_id": "helperhive-vishnu",
+    "storage_bucket": "helperhive-vishnu.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:588556284203:android:6be528e02a1eeb533f956e",
+        "android_client_info": {
+          "package_name": "com.example.helperhive"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCWDQeNy52_ceRjEl4qz6VrVovCBoASd9k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
