@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:helperhive/constants/color_them.dart';
+import 'package:helperhive/screens/feed_screen.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class HomePage extends StatefulWidget {
@@ -20,11 +21,11 @@ class _HomePageState extends State<HomePage> {
 
   List<Widget> _buildScreens() {
     return [
-      Center(child: Text("Home Screen")),
-      Center(child: Text("Search Screen")),
-      Center(child: Text("booking")),
-      Center(child: Text("chats")),
-      Center(child: Text("Profile Screen")),
+      const FeedScreen(),
+      const Center(child: Text("Search Screen")),
+      const Center(child: Text("booking")),
+      const Center(child: Text("chats")),
+      const Center(child: Text("Profile Screen")),
     ];
   }
 
@@ -92,13 +93,13 @@ class _HomePageState extends State<HomePage> {
         items: _navBarsItems(),
         confineInSafeArea: true,
         resizeToAvoidBottomInset: true,
-        backgroundColor: backgroundColor,
+        backgroundColor: appbarColor,
         navBarHeight: 70,
         padding: const NavBarPadding.only(bottom: 10, left: 10, right: 10),
         hideNavigationBarWhenKeyboardShows: true,
         decoration: NavBarDecoration(
           borderRadius: BorderRadius.circular(10.0),
-          colorBehindNavBar: backgroundColor,
+          colorBehindNavBar: appbarColor,
           boxShadow: [
             const BoxShadow(
               color: Colors.black12,
