@@ -39,6 +39,7 @@ dependencies:
   firebase_auth: ^4.19.6
   firebase_storage: ^11.7.6
   uuid: ^4.4.0
+  persistent_bottom_nav_bar: ^5.0.2
 
 dev_dependencies:
   flutter_test:
