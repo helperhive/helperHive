@@ -54,16 +54,19 @@ class DiscountCard extends StatelessWidget {
                         color: Colors.grey[700],
                       ),
                     ),
-                    SizedBox(height: 16),
-                    Spacer(),
+                    const SizedBox(height: 16),
+                    const Spacer(),
                     ElevatedButton(
                       onPressed: () {},
-                      child: Text('Book Now'),
                       style: ElevatedButton.styleFrom(
                         backgroundColor: blueColor,
                         padding: const EdgeInsets.symmetric(
                             horizontal: 32, vertical: 12),
-                        textStyle: const TextStyle(
+                      ),
+                      child: const Text(
+                        'Book Now',
+                        style: TextStyle(
+                          color: Colors.white70,
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),
