@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 import 'package:helperhive/constants/color_them.dart';
+import 'package:helperhive/widgets/category_card.dart';
 import 'package:helperhive/widgets/discount_card.dart';
 
 class FeedScreen extends StatefulWidget {
@@ -20,47 +21,110 @@ class _FeedScreenState extends State<FeedScreen> {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(8),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             const SizedBox(
               height: 5,
             ),
-            FlutterCarousel(
-                options: CarouselOptions(
-                  viewportFraction: 1,
-                  autoPlay: true,
-                  height: 190,
-                  showIndicator: true,
-                  reverse: true,
-                  autoPlayCurve: Curves.easeInOut,
-                  slideIndicator: const CircularSlideIndicator(
-                    currentIndicatorColor: Colors.blue,
-                    indicatorBackgroundColor: Colors.grey,
+            _carousel(),
+            const SizedBox(
+              height: 10,
+            ),
+            const Text(
+              "Categories",
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                  color: primaryColor),
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      CategoryCard(
+                          icon: Icons.cleaning_services, label: 'Cleaning'),
+                      CategoryCard(
+                          icon: Icons.local_laundry_service, label: 'Washing'),
+                      CategoryCard(
+                          icon: Icons.build_circle_sharp, label: 'Repair'),
+                    ],
                   ),
-                ),
-                items: const [
-                  DiscountCard(
-                    service: 'Cleaning',
-                    code: 'CHEN356',
-                    discount: '40',
-                    imagePath: 'assets/cleaner.jpg',
+                  SizedBox(
+                    height: 10,
                   ),
-                  DiscountCard(
-                    service: 'Repair',
-                    code: 'REIR356',
-                    discount: '20',
-                    imagePath: 'assets/repiar.jpg',
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      CategoryCard(
+                          icon: Icons.format_paint_outlined, label: 'Painting'),
+                      CategoryCard(
+                          icon: Icons.plumbing_outlined, label: 'Plumbing'),
+                      CategoryCard(
+                          icon: Icons.miscellaneous_services,
+                          label: 'All Services'),
+                    ],
                   ),
-                  DiscountCard(
-                    service: 'Plumbing',
-                    code: 'PLBI356',
-                    discount: '25',
-                    imagePath: 'assets/plumber.jpg',
-                  ),
-                ])
+                ],
+              ),
+            ),
           ],
         ),
       ),
     );
+  }
+
+  FlutterCarousel _carousel() {
+    return FlutterCarousel(
+        options: CarouselOptions(
+          viewportFraction: 1,
+          autoPlay: true,
+          height: 190,
+          showIndicator: true,
+          reverse: true,
+          autoPlayCurve: Curves.easeInOut,
+          slideIndicator: const CircularSlideIndicator(
+              currentIndicatorColor: Colors.blue,
+              indicatorBackgroundColor: Colors.grey,
+              indicatorRadius: 5),
+        ),
+        items: const [
+          DiscountCard(
+            service: 'Cleaning',
+            code: 'CHEN356',
+            discount: '40',
+            imagePath: 'assets/cleaner.jpg',
+          ),
+          DiscountCard(
+            service: 'Washing',
+            code: 'WAHG856',
+            discount: '20',
+            imagePath: 'assets/washing.jpg',
+          ),
+          DiscountCard(
+            service: 'Repair',
+            code: 'REIR356',
+            discount: '20',
+            imagePath: 'assets/repair.jpg',
+          ),
+          DiscountCard(
+            service: 'Painting',
+            code: 'PATG294',
+            discount: '20',
+            imagePath: 'assets/painting.jpg',
+          ),
+          DiscountCard(
+            service: 'Plumbing',
+            code: 'PLBI356',
+            discount: '25',
+            imagePath: 'assets/plumber.jpg',
+          ),
+        ]);
   }
 
   AppBar _homeAppBar() {
@@ -150,3 +214,16 @@ class _FeedScreenState extends State<FeedScreen> {
     );
   }
 }
+
+
+
+// CategoryCard(
+//                       icon: Icons.cleaning_services, label: 'Cleaning'),
+//                   CategoryCard(
+//                       icon: Icons.local_laundry_service, label: 'Washing'),
+//                   CategoryCard(icon: Icons.build, label: 'Repair'),
+//                   CategoryCard(icon: Icons.format_paint, label: 'Painting'),
+//                   CategoryCard(icon: Icons.plumbing, label: 'Plumbing'),
+//                   CategoryCard(
+//                       icon: Icons.miscellaneous_services,
+//                       label: 'All Services'),

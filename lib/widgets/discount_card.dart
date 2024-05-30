@@ -73,7 +73,7 @@ class DiscountCard extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(
-                      height: 5,
+                      height: 15,
                     )
                   ],
                 ),
@@ -83,7 +83,7 @@ class DiscountCard extends StatelessWidget {
         ),
         Positioned(
             right: -1,
-            top: -10,
+            top: -20,
             child: SizedBox(
               height: 170,
               width: 120,
