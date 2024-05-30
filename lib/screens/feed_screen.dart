@@ -3,6 +3,7 @@ import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 import 'package:helperhive/constants/color_them.dart';
 import 'package:helperhive/widgets/category_card.dart';
 import 'package:helperhive/widgets/discount_card.dart';
+import 'package:helperhive/widgets/service_card.dart';
 
 class FeedScreen extends StatefulWidget {
   const FeedScreen({super.key});
@@ -40,46 +41,55 @@ class _FeedScreenState extends State<FeedScreen> {
             const SizedBox(
               height: 5,
             ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16.0),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      CategoryCard(
-                          icon: Icons.cleaning_services, label: 'Cleaning'),
-                      CategoryCard(
-                          icon: Icons.local_laundry_service, label: 'Washing'),
-                      CategoryCard(
-                          icon: Icons.build_circle_sharp, label: 'Repair'),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      CategoryCard(
-                          icon: Icons.format_paint_outlined, label: 'Painting'),
-                      CategoryCard(
-                          icon: Icons.plumbing_outlined, label: 'Plumbing'),
-                      CategoryCard(
-                          icon: Icons.miscellaneous_services,
-                          label: 'All Services'),
-                    ],
-                  ),
-                ],
-              ),
+            _categoriesColumn(),
+            const SizedBox(
+              height: 10,
             ),
+            const ServiceCard(
+                imageUrl: '',
+                discount: '20',
+                serviceName: 'repair',
+                price: '45',
+                providerName: 'prakash',
+                rating: 4.2),
           ],
         ),
       ),
     );
   }
 
-  FlutterCarousel _carousel() {
+  Widget _categoriesColumn() {
+    return const Padding(
+      padding: EdgeInsets.symmetric(horizontal: 16.0),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              CategoryCard(icon: Icons.cleaning_services, label: 'Cleaning'),
+              CategoryCard(icon: Icons.local_laundry_service, label: 'Washing'),
+              CategoryCard(icon: Icons.build_circle_sharp, label: 'Repair'),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              CategoryCard(
+                  icon: Icons.format_paint_outlined, label: 'Painting'),
+              CategoryCard(icon: Icons.plumbing_outlined, label: 'Plumbing'),
+              CategoryCard(
+                  icon: Icons.miscellaneous_services, label: 'All Services'),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _carousel() {
     return FlutterCarousel(
         options: CarouselOptions(
           viewportFraction: 1,
