@@ -1,4 +1,3 @@
-import 'dart:js';
 
 import 'package:helperhive/screens/loginscreen.dart';
 import 'package:helperhive/screens/search_screen.dart';
