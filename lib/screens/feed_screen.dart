@@ -1,17 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 import 'package:helperhive/constants/color_them.dart';
-import 'package:helperhive/widgets/book_again_card.dart';
 import 'package:helperhive/widgets/book_again_list.dart';
 import 'package:helperhive/widgets/categories_column.dart';
-import 'package:helperhive/widgets/category_card.dart';
-import 'package:helperhive/widgets/discount_card.dart';
 import 'package:helperhive/widgets/discount_carousel.dart';
 import 'package:helperhive/widgets/label_row.dart';
 import 'package:helperhive/widgets/search_bar_home.dart';
-import 'package:helperhive/widgets/service_card.dart';
 import 'package:helperhive/widgets/top_services_list.dart';
 
 class FeedScreen extends StatefulWidget {
