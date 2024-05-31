@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:helperhive/constants/color_them.dart';
-import 'package:helperhive/routes/app_routes.dart';
+import 'package:helperhive/screens/search_screen.dart';
 import 'package:helperhive/widgets/book_again_list.dart';
 import 'package:helperhive/widgets/categories_column.dart';
 import 'package:helperhive/widgets/discount_carousel.dart';
@@ -49,7 +49,8 @@ class _FeedScreenState extends State<FeedScreen> {
             LabelRow(
               labelName: 'Top Services',
               onTap: () {
-                Navigator.of(context).pushNamed(AppRoutes.searchScreenRoute);
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const SearchScreen()));
               },
             ),
             const TopServicesList(
@@ -65,7 +66,7 @@ class _FeedScreenState extends State<FeedScreen> {
             const BookAgainList(),
             const SizedBox(
               height: 50,
-            )
+            ),
           ],
         ),
       ),

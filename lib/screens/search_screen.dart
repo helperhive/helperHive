@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:helperhive/constants/color_them.dart';
 import 'package:helperhive/widgets/search_bar_home.dart';
@@ -43,15 +44,41 @@ class _SearchScreenState extends State<SearchScreen> {
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              RichText(
-                text: const TextSpan(children: [
-                  TextSpan(text: "Search for "),
-                  TextSpan(text: "\"Repair Service\""),
-                ]),
+              SizedBox(
+                height: 40,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const Text(
+                      'Search for  ',
+                      style: TextStyle(fontSize: 20.0),
+                    ),
+                    DefaultTextStyle(
+                      style:
+                          const TextStyle(fontSize: 22.0, color: primaryColor),
+                      child: AnimatedTextKit(
+                        animatedTexts: [
+                          RotateAnimatedText("\"Repair Service\""),
+                          RotateAnimatedText("\"Cleaning Service\""),
+                          RotateAnimatedText("\"Washing Service\""),
+                          RotateAnimatedText("\"Plumbing Service\""),
+                          RotateAnimatedText("\"Painting Service\""),
+                        ],
+                        repeatForever: true,
+                        pause: const Duration(milliseconds: 1000),
+                        displayFullTextOnTap: true,
+                        stopPauseOnTap: true,
+                      ),
+                    ),
+                  ],
+                ),
               ),
               const TopServicesList(
-                length: 5,
+                length: 10,
               ),
             ],
           ),
