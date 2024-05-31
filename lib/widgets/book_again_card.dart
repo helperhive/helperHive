@@ -61,12 +61,12 @@ class BookAgainCard extends StatelessWidget {
                             Text(
                               "$discount% discount",
                               style: const TextStyle(
-                                  color: Colors.blue,
+                                  color: Colors.deepPurpleAccent,
                                   fontWeight: FontWeight.bold),
                             ),
                             Row(
                               children: [
-                                const Icon(Icons.star,
+                                const Icon(Icons.star_border_rounded,
                                     color: Colors.orange, size: 20.0),
                                 Text(
                                   rating.toString(),

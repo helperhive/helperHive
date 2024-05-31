@@ -66,7 +66,7 @@ class DiscountCard extends StatelessWidget {
                       child: const Text(
                         'Book Now',
                         style: TextStyle(
-                          color: Colors.white70,
+                          color: Colors.white,
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                         ),

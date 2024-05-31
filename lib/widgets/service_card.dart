@@ -55,7 +55,8 @@ class ServiceCard extends StatelessWidget {
                         Text(
                           "$discount% discount",
                           style: const TextStyle(
-                              color: Colors.blue, fontWeight: FontWeight.bold),
+                              color: Colors.deepPurpleAccent,
+                              fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: 4.0),
                         Text(

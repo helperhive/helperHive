@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:helperhive/constants/color_them.dart';
 import 'package:helperhive/screens/feed_screen.dart';
+import 'package:helperhive/screens/search_screen.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
 class HomePage extends StatefulWidget {
@@ -22,7 +23,7 @@ class _HomePageState extends State<HomePage> {
   List<Widget> _buildScreens() {
     return [
       const FeedScreen(),
-      const Center(child: Text("Search Screen")),
+      const SearchScreen(),
       const Center(child: Text("booking")),
       const Center(child: Text("chats")),
       const Center(child: Text("Profile Screen")),

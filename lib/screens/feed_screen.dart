@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:helperhive/constants/color_them.dart';
+import 'package:helperhive/routes/app_routes.dart';
 import 'package:helperhive/widgets/book_again_list.dart';
 import 'package:helperhive/widgets/categories_column.dart';
 import 'package:helperhive/widgets/discount_carousel.dart';
@@ -21,36 +22,50 @@ class _FeedScreenState extends State<FeedScreen> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: _homeAppBar(),
-      body: const SingleChildScrollView(
-        padding: EdgeInsets.all(8),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(8),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
-            DiscountCarousel(),
-            SizedBox(
+            const DiscountCarousel(),
+            const SizedBox(
               height: 5,
             ),
-            LabelRow(labelName: "Categories"),
-            SizedBox(
+            LabelRow(
+              labelName: "Categories",
+              onTap: () {},
+            ),
+            const SizedBox(
               height: 5,
             ),
-            CategoriesColumn(),
-            SizedBox(
+            const CategoriesColumn(),
+            const SizedBox(
               height: 10,
             ),
-            LabelRow(labelName: 'Top Services'),
-            TopServicesList(),
-            SizedBox(
+            LabelRow(
+              labelName: 'Top Services',
+              onTap: () {
+                Navigator.of(context).pushNamed(AppRoutes.searchScreenRoute);
+              },
+            ),
+            const TopServicesList(
+              length: 5,
+            ),
+            const SizedBox(
               height: 10,
             ),
             LabelRow(
               labelName: "Book Again",
+              onTap: () {},
             ),
-            BookAgainList(),
+            const BookAgainList(),
+            const SizedBox(
+              height: 50,
+            )
           ],
         ),
       ),
