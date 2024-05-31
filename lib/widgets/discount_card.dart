@@ -22,7 +22,7 @@ class DiscountCard extends StatelessWidget {
       children: [
         Container(
           color: Colors.white,
-          height: 190,
+          height: 170,
           width: width,
           child: Card(
             color: Colors.white,
@@ -30,11 +30,11 @@ class DiscountCard extends StatelessWidget {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15.0),
             ),
-            elevation: 4,
+            elevation: 2,
             child: Container(
               color: Colors.white,
               child: Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const EdgeInsets.all(15.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,9 +72,9 @@ class DiscountCard extends StatelessWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 15,
-                    )
+                    // const SizedBox(
+                    //   height: 15,
+                    // )
                   ],
                 ),
               ),

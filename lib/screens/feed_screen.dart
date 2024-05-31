@@ -1,9 +1,18 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
 import 'package:helperhive/constants/color_them.dart';
+import 'package:helperhive/widgets/book_again_card.dart';
+import 'package:helperhive/widgets/book_again_list.dart';
+import 'package:helperhive/widgets/categories_column.dart';
 import 'package:helperhive/widgets/category_card.dart';
 import 'package:helperhive/widgets/discount_card.dart';
+import 'package:helperhive/widgets/discount_carousel.dart';
+import 'package:helperhive/widgets/label_row.dart';
+import 'package:helperhive/widgets/search_bar_home.dart';
 import 'package:helperhive/widgets/service_card.dart';
+import 'package:helperhive/widgets/top_services_list.dart';
 
 class FeedScreen extends StatefulWidget {
   const FeedScreen({super.key});
@@ -19,122 +28,40 @@ class _FeedScreenState extends State<FeedScreen> {
     return Scaffold(
       backgroundColor: backgroundColor,
       appBar: _homeAppBar(),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(8),
+      body: const SingleChildScrollView(
+        padding: EdgeInsets.all(8),
         child: Column(
+          mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(
+            SizedBox(
               height: 5,
             ),
-            _carousel(),
-            const SizedBox(
-              height: 10,
-            ),
-            const Text(
-              "Categories",
-              style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                  color: primaryColor),
-            ),
-            const SizedBox(
+            DiscountCarousel(),
+            SizedBox(
               height: 5,
             ),
-            _categoriesColumn(),
-            const SizedBox(
+            LabelRow(labelName: "Categories"),
+            SizedBox(
+              height: 5,
+            ),
+            CategoriesColumn(),
+            SizedBox(
               height: 10,
             ),
-            const ServiceCard(
-                imageUrl: '',
-                discount: '20',
-                serviceName: 'repair',
-                price: '45',
-                providerName: 'prakash',
-                rating: 4.2),
+            LabelRow(labelName: 'Top Services'),
+            TopServicesList(),
+            SizedBox(
+              height: 10,
+            ),
+            LabelRow(
+              labelName: "Book Again",
+            ),
+            BookAgainList(),
           ],
         ),
       ),
     );
-  }
-
-  Widget _categoriesColumn() {
-    return const Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.0),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              CategoryCard(icon: Icons.cleaning_services, label: 'Cleaning'),
-              CategoryCard(icon: Icons.local_laundry_service, label: 'Washing'),
-              CategoryCard(icon: Icons.build_circle_sharp, label: 'Repair'),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              CategoryCard(
-                  icon: Icons.format_paint_outlined, label: 'Painting'),
-              CategoryCard(icon: Icons.plumbing_outlined, label: 'Plumbing'),
-              CategoryCard(
-                  icon: Icons.miscellaneous_services, label: 'All Services'),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _carousel() {
-    return FlutterCarousel(
-        options: CarouselOptions(
-          viewportFraction: 1,
-          autoPlay: true,
-          height: 190,
-          showIndicator: true,
-          reverse: true,
-          autoPlayCurve: Curves.easeInOut,
-          slideIndicator: const CircularSlideIndicator(
-              currentIndicatorColor: Colors.blue,
-              indicatorBackgroundColor: Colors.grey,
-              indicatorRadius: 5),
-        ),
-        items: const [
-          DiscountCard(
-            service: 'Cleaning',
-            code: 'CHEN356',
-            discount: '40',
-            imagePath: 'assets/cleaner.jpg',
-          ),
-          DiscountCard(
-            service: 'Washing',
-            code: 'WAHG856',
-            discount: '20',
-            imagePath: 'assets/washing.jpg',
-          ),
-          DiscountCard(
-            service: 'Repair',
-            code: 'REIR356',
-            discount: '20',
-            imagePath: 'assets/repair.jpg',
-          ),
-          DiscountCard(
-            service: 'Painting',
-            code: 'PATG294',
-            discount: '20',
-            imagePath: 'assets/painting.jpg',
-          ),
-          DiscountCard(
-            service: 'Plumbing',
-            code: 'PLBI356',
-            discount: '25',
-            imagePath: 'assets/plumber.jpg',
-          ),
-        ]);
   }
 
   AppBar _homeAppBar() {
@@ -185,55 +112,10 @@ class _FeedScreenState extends State<FeedScreen> {
           width: 10,
         )
       ],
-      bottom: PreferredSize(
-        preferredSize: const Size.fromHeight(64),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15),
-          child: TextFormField(
-            decoration: InputDecoration(
-              hintText: 'Search for service...',
-              hintStyle:
-                  const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-              prefixIcon: const Icon(
-                Icons.search,
-                size: 26,
-                color: primaryColor,
-              ),
-              suffixIcon: GestureDetector(
-                child: Container(
-                  padding: const EdgeInsets.all(8),
-                  margin: const EdgeInsets.all(4),
-                  decoration: BoxDecoration(
-                      color: blueColor,
-                      borderRadius: BorderRadius.circular(10)),
-                  child: const Icon(Icons.filter_alt_outlined,
-                      size: 30, color: backgroundColor),
-                ),
-              ),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(8.0),
-                borderSide: BorderSide.none,
-              ),
-              filled: true,
-              fillColor: const Color.fromARGB(117, 192, 223, 251),
-              contentPadding: const EdgeInsets.all(0),
-            ),
-          ),
-        ),
+      bottom: const PreferredSize(
+        preferredSize: Size.fromHeight(64),
+        child: SearchBarHome(),
       ),
     );
   }
 }
-
-
-
-// CategoryCard(
-//                       icon: Icons.cleaning_services, label: 'Cleaning'),
-//                   CategoryCard(
-//                       icon: Icons.local_laundry_service, label: 'Washing'),
-//                   CategoryCard(icon: Icons.build, label: 'Repair'),
-//                   CategoryCard(icon: Icons.format_paint, label: 'Painting'),
-//                   CategoryCard(icon: Icons.plumbing, label: 'Plumbing'),
-//                   CategoryCard(
-//                       icon: Icons.miscellaneous_services,
-//                       label: 'All Services'),

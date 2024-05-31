@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:helperhive/constants/color_them.dart';
 
-class ServiceCard extends StatelessWidget {
+class BookAgainCard extends StatelessWidget {
   final String imageUrl;
   final String discount;
   final String serviceName;
@@ -10,7 +10,7 @@ class ServiceCard extends StatelessWidget {
   final String providerName;
   final double rating;
 
-  const ServiceCard({
+  const BookAgainCard({
     super.key,
     required this.imageUrl,
     required this.discount,
@@ -23,7 +23,7 @@ class ServiceCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 6.0, vertical: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 2.0, vertical: 4),
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.0),
@@ -33,8 +33,9 @@ class ServiceCard extends StatelessWidget {
         child: Container(
           color: backgroundColor,
           height: 120,
+          width: 290,
           child: Padding(
-            padding: const EdgeInsets.only(left: 4.0, right: 20),
+            padding: const EdgeInsets.only(left: 4.0, right: 10),
             child: Row(
               children: [
                 ClipRRect(
@@ -49,14 +50,32 @@ class ServiceCard extends StatelessWidget {
                 const SizedBox(width: 12.0),
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.only(top: 12.0, left: 8),
+                    padding: const EdgeInsets.only(
+                      top: 12.0,
+                    ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          "$discount% discount",
-                          style: const TextStyle(
-                              color: Colors.blue, fontWeight: FontWeight.bold),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              "$discount% discount",
+                              style: const TextStyle(
+                                  color: Colors.blue,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            Row(
+                              children: [
+                                const Icon(Icons.star,
+                                    color: Colors.orange, size: 20.0),
+                                Text(
+                                  rating.toString(),
+                                  style: const TextStyle(fontSize: 14.0),
+                                ),
+                              ],
+                            )
+                          ],
                         ),
                         const SizedBox(height: 4.0),
                         Text(
@@ -73,7 +92,6 @@ class ServiceCard extends StatelessWidget {
                               fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(height: 4.0),
-                        // Text('By $providerName'),
                         RichText(
                             text: TextSpan(
                                 style: const TextStyle(color: primaryColor),
@@ -86,18 +104,10 @@ class ServiceCard extends StatelessWidget {
                                   style: const TextStyle(
                                       fontWeight: FontWeight.bold))
                             ])),
+                        // Text('By $providerName'),
                       ],
                     ),
                   ),
-                ),
-                Row(
-                  children: [
-                    const Icon(Icons.star, color: Colors.orange, size: 24.0),
-                    Text(
-                      rating.toString(),
-                      style: const TextStyle(fontSize: 18.0),
-                    ),
-                  ],
                 ),
               ],
             ),
