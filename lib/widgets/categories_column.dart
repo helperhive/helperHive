@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:helperhive/widgets/category_card.dart';
 
 class CategoriesColumn extends StatelessWidget {
