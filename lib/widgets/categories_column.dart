@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:helperhive/widgets/category_card.dart';
 
 class CategoriesColumn extends StatelessWidget {
@@ -9,31 +10,21 @@ class CategoriesColumn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16.0),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              CategoryCard(icon: Icons.cleaning_services, label: 'Cleaning'),
-              CategoryCard(icon: Icons.local_laundry_service, label: 'Washing'),
-              CategoryCard(icon: Icons.build_circle_sharp, label: 'Repair'),
-            ],
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              CategoryCard(
-                  icon: Icons.format_paint_outlined, label: 'Painting'),
-              CategoryCard(icon: Icons.plumbing_outlined, label: 'Plumbing'),
-              CategoryCard(
-                  icon: Icons.miscellaneous_services, label: 'All Services'),
-            ],
-          ),
-        ],
+      padding: EdgeInsets.symmetric(horizontal: 8.0),
+      child: SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            CategoryCard(icon: Icons.local_laundry_service, label: 'Washing'),
+            CategoryCard(icon: Icons.build_circle_sharp, label: 'Repair'),
+            CategoryCard(icon: Icons.format_paint_outlined, label: 'Painting'),
+            CategoryCard(icon: Icons.plumbing_outlined, label: 'Plumbing'),
+            CategoryCard(icon: Icons.cleaning_services, label: 'Cleaning'),
+            CategoryCard(
+                icon: Icons.miscellaneous_services, label: 'All Services'),
+          ],
+        ),
       ),
     );
   }

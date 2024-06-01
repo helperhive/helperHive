@@ -5,7 +5,9 @@ import 'package:helperhive/widgets/book_again_list.dart';
 import 'package:helperhive/widgets/categories_column.dart';
 import 'package:helperhive/widgets/discount_carousel.dart';
 import 'package:helperhive/widgets/label_row.dart';
+import 'package:helperhive/widgets/my_booking_card.dart';
 import 'package:helperhive/widgets/search_bar_home.dart';
+import 'package:helperhive/widgets/swiper_builder.dart';
 import 'package:helperhive/widgets/top_services_list.dart';
 
 class FeedScreen extends StatefulWidget {
@@ -20,7 +22,7 @@ class _FeedScreenState extends State<FeedScreen> {
   Widget build(BuildContext context) {
     // final width = MediaQuery.of(context).size.width;
     return Scaffold(
-      backgroundColor: backgroundColor,
+      backgroundColor: Colors.white,
       appBar: _homeAppBar(),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(8),
@@ -46,6 +48,8 @@ class _FeedScreenState extends State<FeedScreen> {
             const SizedBox(
               height: 10,
             ),
+            LabelRow(labelName: 'My Bookings', onTap: () {}),
+            SwiperBuilder(),
             LabelRow(
               labelName: 'Top Services',
               onTap: () {

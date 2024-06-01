@@ -11,23 +11,23 @@ class CategoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12.0),
+        borderRadius: BorderRadius.circular(25.0),
       ),
       elevation: 1,
       child: Container(
         color: backgroundColor,
-        height: 90,
+        height: 70,
         width: 100,
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(4.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(icon, size: 40, color: blueColor),
-              const SizedBox(height: 8.0),
+              // const SizedBox(height: 4.0),
               Text(label,
                   style: const TextStyle(
-                      fontSize: 15.0, fontWeight: FontWeight.bold)),
+                      fontSize: 14.0, fontWeight: FontWeight.bold)),
             ],
           ),
         ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const backgroundColor = Colors.white70;
+const backgroundColor = Colors.white10;
 const appbarColor = Colors.white70;
 const webBackgroundColor = Color.fromRGBO(18, 18, 18, 1);
 const searchColor = Colors.white70;
