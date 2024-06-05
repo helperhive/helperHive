@@ -1,6 +1,6 @@
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
-import 'package:helperhive/widgets/my_booking_card.dart';
+import 'package:helperhive/widgets/cards/my_booking_card.dart';
 
 class SwiperBuilder extends StatelessWidget {
   SwiperBuilder({super.key});

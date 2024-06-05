@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_carousel_widget/flutter_carousel_widget.dart';
-import 'package:helperhive/widgets/discount_card.dart';
+import 'package:helperhive/widgets/cards/discount_card.dart';
 
 class DiscountCarousel extends StatelessWidget {
   const DiscountCarousel({

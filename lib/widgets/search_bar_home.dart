@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:helperhive/constants/color_them.dart';
 
 class SearchBarHome extends StatefulWidget {
+  final Function(String) onSearch;
   const SearchBarHome({
     super.key,
+    required this.onSearch,
   });
 
   @override
@@ -23,6 +25,7 @@ class _SearchBarHomeState extends State<SearchBarHome> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15),
       child: TextFormField(
+        onChanged: widget.onSearch,
         controller: searchController,
         decoration: InputDecoration(
           hintText: 'Search for service...',
