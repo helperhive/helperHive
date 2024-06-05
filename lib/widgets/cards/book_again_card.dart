@@ -22,7 +22,7 @@ class BookAgainCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 2.0, vertical: 4),
+      padding: const EdgeInsets.symmetric(vertical: 4),
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12.0),
@@ -34,7 +34,7 @@ class BookAgainCard extends StatelessWidget {
           height: 120,
           width: 290,
           child: Padding(
-            padding: const EdgeInsets.only(left: 4.0, right: 10),
+            padding: const EdgeInsets.only(left: 0.0, right: 10),
             child: Row(
               children: [
                 ClipRRect(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:helperhive/widgets/book_again_card.dart';
+import 'package:helperhive/widgets/cards/book_again_card.dart';
 
 class BookAgainList extends StatelessWidget {
   const BookAgainList({

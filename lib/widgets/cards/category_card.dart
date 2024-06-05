@@ -11,7 +11,7 @@ class CategoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(25.0),
+        borderRadius: BorderRadius.circular(32.0),
       ),
       elevation: 1,
       child: Container(
@@ -23,7 +23,7 @@ class CategoryCard extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(icon, size: 40, color: blueColor),
+              Icon(icon, size: 35, color: blueColor),
               // const SizedBox(height: 4.0),
               Text(label,
                   style: const TextStyle(

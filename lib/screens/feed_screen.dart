@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:helperhive/constants/color_them.dart';
-import 'package:helperhive/screens/search_screen.dart';
-import 'package:helperhive/widgets/book_again_list.dart';
+// import 'package:helperhive/vishnu/search_screen.dart';
+import 'package:helperhive/screens/service_search_screen.dart';
+import 'package:helperhive/widgets/list_builders/book_again_list.dart';
 import 'package:helperhive/widgets/categories_column.dart';
-import 'package:helperhive/widgets/discount_carousel.dart';
+import 'package:helperhive/widgets/list_builders/discount_carousel.dart';
 import 'package:helperhive/widgets/label_row.dart';
 import 'package:helperhive/widgets/search_bar_home.dart';
-import 'package:helperhive/widgets/swiper_builder.dart';
-import 'package:helperhive/widgets/top_services_list.dart';
+import 'package:helperhive/widgets/list_builders/swiper_builder.dart';
+import 'package:helperhive/widgets/list_builders/top_services_list.dart';
 
 class FeedScreen extends StatefulWidget {
   const FeedScreen({super.key});
@@ -53,7 +54,7 @@ class _FeedScreenState extends State<FeedScreen> {
               labelName: 'Top Services',
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const SearchScreen()));
+                    builder: (context) => const ServiceSearchScreen()));
               },
             ),
             const TopServicesList(
@@ -64,7 +65,10 @@ class _FeedScreenState extends State<FeedScreen> {
             ),
             LabelRow(
               labelName: "Book Again",
-              onTap: () {},
+              onTap: () {
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const ServiceSearchScreen()));
+              },
             ),
             const BookAgainList(),
             const SizedBox(
@@ -88,8 +92,7 @@ class _FeedScreenState extends State<FeedScreen> {
             minVerticalPadding: 0,
             contentPadding: EdgeInsets.all(0),
             leading: CircleAvatar(
-              backgroundImage: NetworkImage(
-                  "https://images.pexels.com/photos/1308881/pexels-photo-1308881.jpeg?auto=compress&cs=tinysrgb&w=600"),
+              backgroundImage: AssetImage('assets/helperHive.png'),
             ),
             title: Text(
               'Narasimha Naidu',
@@ -124,9 +127,11 @@ class _FeedScreenState extends State<FeedScreen> {
           width: 10,
         )
       ],
-      bottom: const PreferredSize(
-        preferredSize: Size.fromHeight(64),
-        child: SearchBarHome(),
+      bottom: PreferredSize(
+        preferredSize: const Size.fromHeight(64),
+        child: SearchBarHome(
+          onSearch: (String) {},
+        ),
       ),
     );
   }
