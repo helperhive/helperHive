@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:helperhive/widgets/cards/category_card.dart';
 
-class CategoriesColumn extends StatelessWidget {
-  const CategoriesColumn({
+class CategoriesRow extends StatelessWidget {
+  const CategoriesRow({
     super.key,
   });
 
