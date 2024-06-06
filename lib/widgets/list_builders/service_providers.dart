@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:helperhive/constants/color_them.dart';
 import 'package:helperhive/model/service_card_model.dart';
-import 'package:helperhive/screens/booking/booking_screen.dart';
 
 class ServiceProviders extends StatefulWidget {
   final String selectedCategory;
@@ -102,10 +101,11 @@ class ServicePersonCard extends StatelessWidget {
               ),
             ),
             ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const BookingScreen()));
-              },
+              onPressed: () {},
+              // onPressed: () {
+              //   Navigator.of(context).push(MaterialPageRoute(
+              //       builder: (context) => const BookingScreen()));
+              // },
               style: ElevatedButton.styleFrom(
                 backgroundColor: blueColor,
                 foregroundColor: Colors.white,

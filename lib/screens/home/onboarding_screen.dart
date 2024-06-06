@@ -173,9 +173,11 @@ class OnboardingScreen extends StatelessWidget {
         children: <Widget>[
           imageType == 'lottie'
               ? Lottie.asset(imagePath, height: 400)
-              : Image.asset(
-                  imagePath,
-                  height: 400,
+              : Container(
+                  child: Image.asset(
+                    imagePath,
+                    height: 250,
+                  ),
                 ),
           Text(
             title,
