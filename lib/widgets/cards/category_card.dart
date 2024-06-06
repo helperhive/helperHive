@@ -21,6 +21,7 @@ class CategoryCard extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(4.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(icon, size: 35, color: blueColor),
