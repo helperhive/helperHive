@@ -24,10 +24,23 @@ class _OnboardingScreensState extends State<OnboardingScreens> {
             controller: _pageController,
             onPageChanged: (value) {
               setState(() {
-                onlastPage = (value == 2);
+                onlastPage = (value == 3);
               });
             },
             children: <Widget>[
+              OnboardingScreen(
+                title: 'Welcome To HelperHive!..',
+                imagePath: 'assets/onboarding/helperHiveLogo.png',
+                buttontext: 'Next',
+                description:
+                    'Instant Access to Top Services.Effortless Connections, Anytime.Find and Connect with Experts',
+                onNextPressed: () {
+                  _pageController.nextPage(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.ease);
+                },
+                imageType: 'image',
+              ),
               OnboardingScreen(
                 title: 'Book Services with Ease',
                 imagePath: 'assets/onboarding/Animation -booking.json',
@@ -39,6 +52,7 @@ class _OnboardingScreensState extends State<OnboardingScreens> {
                       duration: const Duration(milliseconds: 300),
                       curve: Curves.ease);
                 },
+                imageType: 'lottie',
               ),
               OnboardingScreen(
                 title: 'Instant one-to-one and group Connections',
@@ -51,9 +65,10 @@ class _OnboardingScreensState extends State<OnboardingScreens> {
                       duration: const Duration(milliseconds: 300),
                       curve: Curves.ease);
                 },
+                imageType: 'lottie',
               ),
               OnboardingScreen(
-                title: 'Find Top-rated Providers',
+                title: 'Find Top-rated Service Providers',
                 imagePath: 'assets/onboarding/Animation - review.json',
                 description:
                     'Browse and book based on ratings. Choose from a variety of services. Read reviews to make informed decisions.',
@@ -64,6 +79,7 @@ class _OnboardingScreensState extends State<OnboardingScreens> {
                           builder: (context) => const HomePage()));
                 },
                 buttontext: 'Get Started',
+                imageType: 'lottie',
               ),
             ],
           ),
@@ -75,7 +91,7 @@ class _OnboardingScreensState extends State<OnboardingScreens> {
                     children: [
                       TextButton(
                           onPressed: () {
-                            _pageController.jumpToPage(2);
+                            _pageController.jumpToPage(3);
                           },
                           child: const Text(
                             "Skip",
@@ -89,7 +105,7 @@ class _OnboardingScreensState extends State<OnboardingScreens> {
                             _pageController.jumpToPage(index);
                           },
                           controller: _pageController,
-                          count: 3),
+                          count: 4),
                       TextButton(
                           onPressed: () {
                             _pageController.nextPage(
@@ -136,6 +152,7 @@ class OnboardingScreen extends StatelessWidget {
   final String description;
   final Function onNextPressed;
   final String buttontext;
+  final String imageType;
 
   const OnboardingScreen(
       {super.key,
@@ -143,7 +160,8 @@ class OnboardingScreen extends StatelessWidget {
       required this.imagePath,
       required this.description,
       required this.onNextPressed,
-      required this.buttontext});
+      required this.buttontext,
+      required this.imageType});
 
   @override
   Widget build(BuildContext context) {
@@ -153,7 +171,12 @@ class OnboardingScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Lottie.asset(imagePath, height: 400),
+          imageType == 'lottie'
+              ? Lottie.asset(imagePath, height: 400)
+              : Image.asset(
+                  imagePath,
+                  height: 400,
+                ),
           Text(
             title,
             textAlign: TextAlign.center,
@@ -167,9 +190,6 @@ class OnboardingScreen extends StatelessWidget {
                 color: primaryColor,
                 fontWeight: FontWeight.w400),
           ),
-          // const SizedBox(height: 20.0),
-
-          // const SizedBox(height: 120.0),
         ],
       ),
     );

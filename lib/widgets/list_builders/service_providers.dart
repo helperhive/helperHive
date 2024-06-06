@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:helperhive/constants/color_them.dart';
 import 'package:helperhive/model/service_card_model.dart';
-import 'package:helperhive/screens/booking_screen.dart';
+import 'package:helperhive/screens/booking/booking_screen.dart';
 
 class ServiceProviders extends StatefulWidget {
   final String selectedCategory;
