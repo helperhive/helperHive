@@ -9,29 +9,25 @@ class CategoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(32.0),
-      ),
-      elevation: 1,
-      child: Container(
-        color: backgroundColor,
-        height: 70,
-        width: 100,
-        child: Padding(
-          padding: const EdgeInsets.all(4.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(icon, size: 35, color: blueColor),
-              // const SizedBox(height: 4.0),
-              Text(label,
-                  style: const TextStyle(
-                      fontSize: 14.0, fontWeight: FontWeight.bold)),
-            ],
-          ),
-        ),
+    return Padding(
+      padding: const EdgeInsets.all(4.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(25.0),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: Icon(icon, size: 42, color: blueColor),
+              )),
+          // const SizedBox(height: 4.0),
+          Text(label,
+              style:
+                  const TextStyle(fontSize: 16.0, fontWeight: FontWeight.bold)),
+        ],
       ),
     );
   }
