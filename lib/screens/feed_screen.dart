@@ -19,6 +19,7 @@ class FeedScreen extends StatefulWidget {
 }
 
 class _FeedScreenState extends State<FeedScreen> {
+  void onSearch(String value) {}
   @override
   Widget build(BuildContext context) {
     // final width = MediaQuery.of(context).size.width;
@@ -134,7 +135,7 @@ class _FeedScreenState extends State<FeedScreen> {
       bottom: PreferredSize(
         preferredSize: const Size.fromHeight(64),
         child: SearchBarHome(
-          onSearch: (String) {},
+          onSearch: onSearch,
         ),
       ),
     );

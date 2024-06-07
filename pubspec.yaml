@@ -46,6 +46,9 @@ dependencies:
   intl: ^0.19.0
   card_swiper: ^3.0.1
   cloud_firestore: ^4.17.5
+  delightful_toast: ^1.1.0
+  lottie: ^3.1.2
+  smooth_page_indicator: ^1.1.0
 
 
 dev_dependencies:
@@ -62,10 +65,10 @@ dev_dependencies:
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: "assets/helperHive.png"
+  image_path: "assets/onboarding/helperHiveLogo.png"
   web:
     generate: true
-    image_path: "assets/helperHive.png"
+    image_path: "assets/onboarding/helperHiveLogo.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -82,6 +85,7 @@ flutter:
   assets:
     - assets/
     - assets/services/
+    - assets/onboarding/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

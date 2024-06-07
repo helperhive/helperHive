@@ -137,6 +137,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.8"
+  delightful_toast:
+    dependency: "direct main"
+    description:
+      name: delightful_toast
+      sha256: "93d0b9e89a65947e42daa8aafe552596487dbedc15f68d0480654e789e94bc5b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0"
   fake_async:
     dependency: transitive
     description:
@@ -230,6 +238,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_animate:
+    dependency: transitive
+    description:
+      name: flutter_animate
+      sha256: "7c8a6594a9252dad30cc2ef16e33270b6248c4dedc3b3d06c86c4f3f4dc05ae5"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.5.0"
   flutter_carousel_widget:
     dependency: "direct main"
     description:
@@ -254,6 +270,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.2"
+  flutter_shaders:
+    dependency: transitive
+    description:
+      name: flutter_shaders
+      sha256: "02750b545c01ff4d8e9bbe8f27a7731aa3778402506c67daa1de7f5fc3f4befe"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.2"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -344,6 +368,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.0"
+  lottie:
+    dependency: "direct main"
+    description:
+      name: lottie
+      sha256: "6a24ade5d3d918c306bb1c21a6b9a04aab0489d51a2582522eea820b4093b62b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.2"
   matcher:
     dependency: transitive
     description:
@@ -413,6 +445,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
+  smooth_page_indicator:
+    dependency: "direct main"
+    description:
+      name: smooth_page_indicator
+      sha256: "725bc638d5e79df0c84658e1291449996943f93bacbc2cec49963dbbab48d8ae"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0"
   source_span:
     dependency: transitive
     description:
