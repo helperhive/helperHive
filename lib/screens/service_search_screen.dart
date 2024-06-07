@@ -63,7 +63,7 @@ class _ServiceSearchScreenState extends State<ServiceSearchScreen> {
         padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10),
         child: Column(
           children: [
-            // SearchBarCustum(onSearch: updateSearchQuery),
+            // SearchBarHome(onSearch: updateSearchQuery),
             CategoryFilter(
               onSelectCategory: selectCategory,
               selectedCategory: selectedCategory,
