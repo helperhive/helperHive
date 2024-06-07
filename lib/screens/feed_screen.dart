@@ -10,6 +10,7 @@ import 'package:helperhive/widgets/label_row.dart';
 import 'package:helperhive/widgets/search_bar_home.dart';
 import 'package:helperhive/widgets/list_builders/swiper_builder.dart';
 import 'package:helperhive/widgets/list_builders/top_services_list.dart';
+import 'package:helperhive/screens/booking_details_screen.dart';
 
 class FeedScreen extends StatefulWidget {
   const FeedScreen({super.key});
@@ -53,7 +54,16 @@ class _FeedScreenState extends State<FeedScreen> {
             const SizedBox(
               height: 10,
             ),
-            LabelRow(labelName: 'My Bookings', onTap: () {}),
+            LabelRow(
+                labelName: 'My Bookings',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const BookingScreen(),
+                    ),
+                  );
+                }),
             SwiperBuilder(),
             LabelRow(
               labelName: 'Top Services',
