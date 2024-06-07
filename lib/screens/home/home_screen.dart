@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:helperhive/constants/color_them.dart';
+import 'package:helperhive/screens/booking_details_screen.dart';
 import 'package:helperhive/screens/feed_screen.dart';
 // import 'package:helperhive/screens/search_screen.dart';
 import 'package:helperhive/screens/service_search_screen.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
+import 'package:helperhive/screens/user_profile_screen.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -24,11 +26,10 @@ class _HomePageState extends State<HomePage> {
   List<Widget> _buildScreens() {
     return [
       const FeedScreen(),
-      // const SearchScreen(),
       const ServiceSearchScreen(),
-      const Center(child: Text("booking")),
+      const BookingScreen(),
       const Center(child: Text("chats")),
-      const Center(child: Text("Profile Screen")),
+      const UserProfileScreen(),
     ];
   }
 
