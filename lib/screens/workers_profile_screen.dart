@@ -9,8 +9,7 @@ class WorkersProfileScreen extends StatefulWidget {
   const WorkersProfileScreen({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
-  _WorkersProfileScreenState createState() => _WorkersProfileScreenState();
+  State<WorkersProfileScreen> createState() => _WorkersProfileScreenState();
 }
 
 class _WorkersProfileScreenState extends State<WorkersProfileScreen> {
