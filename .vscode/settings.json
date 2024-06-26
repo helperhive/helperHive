@@ -1,3 +1,4 @@
 {
-    "cmake.sourceDirectory": "D:/flutter_practise/helperHive/linux"
+    "cmake.sourceDirectory": "D:/flutter_practise/helperHive/linux",
+    "java.configuration.updateBuildConfiguration": "interactive"
 }
