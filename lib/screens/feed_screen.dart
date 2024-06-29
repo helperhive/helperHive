@@ -44,7 +44,7 @@ class _FeedScreenState extends State<FeedScreen> {
               labelName: "Categories",
               onTap: () {
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: ((context) => AllCategoriesColumn())));
+                    builder: ((context) => const AllCategoriesColumn())));
               },
             ),
             const SizedBox(

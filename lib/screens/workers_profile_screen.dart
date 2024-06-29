@@ -224,7 +224,7 @@ class BookingHours extends StatelessWidget {
   final String startTime;
   final String endTime;
 
-  const BookingHours({
+  const BookingHours({super.key, 
     required this.day,
     required this.startTime,
     required this.endTime,

@@ -1,9 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class UserModel {
   final String uid;
   final String name;
-  final String service;
+  final String email;
+  final String phoneNumber;
+  final Service service;
   final String location;
   final double rating;
   final int experience;
@@ -16,6 +16,8 @@ class UserModel {
   UserModel({
     required this.uid,
     required this.name,
+    required this.email,
+    required this.phoneNumber,
     required this.service,
     required this.location,
     required this.rating,
@@ -27,44 +29,31 @@ class UserModel {
     required this.price,
   });
 
-  factory UserModel.fromJson(Map<String, dynamic> json) {
+  factory UserModel.fromMap(Map<String, dynamic> map) {
     return UserModel(
-      uid: json['uid'],
-      name: json['name'],
-      service: json['service'],
-      location: json['location'],
-      rating: json['rating'],
-      experience: json['experience'],
-      workingHours: Map<String, String>.from(json['workingHours']),
-      description: json['description'],
-      imageUrl: json['imageUrl'],
-      discount: json['discount'],
-      price: json['price'],
+      uid: map['uid'],
+      name: map['name'],
+      email: map['email'],
+      phoneNumber: map['phoneNumber'],
+      service: stringToService(map['service']),
+      location: map['location'],
+      rating: map['rating'],
+      experience: map['experience'],
+      workingHours: Map<String, String>.from(map['workingHours']),
+      description: map['description'],
+      imageUrl: map['imageUrl'],
+      discount: map['discount'],
+      price: map['price'],
     );
   }
 
-  factory UserModel.fromDocumentSnapshot(DocumentSnapshot doc) {
-    final data = doc.data() as Map<String, dynamic>;
-    return UserModel(
-      uid: doc.id, // Use doc.id to get the document ID as the uid
-      name: data['name'],
-      service: data['service'],
-      location: data['location'],
-      rating: data['rating'],
-      experience: data['experience'],
-      workingHours: Map<String, String>.from(data['workingHours']),
-      description: data['description'],
-      imageUrl: data['imageUrl'],
-      discount: data['discount'],
-      price: data['price'],
-    );
-  }
-
-  Map<String, dynamic> toJson() {
+  Map<String, dynamic> toMap() {
     return {
       'uid': uid,
       'name': name,
-      'service': service,
+      'email': email,
+      'phoneNumber': phoneNumber,
+      'service': service.toString().split('.').last,
       'location': location,
       'rating': rating,
       'experience': experience,
@@ -74,5 +63,20 @@ class UserModel {
       'discount': discount,
       'price': price,
     };
+  }
+}
+
+enum Service { service1, service2, service3, unknown }
+
+Service stringToService(String serviceString) {
+  switch (serviceString) {
+    case 'service1':
+      return Service.service1;
+    case 'service2':
+      return Service.service2;
+    case 'service3':
+      return Service.service3;
+    default:
+      throw Exception('Invalid service string');
   }
 }

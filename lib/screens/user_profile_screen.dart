@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:helperhive/screens/edit_profile_screen.dart';
 import 'package:helperhive/screens/payment_screen.dart';
-// import 'package:helperhive/screens/home/onboarding_screen.dart';
+import 'package:helperhive/screens/auth/loginscreen.dart';
 
 class UserProfileScreen extends StatefulWidget {
   const UserProfileScreen({super.key});
@@ -96,13 +96,13 @@ class UserProfileScreenState extends State<UserProfileScreen> {
                     icon: Icons.logout,
                     text: 'Logout',
                     onTap: () {
-                      // Navigator.push(
-                      //   // ignore: use_build_context_synchronously
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) => const OnboardingScreens(),
-                      //   ),
-                      // );
+                      Navigator.push(
+                        // ignore: use_build_context_synchronously
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const LoginScreen(),
+                        ),
+                      );
                     },
                   ),
                 ],
