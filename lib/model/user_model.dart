@@ -1,3 +1,5 @@
+// ignore_for_file: constant_identifier_names
+
 class UserModel {
   final String uid;
   final String name;
@@ -66,16 +68,48 @@ class UserModel {
   }
 }
 
-enum Service { service1, service2, service3, unknown }
+enum Service {
+  Cleaning,
+  Washing,
+  Repairs,
+  Painting,
+  Plumbing,
+  Healthcare,
+  Real_Estate,
+  Transportation,
+  Pest_Control,
+  Saloon,
+  Food_And_Beverage,
+  Beauty_And_Spa,
+  Others
+}
 
 Service stringToService(String serviceString) {
   switch (serviceString) {
-    case 'service1':
-      return Service.service1;
-    case 'service2':
-      return Service.service2;
-    case 'service3':
-      return Service.service3;
+    case 'Cleaning':
+      return Service.Cleaning;
+    case 'Washing':
+      return Service.Washing;
+    case 'Repairs':
+      return Service.Repairs;
+    case 'Painting':
+      return Service.Painting;
+    case 'Plumbing':
+      return Service.Plumbing;
+    case 'Healthcare':
+      return Service.Healthcare;
+    case 'Real_Estate':
+      return Service.Real_Estate;
+    case 'Transportation':
+      return Service.Transportation;
+    case 'Pest_Control':
+      return Service.Pest_Control;
+    case 'Saloon':
+      return Service.Saloon;
+    case 'Food_And_Beverage':
+      return Service.Food_And_Beverage;
+    case 'Beauty_And_Spa':
+      return Service.Beauty_And_Spa;
     default:
       throw Exception('Invalid service string');
   }

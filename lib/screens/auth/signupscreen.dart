@@ -18,7 +18,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _phoneNumberController = TextEditingController();
-  Service _selectedService = Service.service1;
+  Service _selectedService = Service.Cleaning;
   bool _isLoading = false;
   bool _isPasswordVisible = false;
 
@@ -220,28 +220,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     child: Container(
                       decoration: BoxDecoration(
                         color: Colors.blueGrey.shade200,
-                        borderRadius: BorderRadius.circular(
-                            16.0), // Optional: Adds rounded corners
+                        borderRadius: BorderRadius.circular(16.0),
                       ),
                       child: DropdownButton<Service>(
-                        value: _selectedService,
-                        isExpanded: true,
-                        items: Service.values.map((service) {
-                          return DropdownMenuItem<Service>(
-                            value: service,
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 16.0), // Optional: Adjust padding
+                          value: _selectedService,
+                          isExpanded: true,
+                          items: Service.values.map((service) {
+                            return DropdownMenuItem<Service>(
+                              value: service,
                               child: Text(service.toString().split('.').last),
-                            ),
-                          );
-                        }).toList(),
-                        onChanged: (Service? newValue) {
-                          setState(() {
-                            _selectedService = newValue!;
-                          });
-                        },
-                      ),
+                            );
+                          }).toList(),
+                          onChanged: (Service? newValue) {
+                            setState(() {
+                              _selectedService = newValue!;
+                            });
+                          }),
                     ),
                   ),
 
