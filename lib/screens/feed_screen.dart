@@ -10,7 +10,7 @@ import 'package:helperhive/widgets/label_row.dart';
 import 'package:helperhive/widgets/search_bar_home.dart';
 import 'package:helperhive/widgets/list_builders/swiper_builder.dart';
 import 'package:helperhive/widgets/list_builders/top_services_list.dart';
-import 'package:helperhive/screens/booking_details_screen.dart';
+import 'package:helperhive/screens/booking/booking_details_screen.dart';
 
 class FeedScreen extends StatefulWidget {
   const FeedScreen({super.key});

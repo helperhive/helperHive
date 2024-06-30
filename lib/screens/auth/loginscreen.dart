@@ -39,7 +39,10 @@ class LoginScreenState extends State<LoginScreen> {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Colors.blue.shade800,
+              Colors.blue.shade200,
+              Colors.blue.shade400,
+              Colors.blue.shade500,
+              Colors.blue.shade300,
               Colors.blue.shade400,
               Colors.blue.shade200,
             ],
@@ -66,7 +69,10 @@ class LoginScreenState extends State<LoginScreen> {
                   controller: _emailController,
                   decoration: InputDecoration(
                     labelText: 'Email / Username',
-                    fillColor: Colors.blueGrey.shade200,
+                    labelStyle: TextStyle(
+                      color: Colors.cyan.shade800,
+                    ),
+                    fillColor: Colors.blueGrey.shade100,
                     filled: true,
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(16.0),
@@ -77,7 +83,7 @@ class LoginScreenState extends State<LoginScreen> {
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(16.0),
                       borderSide: BorderSide(
-                          color: Colors.lightGreenAccent.shade400,
+                          color: Colors.indigo.shade900,
                           width: 2.0), // Border color when focused
                     ),
                     suffixIcon: const Icon(Icons.email),
@@ -90,7 +96,10 @@ class LoginScreenState extends State<LoginScreen> {
                   obscureText: !_isPasswordVisible,
                   decoration: InputDecoration(
                     labelText: 'Password',
-                    fillColor: Colors.blueGrey.shade200,
+                    labelStyle: TextStyle(
+                      color: Colors.cyan.shade800,
+                    ),
+                    fillColor: Colors.blueGrey.shade100,
                     filled: true,
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(16.0),
@@ -101,7 +110,7 @@ class LoginScreenState extends State<LoginScreen> {
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(16.0),
                       borderSide: BorderSide(
-                          color: Colors.lightGreenAccent.shade400,
+                          color: Colors.blue.shade900,
                           width: 2.0), // Border color when focused
                     ),
                     suffixIcon: IconButton(

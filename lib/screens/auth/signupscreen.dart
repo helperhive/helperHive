@@ -18,7 +18,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
   final _phoneNumberController = TextEditingController();
-  Service _selectedService = Service.Cleaning;
+  Service? _selectedService;
   bool _isLoading = false;
   bool _isPasswordVisible = false;
 
@@ -34,7 +34,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           password: _passwordController.text.trim(),
           name: _nameController.text.trim(),
           phoneNumber: _phoneNumberController.text.trim(),
-          service: _selectedService,
+          service: _selectedService!,
         );
         Navigator.of(context).pushNamed(AppRoutes.loginRoute);
       } catch (e) {
@@ -52,14 +52,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Sign Up'),
-      ),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Colors.blue.shade800,
+              Colors.blue.shade200,
+              Colors.blue.shade400,
+              Colors.blue.shade500,
+              Colors.blue.shade300,
               Colors.blue.shade400,
               Colors.blue.shade200,
             ],
@@ -83,12 +83,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         fontWeight: FontWeight.bold,
                         color: Colors.red),
                   ),
-                  const SizedBox(height: 50),
+                  const SizedBox(height: 70),
                   TextFormField(
                     controller: _nameController,
                     decoration: InputDecoration(
                       labelText: 'Name',
-                      fillColor: Colors.blueGrey.shade200,
+                      labelStyle: TextStyle(
+                        color: Colors.cyan.shade800,
+                      ),
+                      fillColor: Colors.blueGrey.shade100,
                       filled: true,
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(16.0),
@@ -99,10 +102,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(16.0),
                         borderSide: BorderSide(
-                            color: Colors.lightGreenAccent.shade400,
+                            color: Colors.indigo.shade900,
                             width: 2.0), // Border color when focused
                       ),
-                      suffixIcon: const Icon(
+                      prefixIcon: const Icon(
                         IconData(0xe043,
                             fontFamily:
                                 'MaterialIcons'), // Replace with your custom icon code point and fontFamily
@@ -120,7 +123,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     controller: _emailController,
                     decoration: InputDecoration(
                       labelText: 'Email',
-                      fillColor: Colors.blueGrey.shade200,
+                      labelStyle: TextStyle(
+                        color: Colors.cyan.shade800,
+                      ),
+                      fillColor: Colors.blueGrey.shade100,
                       filled: true,
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(16.0),
@@ -131,10 +137,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(16.0),
                         borderSide: BorderSide(
-                            color: Colors.lightGreenAccent.shade400,
+                            color: Colors.indigo.shade900,
                             width: 2.0), // Border color when focused
                       ),
-                      suffixIcon: const Icon(Icons.email),
+                      prefixIcon: const Icon(Icons.email),
                     ),
                     validator: (value) {
                       if (value == null ||
@@ -151,7 +157,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     obscureText: !_isPasswordVisible,
                     decoration: InputDecoration(
                       labelText: 'Password',
-                      fillColor: Colors.blueGrey.shade200,
+                      labelStyle: TextStyle(
+                        color: Colors.cyan.shade800,
+                      ),
+                      fillColor: Colors.blueGrey.shade100,
                       filled: true,
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(16.0),
@@ -162,9 +171,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(16.0),
                         borderSide: BorderSide(
-                            color: Colors.lightGreenAccent.shade400,
+                            color: Colors.indigo.shade900,
                             width: 2.0), // Border color when focused
                       ),
+                      prefixIcon: const Icon(
+                          IconData(0xe3ae, fontFamily: 'MaterialIcons')),
                       suffixIcon: IconButton(
                         icon: Icon(
                           _isPasswordVisible
@@ -190,7 +201,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     controller: _phoneNumberController,
                     decoration: InputDecoration(
                       labelText: 'Phone Number',
-                      fillColor: Colors.blueGrey.shade200,
+                      labelStyle: TextStyle(
+                        color: Colors.cyan.shade800,
+                      ),
+                      fillColor: Colors.blueGrey.shade100,
                       filled: true,
                       enabledBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(16.0),
@@ -201,10 +215,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(16.0),
                         borderSide: BorderSide(
-                            color: Colors.lightGreenAccent.shade400,
+                            color: Colors.indigo.shade900,
                             width: 2.0), // Border color when focused
                       ),
-                      suffixIcon: const Icon(
+                      prefixIcon: const Icon(
                         IconData(0xe4a2, fontFamily: 'MaterialIcons'),
                       ),
                     ),
@@ -216,46 +230,54 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     },
                   ),
                   const SizedBox(height: 16),
+
                   DropdownButtonHideUnderline(
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Colors.blueGrey.shade200,
+                        color: Colors.blueGrey.shade100,
                         borderRadius: BorderRadius.circular(16.0),
                       ),
-                      child: DropdownButton<Service>(
-                          value: _selectedService,
-                          isExpanded: true,
-                          items: Service.values.map((service) {
-                            return DropdownMenuItem<Service>(
-                              value: service,
-                              child: Text(service.toString().split('.').last),
-                            );
-                          }).toList(),
-                          onChanged: (Service? newValue) {
-                            setState(() {
-                              _selectedService = newValue!;
-                            });
-                          }),
+                      child: Row(
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 8.0),
+                            child: Icon(Icons.menu),
+                          ),
+                          Expanded(
+                            child: DropdownButton<Service>(
+                              value: _selectedService,
+                              isExpanded: true,
+                              hint: Text(
+                                'Please Select a Service',
+                                style: TextStyle(
+                                  color: Colors.cyan.shade800,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                              ),
+                              items: Service.values.map((service) {
+                                return DropdownMenuItem<Service>(
+                                  value: service,
+                                  child: Row(
+                                    children: [
+                                      Icon(getIconForService(service)),
+                                      const SizedBox(width: 10),
+                                      Text(service.toString().split('.').last),
+                                    ],
+                                  ),
+                                );
+                              }).toList(),
+                              onChanged: (Service? newValue) {
+                                setState(() {
+                                  _selectedService = newValue!;
+                                });
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
 
-                  // DropdownButtonHideUnderline(
-                  //   child: DropdownButton<Service>(
-                  //     value: _selectedService,
-                  //     isExpanded: true,
-                  //     items: Service.values.map((service) {
-                  //       return DropdownMenuItem<Service>(
-                  //         value: service,
-                  //         child: Text(service.toString().split('.').last),
-                  //       );
-                  //     }).toList(),
-                  //     onChanged: (Service? newValue) {
-                  //       setState(() {
-                  //         _selectedService = newValue!;
-                  //       });
-                  //     },
-                  //   ),
-                  // ),
                   const SizedBox(height: 30),
                   _isLoading
                       ? const CircularProgressIndicator()
