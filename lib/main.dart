@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
             stream: FirebaseAuth.instance.authStateChanges(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
-                return const ResponsiveLayout();
+                return const HomePage();
               } else if (snapshot.hasError) {
                 return const Center(
                   child: Text("error will loading the data"),
