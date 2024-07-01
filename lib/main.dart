@@ -23,7 +23,27 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: AppRoutes.routes,
       title: 'HelperHive',
-      home: const OnboardingScreens(),
+      // home: const OnboardingScreens(),
+      home: StreamBuilder(
+            stream: FirebaseAuth.instance.authStateChanges(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return const HomePage();
+              } else if (snapshot.hasError) {
+                return const Center(
+                  child: Text("error will loading the data"),
+                );
+              }
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(
+                      // color: primaryColor,
+                      ),
+                );
+              }
+
+              return const OnboardingScreens();
+            }),
     );
   }
 }
