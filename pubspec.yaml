@@ -88,6 +88,8 @@ flutter:
     - assets/services/
     - assets/logos/
     - assets/onboarding/
+    - assets/payment_screen_logos/
+    - assets/discount_arousel_images/
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

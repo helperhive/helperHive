@@ -102,15 +102,6 @@ class MyBookingCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                // Row(
-                //   children: [
-                //     const Icon(Icons.star, color: Colors.orange, size: 24.0),
-                //     Text(
-                //       date,
-                //       style: const TextStyle(fontSize: 18.0),
-                //     ),
-                //   ],
-                // ),
               ],
             ),
           ),

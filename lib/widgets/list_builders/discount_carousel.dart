@@ -27,31 +27,31 @@ class DiscountCarousel extends StatelessWidget {
             service: 'Cleaning',
             code: 'CHEN356',
             discount: '40',
-            imagePath: 'assets/cleaner.jpg',
+            imagePath: 'assets/discount_arousel_images/cleaner.jpg',
           ),
           DiscountCard(
             service: 'Washing',
             code: 'WAHG856',
             discount: '20',
-            imagePath: 'assets/washing.jpg',
+            imagePath: 'assets/discount_arousel_images/washing.jpg',
           ),
           DiscountCard(
             service: 'Repair',
             code: 'REIR356',
             discount: '20',
-            imagePath: 'assets/repair.jpg',
+            imagePath: 'assets/discount_arousel_images/repair.jpg',
           ),
           DiscountCard(
             service: 'Painting',
             code: 'PATG294',
             discount: '20',
-            imagePath: 'assets/painting.jpg',
+            imagePath: 'assets/discount_arousel_images/painting.jpg',
           ),
           DiscountCard(
             service: 'Plumbing',
             code: 'PLBI356',
             discount: '25',
-            imagePath: 'assets/plumber.jpg',
+            imagePath: 'assets/discount_arousel_images/plumber.jpg',
           ),
         ]);
   }

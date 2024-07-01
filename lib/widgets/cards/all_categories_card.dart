@@ -28,16 +28,6 @@ class CategoryCard extends StatelessWidget {
         });
       },
       child: Column(
-        // children: [
-        //   Icon(icon, size: 30, color: Colors.blue),
-        //   const SizedBox(height: 5),
-        //   Text(
-        //     label,
-        //     textAlign: TextAlign.center,
-        //     style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-        //   ),
-        // ],
-
         children: [
           Container(
             decoration: BoxDecoration(

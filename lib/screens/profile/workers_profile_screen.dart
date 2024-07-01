@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:helperhive/constants/color_them.dart';
 import 'package:helperhive/screens/booking/booking_date_screen.dart';
-import 'package:helperhive/widgets/cards/likecard.dart';
-import 'package:helperhive/widgets/cards/reviewcard.dart';
-import 'package:helperhive/widgets/show_more_text.dart';
+import 'package:helperhive/screens/profile/widgets/cards/likecard.dart';
+import 'package:helperhive/screens/profile/widgets/cards/reviewcard.dart';
+import 'package:helperhive/screens/profile/widgets/show_more_text.dart';
 
 class WorkersProfileScreen extends StatefulWidget {
   const WorkersProfileScreen({super.key});

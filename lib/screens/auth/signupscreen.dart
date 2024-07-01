@@ -1,49 +1,53 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:helperhive/routes/app_routes.dart';
-import '../../backend/auth_methods.dart';
-import '../../model/user_model.dart';
-import '../../widgets/custum_auth_button.dart';
+import 'package:helperhive/backend/auth_methods.dart';
+import 'package:helperhive/model/user_model.dart';
+import 'package:helperhive/widgets/custum_auth_button.dart';
+import 'package:helperhive/screens/auth/widgets/auth_text_form_field.dart';
+import 'package:helperhive/screens/auth/widgets/button_with_image.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
 
   @override
-  State<SignUpScreen> createState() => _SignUpScreenState();
+  State<SignUpScreen> createState() => SignUpScreenState();
 }
 
-class _SignUpScreenState extends State<SignUpScreen> {
-  final AuthService _authService = AuthService();
-  final _formKey = GlobalKey<FormState>();
-  final _nameController = TextEditingController();
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-  final _phoneNumberController = TextEditingController();
-  Service? _selectedService;
-  bool _isLoading = false;
-  bool _isPasswordVisible = false;
+class SignUpScreenState extends State<SignUpScreen> {
+  final AuthService authService = AuthService();
+  final formKey = GlobalKey<FormState>();
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final phoneNumberController = TextEditingController();
+  Service? selectedService;
+  bool isLoading = false;
+  bool isPasswordVisible = false;
 
-  Future<void> _signUp() async {
-    if (_formKey.currentState!.validate()) {
+  void signUp() async {
+    if (formKey.currentState!.validate()) {
       setState(() {
-        _isLoading = true;
+        isLoading = true;
       });
 
       try {
-        await _authService.signUpWithEmailAndPassword(
-          email: _emailController.text.trim(),
-          password: _passwordController.text.trim(),
-          name: _nameController.text.trim(),
-          phoneNumber: _phoneNumberController.text.trim(),
-          service: _selectedService!,
+        await authService.signUpWithEmailAndPassword(
+          email: emailController.text.trim(),
+          password: passwordController.text.trim(),
+          name: nameController.text.trim(),
+          phoneNumber: phoneNumberController.text.trim(),
+          service: selectedService!,
         );
-        Navigator.of(context).pushNamed(AppRoutes.loginRoute);
+        Navigator.of(context).pushNamed(AppRoutes.homeRoute);
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text(e.toString())),
         );
       } finally {
         setState(() {
-          _isLoading = false;
+          isLoading = false;
         });
       }
     }
@@ -57,10 +61,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
           gradient: LinearGradient(
             colors: [
               Colors.blue.shade200,
-              Colors.blue.shade400,
-              Colors.blue.shade500,
+              Colors.blue.shade200,
               Colors.blue.shade300,
-              Colors.blue.shade400,
+              Colors.blue.shade300,
+              Colors.blue.shade200,
               Colors.blue.shade200,
             ],
             begin: Alignment.topLeft,
@@ -71,7 +75,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           child: Padding(
             padding: const EdgeInsets.all(13.0),
             child: Form(
-              key: _formKey,
+              key: formKey,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
@@ -83,112 +87,36 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         fontWeight: FontWeight.bold,
                         color: Colors.red),
                   ),
+
+                  //Name
                   const SizedBox(height: 70),
-                  TextFormField(
-                    controller: _nameController,
-                    decoration: InputDecoration(
+                  AuthTextFormField(
+                      emailController: nameController,
+                      isPassword: false,
                       labelText: 'Name',
-                      labelStyle: TextStyle(
-                        color: Colors.cyan.shade800,
-                      ),
-                      fillColor: Colors.blueGrey.shade100,
-                      filled: true,
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(16.0),
-                        borderSide: BorderSide(
-                            color: Colors.grey.shade400,
-                            width: 1.0), // Border color when not focused
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(16.0),
-                        borderSide: BorderSide(
-                            color: Colors.indigo.shade900,
-                            width: 2.0), // Border color when focused
-                      ),
-                      prefixIcon: const Icon(
-                        IconData(0xe043,
-                            fontFamily:
-                                'MaterialIcons'), // Replace with your custom icon code point and fontFamily
-                      ),
-                    ),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter your name';
-                      }
-                      return null;
-                    },
-                  ),
+                      icon: const IconData(0xe043, fontFamily: 'MaterialIcons'),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter your name';
+                        }
+                        return null;
+                      }),
+
+                  //Email
                   const SizedBox(height: 16),
-                  TextFormField(
-                    controller: _emailController,
-                    decoration: InputDecoration(
+                  AuthTextFormField(
+                      emailController: emailController,
+                      isPassword: false,
                       labelText: 'Email',
-                      labelStyle: TextStyle(
-                        color: Colors.cyan.shade800,
-                      ),
-                      fillColor: Colors.blueGrey.shade100,
-                      filled: true,
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(16.0),
-                        borderSide: BorderSide(
-                            color: Colors.grey.shade400,
-                            width: 1.0), // Border color when not focused
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(16.0),
-                        borderSide: BorderSide(
-                            color: Colors.indigo.shade900,
-                            width: 2.0), // Border color when focused
-                      ),
-                      prefixIcon: const Icon(Icons.email),
-                    ),
-                    validator: (value) {
-                      if (value == null ||
-                          value.isEmpty ||
-                          !value.contains('@')) {
-                        return 'Please enter a valid email';
-                      }
-                      return null;
-                    },
-                  ),
+                      icon: Icons.email),
+
+                  //Password
                   const SizedBox(height: 16),
-                  TextFormField(
-                    controller: _passwordController,
-                    obscureText: !_isPasswordVisible,
-                    decoration: InputDecoration(
-                      labelText: 'Password',
-                      labelStyle: TextStyle(
-                        color: Colors.cyan.shade800,
-                      ),
-                      fillColor: Colors.blueGrey.shade100,
-                      filled: true,
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(16.0),
-                        borderSide: BorderSide(
-                            color: Colors.grey.shade400,
-                            width: 1.0), // Border color when not focused
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(16.0),
-                        borderSide: BorderSide(
-                            color: Colors.indigo.shade900,
-                            width: 2.0), // Border color when focused
-                      ),
-                      prefixIcon: const Icon(
-                          IconData(0xe3ae, fontFamily: 'MaterialIcons')),
-                      suffixIcon: IconButton(
-                        icon: Icon(
-                          _isPasswordVisible
-                              ? Icons.visibility
-                              : Icons.visibility_off,
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            _isPasswordVisible = !_isPasswordVisible;
-                          });
-                        },
-                      ),
-                    ),
+                  AuthTextFormField(
+                    emailController: passwordController,
+                    isPassword: true,
+                    labelText: 'Password',
+                    icon: const IconData(0xe3ae, fontFamily: 'MaterialIcons'),
                     validator: (value) {
                       if (value == null || value.length < 6) {
                         return 'Please enter a password with at least 6 characters';
@@ -196,32 +124,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       return null;
                     },
                   ),
+
+                  //Phone Number
                   const SizedBox(height: 16),
-                  TextFormField(
-                    controller: _phoneNumberController,
-                    decoration: InputDecoration(
-                      labelText: 'Phone Number',
-                      labelStyle: TextStyle(
-                        color: Colors.cyan.shade800,
-                      ),
-                      fillColor: Colors.blueGrey.shade100,
-                      filled: true,
-                      enabledBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(16.0),
-                        borderSide: BorderSide(
-                            color: Colors.grey.shade400,
-                            width: 1.0), // Border color when not focused
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(16.0),
-                        borderSide: BorderSide(
-                            color: Colors.indigo.shade900,
-                            width: 2.0), // Border color when focused
-                      ),
-                      prefixIcon: const Icon(
-                        IconData(0xe4a2, fontFamily: 'MaterialIcons'),
-                      ),
-                    ),
+                  AuthTextFormField(
+                    emailController: phoneNumberController,
+                    isPassword: false,
+                    labelText: 'Phone Number',
+                    icon: const IconData(0xe4a2, fontFamily: 'MaterialIcons'),
                     validator: (value) {
                       if (value == null || value.isEmpty || value.length < 10) {
                         return 'Please enter a valid phone number';
@@ -229,12 +139,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       return null;
                     },
                   ),
-                  const SizedBox(height: 16),
 
+                  //Drop Down Menu Bar
+                  const SizedBox(height: 16),
                   DropdownButtonHideUnderline(
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Colors.blueGrey.shade100,
+                        color: Colors.white60,
                         borderRadius: BorderRadius.circular(16.0),
                       ),
                       child: Row(
@@ -245,12 +156,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                           Expanded(
                             child: DropdownButton<Service>(
-                              value: _selectedService,
+                              value: selectedService,
                               isExpanded: true,
-                              hint: Text(
-                                'Please Select a Service',
+                              hint: const Text(
+                                'Select a Service',
                                 style: TextStyle(
-                                  color: Colors.cyan.shade800,
+                                  color: Colors.black,
                                   fontWeight: FontWeight.normal,
                                 ),
                               ),
@@ -268,7 +179,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               }).toList(),
                               onChanged: (Service? newValue) {
                                 setState(() {
-                                  _selectedService = newValue!;
+                                  selectedService = newValue!;
                                 });
                               },
                             ),
@@ -279,14 +190,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
 
                   const SizedBox(height: 30),
-                  _isLoading
+                  isLoading
                       ? const CircularProgressIndicator()
                       : SizedBox(
-                          width: double.infinity,
+                          width: 300,
                           child: CustomAuthElevatedButton(
                             text: 'Sign Up',
                             color: Colors.orange.shade300,
-                            onPressed: _signUp,
+                            onPressed: signUp,
                           ),
                         ),
 
@@ -294,94 +205,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   Text('Or log in with',
                       style: TextStyle(color: Colors.blue.shade900)),
                   const SizedBox(height: 20),
+
                   //signin with google button
-                  MouseRegion(
-                    cursor: SystemMouseCursors.click,
-                    child: GestureDetector(
-                      onTap: () {},
-                      child: Container(
-                        height: 40,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.cyan.shade800, // Border color
-                            width: 2, // Border width
-                          ),
-                          borderRadius: BorderRadius.circular(32),
-                          color: Colors.white,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: 40,
-                              height: 40,
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                  image: AssetImage(
-                                      'assets/logos/google_logo.jpg'), // Replace with your Google image asset
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 10),
-                            Text(
-                              'Login With Google',
-                              style: TextStyle(
-                                color: Colors.cyan.shade800,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+                  const ButtonWithImage(
+                      image: AssetImage('assets/logos/google_logo.jpg'),
+                      label: 'Login With Google'),
 
                   //signin with fb button
                   const SizedBox(height: 10),
-                  MouseRegion(
-                    cursor: SystemMouseCursors.click,
-                    child: GestureDetector(
-                      onTap: () {},
-                      child: Container(
-                        height: 40,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.cyan.shade800, // Border color
-                            width: 2, // Border width
-                          ),
-                          borderRadius: BorderRadius.circular(32),
-                          color: Colors.white,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: 30,
-                              height: 30,
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                image: DecorationImage(
-                                  image: AssetImage(
-                                      'assets/logos/fb_logo.jpg'), // Replace with your Google image asset
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ),
-                            const SizedBox(width: 10),
-                            Text(
-                              'Login With Facebook',
-                              style: TextStyle(
-                                color: Colors.cyan.shade800,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+                  const ButtonWithImage(
+                      image: AssetImage('assets/logos/fb_logo.jpg'),
+                      label: 'Login With Facebook'),
 
                   const SizedBox(height: 15),
                   TextButton(

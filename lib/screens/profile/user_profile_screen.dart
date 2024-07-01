@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:helperhive/screens/edit_profile_screen.dart';
+import 'package:helperhive/screens/profile/edit_profile_screen.dart';
 import 'package:helperhive/screens/payment_screen.dart';
 import 'package:helperhive/screens/auth/loginscreen.dart';
 
