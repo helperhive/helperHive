@@ -3,7 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:helperhive/firebase_options.dart';
 import 'package:helperhive/routes/app_routes.dart';
-// import 'package:helperhive/screens/home/home_screen.dart';
+import 'package:helperhive/screens/home/home_screen.dart';
 import 'package:helperhive/screens/home/onboarding_screen.dart';
 
 void main() async {
