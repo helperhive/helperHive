@@ -6,7 +6,7 @@ import 'package:helperhive/screens/auth/widgets/button_with_image.dart';
 import 'package:helperhive/screens/auth/signupscreen.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key});
+  const LoginScreen({super.key});
 
   @override
   State<LoginScreen> createState() => LoginScreenState();
@@ -136,13 +136,13 @@ class LoginScreenState extends State<LoginScreen> {
               ),
 
               const SizedBox(height: 20),
-              ButtonWithImage(
+              const ButtonWithImage(
                 image: AssetImage('assets/logos/google_logo.jpg'),
                 label: 'Login With Google',
               ),
 
               const SizedBox(height: 10),
-              ButtonWithImage(
+              const ButtonWithImage(
                 image: AssetImage('assets/logos/fb_logo.jpg'),
                 label: 'Login With Facebook',
               ),
