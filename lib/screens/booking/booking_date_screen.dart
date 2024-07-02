@@ -1,49 +1,41 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:helperhive/constants/color_them.dart';
 import 'package:helperhive/screens/booking/booking_time_screen.dart';
+import 'package:table_calendar/table_calendar.dart';
+
+import 'widgets/calender.dart';
 
 class BookingDateScreen extends StatefulWidget {
   const BookingDateScreen({super.key});
 
   @override
-  // ignore: library_private_types_in_public_api
-  _BookingDateScreenState createState() => _BookingDateScreenState();
+  BookingDateScreenState createState() => BookingDateScreenState();
 }
 
-class _BookingDateScreenState extends State<BookingDateScreen> {
-  final ScrollController scrollController =
-      ScrollController(); // Scroll controller for horizontal scrolling
-  List<DateTime> displayedDates = []; // List of dates to display
-  DateTime? selectedDate; // Currently selected date
-  TimeOfDay? selectedTime; // Currently selected time
-  bool isBooking = false; // Flag to prevent multiple bookings
+class BookingDateScreenState extends State<BookingDateScreen> {
+  final ScrollController scrollController = ScrollController();
+  DateTime? selectedDate;
+  TimeOfDay? selectedTime;
+  bool isBooking = false;
 
   // User details
   final String userName = 'Vishnu';
   final String userSpecialty = 'Electrician';
   final String userLocation = 'Bhimavaram, Andhra Pradesh';
-  final String userImageUrl =
-      'assets/naruto.jpeg'; // Replace with your image path
+  final String userImageUrl = 'assets/naruto.jpeg';
 
   final List<TimeOfDay> availableTimes = [
     const TimeOfDay(hour: 10, minute: 0),
     const TimeOfDay(hour: 11, minute: 0),
     const TimeOfDay(hour: 12, minute: 0),
-    const TimeOfDay(hour: 1, minute: 0),
-    const TimeOfDay(hour: 2, minute: 0),
-    const TimeOfDay(hour: 3, minute: 0),
-    const TimeOfDay(hour: 4, minute: 0),
-    const TimeOfDay(hour: 5, minute: 0),
+    const TimeOfDay(hour: 13, minute: 0),
+    const TimeOfDay(hour: 14, minute: 0),
+    const TimeOfDay(hour: 15, minute: 0),
+    const TimeOfDay(hour: 16, minute: 0),
+    const TimeOfDay(hour: 17, minute: 0),
   ];
-
-  @override
-  void initState() {
-    super.initState();
-    // Generate initial list of displayed dates (replace with your logic)
-    displayedDates =
-        List.generate(7, (index) => DateTime.now().add(Duration(days: index)));
-  }
 
   void _selectTime(TimeOfDay time) {
     setState(() {
@@ -51,53 +43,11 @@ class _BookingDateScreenState extends State<BookingDateScreen> {
     });
   }
 
-  Widget _buildDateBox(DateTime date) {
-    final isSelected = selectedDate == date;
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 0),
-      padding: const EdgeInsets.symmetric(vertical: 23.0, horizontal: 6.0),
-      decoration: BoxDecoration(
-        color: isSelected ? blueColor : Colors.grey[200],
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      child: TextButton(
-        onPressed: () {
-          setState(() {
-            selectedDate = date;
-            selectedTime = null; // Reset selected time
-          });
-        },
-        child: Text(
-          DateFormat('EEE\nMMM d').format(date),
-          style: TextStyle(
-            color: isSelected ? Colors.white : Colors.black,
-          ),
-          textAlign: TextAlign.center,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildTimeBox(TimeOfDay time) {
-    final isSelected = selectedTime == time;
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
-      padding: const EdgeInsets.all(8.0),
-      decoration: BoxDecoration(
-        color: isSelected ? blueColor : Colors.grey[200],
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      child: TextButton(
-        onPressed: selectedDate == null ? null : () => _selectTime(time),
-        child: Text(
-          time.format(context),
-          style: TextStyle(
-            color: isSelected ? Colors.white : Colors.black,
-          ),
-          textAlign: TextAlign.center,
-        ),
-      ),
-    );
+  void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
+    setState(() {
+      selectedDate = selectedDay;
+      selectedTime = null;
+    });
   }
 
   @override
@@ -111,8 +61,7 @@ class _BookingDateScreenState extends State<BookingDateScreen> {
         backgroundColor: blueColor,
       ),
       body: Padding(
-        padding:
-            const EdgeInsets.all(12.0), // Adjust the padding values as needed
+        padding: const EdgeInsets.all(12.0),
         child: SingleChildScrollView(
           child: ConstrainedBox(
             constraints: BoxConstraints(
@@ -157,26 +106,15 @@ class _BookingDateScreenState extends State<BookingDateScreen> {
                       ],
                     ),
                   ),
-
                   const SizedBox(height: 30),
                   const Text(
                     'Select Date : ',
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                   ),
                   const SizedBox(height: 17),
-                  // Booking Calendar with Scrollbar
-                  Scrollbar(
-                    controller: scrollController,
-                    thumbVisibility: true,
-                    child: SingleChildScrollView(
-                      controller: scrollController,
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: displayedDates
-                            .map((date) => _buildDateBox(date))
-                            .toList(),
-                      ),
-                    ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 2),
+                    child: CalendarTabBoking(),
                   ),
                   const SizedBox(height: 20),
                   Text(
@@ -191,7 +129,6 @@ class _BookingDateScreenState extends State<BookingDateScreen> {
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                   ),
                   const SizedBox(height: 16),
-                  // Static Time Buttons
                   Wrap(
                     spacing: 10.0,
                     runSpacing: 10.0,
@@ -200,7 +137,6 @@ class _BookingDateScreenState extends State<BookingDateScreen> {
                         .toList(),
                   ),
                   const SizedBox(height: 16),
-                  // Display selected time (if available)
                   if (selectedTime != null)
                     Text(
                       DateFormat('h:mm a')
@@ -208,7 +144,6 @@ class _BookingDateScreenState extends State<BookingDateScreen> {
                       style: const TextStyle(fontSize: 15),
                     ),
                   const SizedBox(height: 30),
-                  // Button to book appointment (enabled only if date and time are selected)
                   SizedBox(
                     width: double.infinity,
                     height: 43,
@@ -220,30 +155,18 @@ class _BookingDateScreenState extends State<BookingDateScreen> {
                               setState(() {
                                 isBooking = true;
                               });
-                              // Implement your booking logic here
                               await Future.delayed(const Duration(
                                   seconds: 1)); // Simulate network latency
                               setState(() {
                                 isBooking = false;
                               });
                               Navigator.push(
-                                // ignore: use_build_context_synchronously
                                 context,
                                 MaterialPageRoute(
                                   builder: (context) =>
                                       const BookingTimeScreen(),
                                 ),
                               );
-                              // final bookedDateTime =
-                              //     _convertTimeOfDayToDateTime(selectedTime!);
-                              // ignore: use_build_context_synchronously
-                              //   ScaffoldMessenger.of(context).showSnackBar(
-                              //     SnackBar(
-                              //       content: Text(
-                              //           'Appointment Booked for ${DateFormat('EEEE, MMMM d, y - h:mm a').format(bookedDateTime)}'),
-                              //       backgroundColor: Colors.green,
-                              //     ),
-                              //   );
                             },
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.blue,
@@ -252,11 +175,32 @@ class _BookingDateScreenState extends State<BookingDateScreen> {
                       child: const Text('Next'),
                     ),
                   ),
-                  // const SizedBox(height: 20),
                 ],
               ),
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTimeBox(TimeOfDay time) {
+    final isSelected = selectedTime == time;
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
+      padding: const EdgeInsets.all(8.0),
+      decoration: BoxDecoration(
+        color: isSelected ? blueColor : Colors.grey[200],
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+      child: TextButton(
+        onPressed: selectedDate == null ? null : () => _selectTime(time),
+        child: Text(
+          time.format(context),
+          style: TextStyle(
+            color: isSelected ? Colors.white : Colors.black,
+          ),
+          textAlign: TextAlign.center,
         ),
       ),
     );
@@ -300,7 +244,6 @@ class DatePickerScreen extends StatelessWidget {
                   lastDate: DateTime.now().add(const Duration(days: 365)),
                 );
                 if (pickedDate != null) {
-                  // ignore: use_build_context_synchronously
                   Navigator.pop(context, pickedDate);
                 }
               },
