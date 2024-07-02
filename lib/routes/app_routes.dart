@@ -1,9 +1,9 @@
-import 'package:helperhive/screens/booking_details_screen.dart';
+import 'package:helperhive/screens/booking/booking_details_screen.dart';
 import 'package:helperhive/screens/auth/loginscreen.dart';
 import 'package:helperhive/screens/service_search_screen.dart';
 import 'package:helperhive/screens/auth/signupscreen.dart';
-import 'package:helperhive/screens/user_profile_screen.dart';
-import 'package:helperhive/screens/workers_profile_screen.dart';
+import 'package:helperhive/screens/profile/user_profile_screen.dart';
+import 'package:helperhive/screens/profile/workers_profile_screen.dart';
 import 'package:helperhive/screens/home/home_screen.dart';
 
 class AppRoutes {

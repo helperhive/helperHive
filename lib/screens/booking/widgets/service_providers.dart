@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:helperhive/constants/color_them.dart';
 import 'package:helperhive/model/service_card_model.dart';
-import 'package:helperhive/screens/workers_profile_screen.dart';
+import 'package:helperhive/screens/profile/workers_profile_screen.dart';
 
 class ServiceProviders extends StatefulWidget {
-  final String selectedCategory;
+  final String? selectedCategory;
   final String searchQuery;
 
   const ServiceProviders({
     super.key,
-    required this.selectedCategory,
+    this.selectedCategory,
     required this.searchQuery,
   });
 
   @override
-  State<ServiceProviders> createState() => _ServiceProvidersState();
+  State<ServiceProviders> createState() => ServiceProvidersState();
 }
 
-class _ServiceProvidersState extends State<ServiceProviders> {
+class ServiceProvidersState extends State<ServiceProviders> {
   final List<ServicePersonData> servicePersons =
       ServicePersonData.servicePersons;
 

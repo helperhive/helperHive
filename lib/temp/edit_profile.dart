@@ -50,7 +50,7 @@ class _EditSettingsScreenState extends State<EditSettingsScreen> {
         _discountController.text = userModel.discount.toString();
         _priceController.text = userModel.price.toString();
       });
-        } catch (e) {
+    } catch (e) {
       print("Failed to load user details: $e");
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Failed to load user details: $e')),
@@ -221,6 +221,6 @@ class _EditSettingsScreenState extends State<EditSettingsScreen> {
   Service stringToService(String serviceString) {
     return Service.values.firstWhere(
         (e) => e.toString().split('.').last == serviceString,
-        orElse: () => Service.unknown); // Default to an unknown service
+        orElse: () => Service.Others); // Default to an unknown service
   }
 }

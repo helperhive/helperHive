@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:helperhive/constants/color_them.dart';
-import 'package:helperhive/screens/home/home_screen.dart';
 import 'package:lottie/lottie.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:helperhive/constants/color_them.dart';
-import 'package:helperhive/screens/booking_time_screen.dart';
+import 'package:helperhive/screens/booking/booking_time_screen.dart';
 
 class BookingDateScreen extends StatefulWidget {
   const BookingDateScreen({super.key});

@@ -1,118 +1,152 @@
 import 'package:flutter/material.dart';
-import '../../backend/auth_methods.dart';
+import 'package:helperhive/screens/auth/widgets/auth_text_form_field.dart';
+import 'package:helperhive/backend/auth_methods.dart';
 import 'package:helperhive/widgets/custum_auth_button.dart';
-import 'signupscreen.dart';
+import 'package:helperhive/screens/auth/widgets/button_with_image.dart';
+import 'package:helperhive/screens/auth/signupscreen.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+  const LoginScreen({Key? key});
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  State<LoginScreen> createState() => LoginScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final AuthService _authService = AuthService();
-  bool _isPasswordVisible = false;
+class LoginScreenState extends State<LoginScreen> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final AuthService authService = AuthService();
+  bool isPasswordVisible = false;
+  bool isLoading = false;
 
-  Future<void> _signIn() async {
+  void logIn() async {
+    setState(() {
+      isLoading = true;
+    });
+
     try {
-      await _authService.signInWithEmailAndPassword(
-        _emailController.text.trim(),
-        _passwordController.text.trim(),
+      await authService.signInWithEmailAndPassword(
+        emailController.text.trim(),
+        passwordController.text.trim(),
       );
 
-      // Navigate to EditSettingsScreen (user_edit_settings.dart)
+      // Navigate to HomeScreen after successful login
       Navigator.pushReplacementNamed(context, '/home_screen');
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Sign in failed: $e')),
       );
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
+      body: SafeArea(
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Colors.blue.shade200,
+                Colors.blue.shade200,
+                Colors.blue.shade300,
+                Colors.blue.shade300,
+                Colors.blue.shade200,
+                Colors.blue.shade200,
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               const SizedBox(height: 100),
               const Text(
                 'Welcome Back!',
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 100),
-              TextField(
-                controller: _emailController,
-                decoration: const InputDecoration(
-                  labelText: 'Email / Username',
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.red,
                 ),
               ),
-              const SizedBox(height: 20),
-              TextField(
-                controller: _passwordController,
-                obscureText: !_isPasswordVisible,
-                decoration: InputDecoration(
+
+              const SizedBox(height: 100),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: AuthTextFormField(
+                  emailController: emailController,
+                  isPassword: false,
+                  labelText: 'Email',
+                  icon: Icons.email,
+                ),
+              ),
+
+              const SizedBox(height: 15),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: AuthTextFormField(
+                  emailController: passwordController,
+                  isPassword: true,
                   labelText: 'Password',
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      _isPasswordVisible
-                          ? Icons.visibility
-                          : Icons.visibility_off,
+                  icon: const IconData(0xe3ae, fontFamily: 'MaterialIcons'),
+                  validator: (value) {
+                    if (value == null || value.length < 6) {
+                      return 'Please enter a password with at least 6 characters';
+                    }
+                    return null;
+                  },
+                ),
+              ),
+
+              const SizedBox(height: 25),
+              isLoading
+                  ? const CircularProgressIndicator()
+                  : SizedBox(
+                      width: 300,
+                      child: CustomAuthElevatedButton(
+                        text: 'Log In',
+                        color: Colors.orange.shade300,
+                        onPressed: logIn,
+                      ),
                     ),
-                    onPressed: () {
-                      setState(() {
-                        _isPasswordVisible = !_isPasswordVisible;
-                      });
-                    },
+
+              const SizedBox(height: 10),
+              Align(
+                alignment: Alignment.centerRight,
+                child: TextButton(
+                  onPressed: () {
+                    // Implement your forgot password logic here
+                  },
+                  child: const Text(
+                    'Forgot Password?',
+                    style: TextStyle(color: Colors.deepOrange),
                   ),
                 ),
               ),
+
+              const SizedBox(height: 10),
+              Text(
+                'Or log in with',
+                style: TextStyle(color: Colors.blue.shade900),
+              ),
+
               const SizedBox(height: 20),
-              SizedBox(
-                width: double.infinity,
-                child: CustomAuthElevatedButton(
-                  text: 'Log In',
-                  color: Colors.blue,
-                  onPressed: _signIn,
-                ),
+              ButtonWithImage(
+                image: AssetImage('assets/logos/google_logo.jpg'),
+                label: 'Login With Google',
               ),
-              TextButton(
-                onPressed: () {
-                  // Implement your forgot password logic here
-                },
-                child: const Text('Forgot Password?'),
+
+              const SizedBox(height: 10),
+              ButtonWithImage(
+                image: AssetImage('assets/logos/fb_logo.jpg'),
+                label: 'Login With Facebook',
               ),
-              const SizedBox(height: 20),
-              const Text('Or log in with'),
-              const SizedBox(height: 20),
-              SizedBox(
-                width: double.infinity,
-                child: CustomAuthElevatedButton(
-                  text: 'LOGIN WITH GOOGLE',
-                  icon: Icons.g_mobiledata_outlined,
-                  color: Colors.red.shade300,
-                  onPressed: () {
-                    // Implement Google login logic here
-                  },
-                ),
-              ),
-              SizedBox(
-                width: double.infinity,
-                child: CustomAuthElevatedButton(
-                  text: 'LOGIN WITH FACEBOOK',
-                  icon: Icons.facebook,
-                  color: Colors.blue.shade200,
-                  onPressed: () {
-                    // Implement Facebook login logic here
-                  },
-                ),
-              ),
+
               const SizedBox(height: 20),
               TextButton(
                 onPressed: () {
@@ -124,14 +158,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   ).then((loginSuccessful) {
                     if (loginSuccessful == true) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
+                        const SnackBar(
                           content: Text('Successfully done!'),
                           duration: Duration(seconds: 5),
                         ),
                       );
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
+                        const SnackBar(
                           content: Text('Please recheck and try again.'),
                           duration: Duration(seconds: 5),
                         ),
@@ -139,8 +173,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     }
                   });
                 },
-                child: const Text("Don't have an account? Sign Up"),
+                child: const Text(
+                  "Don't have an account? Sign Up",
+                  style: TextStyle(color: Colors.red),
+                ),
               ),
+
+              const SizedBox(
+                  height: 20), // Ensure there's enough space at the bottom
             ],
           ),
         ),

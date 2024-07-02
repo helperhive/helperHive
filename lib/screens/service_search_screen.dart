@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:helperhive/constants/color_them.dart';
 import 'package:helperhive/widgets/cards/category_filter_search.dart';
-import 'package:helperhive/widgets/list_builders/service_providers.dart';
+import 'package:helperhive/screens/booking/widgets/service_providers.dart';
 import 'package:helperhive/widgets/search_bar_home.dart';
 
 class ServiceSearchScreen extends StatefulWidget {
@@ -63,7 +63,6 @@ class _ServiceSearchScreenState extends State<ServiceSearchScreen> {
         padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10),
         child: Column(
           children: [
-            // SearchBarHome(onSearch: updateSearchQuery),
             CategoryFilter(
               onSelectCategory: selectCategory,
               selectedCategory: selectedCategory,

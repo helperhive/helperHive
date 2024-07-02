@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:helperhive/constants/color_them.dart';
-import 'package:helperhive/screens/booking_date_screen.dart';
-import 'package:helperhive/widgets/cards/likecard.dart';
-import 'package:helperhive/widgets/cards/reviewcard.dart';
-import 'package:helperhive/widgets/show_more_text.dart';
+import 'package:helperhive/screens/booking/booking_date_screen.dart';
+import 'package:helperhive/screens/profile/widgets/cards/likecard.dart';
+import 'package:helperhive/screens/profile/widgets/cards/reviewcard.dart';
+import 'package:helperhive/screens/profile/widgets/show_more_text.dart';
 
 class WorkersProfileScreen extends StatefulWidget {
   const WorkersProfileScreen({super.key});
@@ -224,7 +224,8 @@ class BookingHours extends StatelessWidget {
   final String startTime;
   final String endTime;
 
-  const BookingHours({super.key, 
+  const BookingHours({
+    super.key,
     required this.day,
     required this.startTime,
     required this.endTime,
@@ -241,119 +242,3 @@ class BookingHours extends StatelessWidget {
     );
   }
 }
-
-// class Review {
-//   final String reviewerName;
-//   final double rating;
-//   final String comment;
-
-//   Review({
-//     required this.reviewerName,
-//     required this.rating,
-//     required this.comment,
-//   });
-// }
-
-// class ReviewCard extends StatelessWidget {
-//   final Review review;
-
-//   const ReviewCard({
-//     required this.review,
-//   });
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Card(
-//       margin: const EdgeInsets.symmetric(vertical: 4),
-//       child: Padding(
-//         padding: const EdgeInsets.all(8.0),
-//         child: Column(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-//             Text(
-//               review.reviewerName,
-//               style: const TextStyle(fontWeight: FontWeight.bold),
-//             ),
-//             const SizedBox(height: 4),
-//             Row(
-//               children: [
-//                 const Icon(Icons.star, color: Colors.yellow),
-//                 const SizedBox(width: 4),
-//                 Text('${review.rating}'),
-//               ],
-//             ),
-//             const SizedBox(height: 4),
-//             Text(review.comment),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-// class ShowMoreText extends StatefulWidget {
-//   final String text;
-//   final int maxLines;
-
-//   const ShowMoreText({
-//     Key? key,
-//     required this.text,
-//     this.maxLines = 3,
-//   }) : super(key: key);
-
-//   @override
-//   _ShowMoreTextState createState() => _ShowMoreTextState();
-// }
-
-// class _ShowMoreTextState extends State<ShowMoreText> {
-//   bool _showMore = false;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return LayoutBuilder(
-//       builder: (context, constraints) {
-//         final span = TextSpan(
-//           text: widget.text,
-//           style: DefaultTextStyle.of(context).style,
-//         );
-
-//         final tp = TextPainter(
-//           text: span,
-//           maxLines: widget.maxLines,
-//           textDirection: TextDirection.ltr,
-//         );
-
-//         tp.layout(maxWidth: constraints.maxWidth);
-
-//         bool showSeeMore = tp.didExceedMaxLines;
-
-//         return Column(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-//             Text(
-//               widget.text,
-//               maxLines: _showMore ? null : widget.maxLines,
-//               overflow: TextOverflow.ellipsis,
-//             ),
-//             if (showSeeMore) const SizedBox(height: 8),
-//             if (showSeeMore)
-//               InkWell(
-//                 onTap: () {
-//                   setState(() {
-//                     _showMore = !_showMore;
-//                   });
-//                 },
-//                 child: Text(
-//                   _showMore ? 'See Less' : 'See More',
-//                   style: const TextStyle(
-//                     color: Colors.blue,
-//                     decoration: TextDecoration.underline,
-//                   ),
-//                 ),
-//               ),
-//           ],
-//         );
-//       },
-//     );
-//   }
-// }

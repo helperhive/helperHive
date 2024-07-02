@@ -8,6 +8,7 @@ class ServicePersonData {
   final String providerName;
   final String experience;
   final double rating;
+  final String? choice;
 
   ServicePersonData({
     required this.imageUrl,
@@ -17,6 +18,7 @@ class ServicePersonData {
     required this.providerName,
     required this.experience,
     required this.rating,
+    this.choice,
   });
 
   factory ServicePersonData.fromJson(Map<String, dynamic> json) {
@@ -28,6 +30,7 @@ class ServicePersonData {
       providerName: json['providerName'],
       experience: json['experience'],
       rating: json['rating'].toDouble(),
+      choice: json['choice'],
     );
   }
 
@@ -42,12 +45,24 @@ class ServicePersonData {
       providerName: data['providerName'],
       experience: data['experience'],
       rating: data['rating'].toDouble(),
+      choice: data['choice'],
     );
   }
 
   //  to convert  JSON map
+  // Map<String, dynamic> toJson() {
+  //   return {
+  //     'imageUrl': imageUrl,
+  //     'discount': discount,
+  //     'serviceName': serviceName,
+  //     'price': price,
+  //     'providerName': providerName,
+  //     'experience': experience,
+  //     'rating': rating,
+  //   };
+  // }
   Map<String, dynamic> toJson() {
-    return {
+    Map<String, dynamic> json = {
       'imageUrl': imageUrl,
       'discount': discount,
       'serviceName': serviceName,
@@ -56,6 +71,12 @@ class ServicePersonData {
       'experience': experience,
       'rating': rating,
     };
+
+    if (choice != null) {
+      json['choice'] = choice; // Include 'choice' in JSON map if not null
+    }
+
+    return json;
   }
 
   static List<ServicePersonData> servicePersons = [
@@ -78,31 +99,33 @@ class ServicePersonData {
       experience: '2.5',
     ),
     ServicePersonData(
-      imageUrl: "assets/services/washing_service.jpg",
-      discount: '23',
-      serviceName: 'Washing',
-      price: '28',
-      providerName: 'Vishnu',
-      rating: 4.2,
-      experience: '1.5',
-    ),
-    ServicePersonData(
-      imageUrl: "assets/services/plumbing_service.jpg",
-      discount: '15',
-      serviceName: 'Plumbing',
-      price: '35',
-      providerName: 'Abhishek',
-      rating: 4.1,
-      experience: '1',
-    ),
-    ServicePersonData(
-        imageUrl: "assets/services/painting_service.jpg",
-        discount: '25',
-        serviceName: 'Painting',
-        price: '40',
-        providerName: 'Venkat',
+        imageUrl: "assets/services/washing_service.jpg",
+        discount: '23',
+        serviceName: 'Washing',
+        price: '28',
+        providerName: 'Vishnu',
         rating: 4.2,
-        experience: '1.6'),
+        experience: '1.5',
+        choice: 'Previous Bookings'),
+    ServicePersonData(
+        imageUrl: "assets/services/plumbing_service.jpg",
+        discount: '15',
+        serviceName: 'Plumbing',
+        price: '35',
+        providerName: 'Abhishek',
+        rating: 4.1,
+        experience: '1',
+        choice: 'Previous Bookings'),
+    ServicePersonData(
+      imageUrl: "assets/services/painting_service.jpg",
+      discount: '25',
+      serviceName: 'Painting',
+      price: '40',
+      providerName: 'Venkat',
+      rating: 4.2,
+      experience: '1.6',
+      choice: 'Previous Bookings',
+    ),
     ServicePersonData(
         imageUrl: "assets/services/repair_service.jpg",
         discount: '20',
@@ -136,12 +159,13 @@ class ServicePersonData {
         rating: 4.1,
         experience: '3'),
     ServicePersonData(
-        imageUrl: "assets/services/painting_service.jpg",
-        discount: '25',
-        serviceName: 'Painting',
-        price: '40',
-        providerName: 'Venkat',
-        rating: 4.2,
-        experience: '2.5'),
+      imageUrl: "assets/services/painting_service.jpg",
+      discount: '25',
+      serviceName: 'Painting',
+      price: '40',
+      providerName: 'Venkat',
+      rating: 4.2,
+      experience: '2.5',
+    ),
   ];
 }
