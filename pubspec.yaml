@@ -53,7 +53,7 @@ dependencies:
   google_fonts: ^6.2.1
   table_calendar: ^3.1.2
   image_picker: ^1.1.2
-
+  google_sign_in: ^6.2.1
 
 dev_dependencies:
   flutter_test:

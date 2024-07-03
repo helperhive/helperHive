@@ -1,12 +1,15 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:helperhive/routes/app_routes.dart';
 import 'package:helperhive/backend/auth_methods.dart';
 import 'package:helperhive/model/user_model.dart';
 import 'package:helperhive/widgets/custum_auth_button.dart';
 import 'package:helperhive/screens/auth/widgets/auth_text_form_field.dart';
 import 'package:helperhive/screens/auth/widgets/button_with_image.dart';
+// import 'package:helperhive/screens/auth/widgets/auth_login_signup.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -26,6 +29,14 @@ class SignUpScreenState extends State<SignUpScreen> {
   bool isLoading = false;
   bool isPasswordVisible = false;
 
+  // late SignInAndLoginService signinLogin;
+  // @override
+  // void initState() {
+  //     super.initState();
+  //     signinLogin = SignInAndLoginService(authService: authService); // Create an instance of GoogleSignInService
+  //   }
+
+  //Signin using email and password
   void signUp() async {
     if (formKey.currentState!.validate()) {
       setState(() {
@@ -50,6 +61,46 @@ class SignUpScreenState extends State<SignUpScreen> {
           isLoading = false;
         });
       }
+    }
+  }
+
+  //  void signInWithGoogle() {
+  //   signinLogin.signInWithGoogle(context);
+  // }
+
+  //Signin with Google
+  void signInWithGoogle() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      if (googleUser == null) {
+        throw Exception('Google Sign-In aborted');
+      }
+
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+
+      await authService.handlesigninWithGoogle(userCredential);
+
+      Navigator.of(context).pushNamed(AppRoutes.homeRoute);
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(e.toString())),
+      );
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
@@ -207,15 +258,60 @@ class SignUpScreenState extends State<SignUpScreen> {
                   const SizedBox(height: 20),
 
                   //signin with google button
-                  const ButtonWithImage(
-                      image: AssetImage('assets/logos/google_logo.jpg'),
-                      label: 'Login With Google'),
+                  // const ButtonWithImage(
+                  //     image: AssetImage('assets/logos/google_logo.jpg'),
+                  //     label: 'SignIn With Google',
+                  //     loginSignupFunction: signInWithGoogle,
+                  //     ),
+
+                  MouseRegion(
+                    cursor: SystemMouseCursors.click,
+                    child: GestureDetector(
+                      onTap: signInWithGoogle,
+                      child: Container(
+                        height: 40,
+                        width: 300,
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                            color: Colors.cyan.shade800,
+                            width: 2,
+                          ),
+                          borderRadius: BorderRadius.circular(32),
+                          color: Colors.white,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              width: 30,
+                              height: 30,
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  image: AssetImage(
+                                      'assets/logos/google_logo.jpg'),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            Text(
+                              'SignIn With Google',
+                              style: TextStyle(
+                                color: Colors.cyan.shade800,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
 
                   //signin with fb button
                   const SizedBox(height: 10),
                   const ButtonWithImage(
                       image: AssetImage('assets/logos/fb_logo.jpg'),
-                      label: 'Login With Facebook'),
+                      label: 'SignIn With Facebook'),
 
                   const SizedBox(height: 15),
                   TextButton(

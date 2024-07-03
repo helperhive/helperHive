@@ -25,7 +25,7 @@ class LoginScreenState extends State<LoginScreen> {
     });
 
     try {
-      await authService.signInWithEmailAndPassword(
+      await authService.logInWithEmailAndPassword(
         emailController.text.trim(),
         passwordController.text.trim(),
       );

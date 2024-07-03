@@ -50,7 +50,8 @@ class _WorkersProfileScreenState extends State<WorkersProfileScreen> {
                   contentPadding: EdgeInsets.zero,
                   leading: CircleAvatar(
                     radius: 30,
-                    backgroundImage: AssetImage("assets/naruto.jpeg"),
+                    backgroundImage: AssetImage(
+                        "assets/discount_arousel_images/naruto.jpeg"),
                   ),
                   title: Text(
                     'Vishnu',
