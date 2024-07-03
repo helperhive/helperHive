@@ -5,17 +5,19 @@ class ButtonWithImage extends StatelessWidget {
     super.key,
     required this.image,
     required this.label,
+    this.loginSignupFunction,
   });
 
   final ImageProvider image;
   final String label;
+  final VoidCallback? loginSignupFunction;
 
   @override
   Widget build(BuildContext context) {
     return MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(
-        onTap: () {},
+        onTap: loginSignupFunction,
         child: Container(
           height: 40,
           width: 300,

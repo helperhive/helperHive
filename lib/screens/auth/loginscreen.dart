@@ -1,4 +1,9 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:helperhive/routes/app_routes.dart';
 import 'package:helperhive/screens/auth/widgets/auth_text_form_field.dart';
 import 'package:helperhive/backend/auth_methods.dart';
 import 'package:helperhive/widgets/custum_auth_button.dart';
@@ -6,6 +11,7 @@ import 'package:helperhive/screens/auth/widgets/button_with_image.dart';
 import 'package:helperhive/screens/auth/signupscreen.dart';
 
 class LoginScreen extends StatefulWidget {
+  // ignore: use_key_in_widget_constructors
   const LoginScreen({Key? key});
 
   @override
@@ -19,13 +25,14 @@ class LoginScreenState extends State<LoginScreen> {
   bool isPasswordVisible = false;
   bool isLoading = false;
 
+//login using email and password
   void logIn() async {
     setState(() {
       isLoading = true;
     });
 
     try {
-      await authService.signInWithEmailAndPassword(
+      await authService.logInWithEmailAndPassword(
         emailController.text.trim(),
         passwordController.text.trim(),
       );
@@ -35,6 +42,43 @@ class LoginScreenState extends State<LoginScreen> {
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Sign in failed: $e')),
+      );
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+//login using google
+  // Sign in using Google
+  void signInWithGoogle() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      if (googleUser == null) {
+        throw Exception('Google Sign-In aborted');
+      }
+
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+
+      await authService.handlesigninWithGoogle(userCredential);
+
+      Navigator.of(context).pushNamed(AppRoutes.homeRoute);
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(e.toString())),
       );
     } finally {
       setState(() {
@@ -137,12 +181,13 @@ class LoginScreenState extends State<LoginScreen> {
 
               const SizedBox(height: 20),
               ButtonWithImage(
-                image: AssetImage('assets/logos/google_logo.jpg'),
+                image: const AssetImage('assets/logos/google_logo.jpg'),
                 label: 'Login With Google',
+                loginSignupFunction: signInWithGoogle,
               ),
 
               const SizedBox(height: 10),
-              ButtonWithImage(
+              const ButtonWithImage(
                 image: AssetImage('assets/logos/fb_logo.jpg'),
                 label: 'Login With Facebook',
               ),

@@ -1,14 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-import '../model/user_model.dart';
-// import 'user_details.dart';
+import 'package:helperhive/model/user_model.dart';
 
 class AuthService {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  // Create a new user account
+  // Signin using Email and Password
   Future<void> signUpWithEmailAndPassword({
     required String email,
     required String password,
@@ -17,17 +15,16 @@ class AuthService {
     required Service service,
   }) async {
     try {
-      UserCredential result = await _auth.createUserWithEmailAndPassword(
+      UserCredential result = await auth.createUserWithEmailAndPassword(
           email: email, password: password);
       User? user = result.user;
-      // Create a new user document in Firestore
-      await _firestore.collection('users').doc(user!.uid).set({
+      await firestore.collection('users').doc(user!.uid).set({
         'uid': user.uid,
         'email': email,
         'name': name,
         'phoneNumber': phoneNumber,
         'service': service.toString().split('.').last,
-        'location': '', // Ensure all fields are properly initialized
+        'location': '',
         'rating': 0.0,
         'experience': 0,
         'workingHours': {},
@@ -41,25 +38,64 @@ class AuthService {
     }
   }
 
-  // Sign in with email and password
-  Future<void> signInWithEmailAndPassword(String email, String password) async {
+  //Signin using google
+  Future<void> handlesigninWithGoogle(UserCredential userCredential) async {
+    User? user = userCredential.user;
+
+    if (user != null) {
+      // Check if the user already exists in Firestore
+      DocumentSnapshot userDoc =
+          await firestore.collection('users').doc(user.uid).get();
+
+      if (!userDoc.exists) {
+        // If the user does not exist, create a new user document
+        await firestore.collection('users').doc(user.uid).set({
+          'uid': user.uid,
+          'email': user.email,
+          'name': user.displayName,
+          'phoneNumber': user.phoneNumber,
+          'service': '',
+          'location': '',
+          'rating': 0.0,
+          'experience': 0,
+          'workingHours': {},
+          'description': '',
+          'imageUrl': '',
+          'discount': 0.0,
+          'price': 0.0,
+          'createdAt': FieldValue.serverTimestamp(),
+          'lastSignIn': FieldValue.serverTimestamp(),
+        });
+      } else {
+        // If the user exists, update the last sign-in time
+        await firestore.collection('users').doc(user.uid).update({
+          'lastSignIn': FieldValue.serverTimestamp(),
+        });
+      }
+    } else {
+      throw Exception("User is null");
+    }
+  }
+
+  // Login in with email and password
+  Future<void> logInWithEmailAndPassword(String email, String password) async {
     try {
-      await _auth.signInWithEmailAndPassword(email: email, password: password);
+      await auth.signInWithEmailAndPassword(email: email, password: password);
     } catch (e) {
       throw Exception('Failed to sign in: $e');
     }
   }
 
   // Get the current user
-  User? get currentUser => _auth.currentUser;
+  User? get currentUser => auth.currentUser;
 
   // Get the user details from Firestore
   Future<UserModel> getUserDetails() async {
     try {
-      User? user = _auth.currentUser;
+      User? user = auth.currentUser;
       if (user != null) {
         DocumentSnapshot snapshot =
-            await _firestore.collection('users').doc(user.uid).get();
+            await firestore.collection('users').doc(user.uid).get();
         if (snapshot.exists) {
           return UserModel.fromMap(snapshot.data() as Map<String, dynamic>);
         } else {
@@ -76,9 +112,9 @@ class AuthService {
   // Update the user details in Firestore
   Future<void> updateUserDetails(UserModel userModel) async {
     try {
-      User? user = _auth.currentUser;
+      User? user = auth.currentUser;
       if (user != null) {
-        await _firestore
+        await firestore
             .collection('users')
             .doc(user.uid)
             .update(userModel.toMap());
@@ -94,7 +130,7 @@ class AuthService {
   Future<void> updateUserDetailsField(
       String uid, Map<String, dynamic> updateData) async {
     try {
-      await _firestore.collection('users').doc(uid).update(updateData);
+      await firestore.collection('users').doc(uid).update(updateData);
     } catch (e) {
       throw Exception('Failed to update user details: $e');
     }
@@ -103,7 +139,7 @@ class AuthService {
   // Sign out
   Future<void> signOut() async {
     try {
-      await _auth.signOut();
+      await auth.signOut();
     } catch (e) {
       throw Exception('Failed to sign out: $e');
     }

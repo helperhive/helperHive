@@ -1,6 +1,8 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:helperhive/routes/app_routes.dart';
 import 'package:helperhive/backend/auth_methods.dart';
 import 'package:helperhive/model/user_model.dart';
@@ -24,8 +26,8 @@ class SignUpScreenState extends State<SignUpScreen> {
   final phoneNumberController = TextEditingController();
   Service? selectedService;
   bool isLoading = false;
-  bool isPasswordVisible = false;
 
+  // Sign up using email and password
   void signUp() async {
     if (formKey.currentState!.validate()) {
       setState(() {
@@ -50,6 +52,42 @@ class SignUpScreenState extends State<SignUpScreen> {
           isLoading = false;
         });
       }
+    }
+  }
+
+  // Sign in using Google
+  void signInWithGoogle() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+      if (googleUser == null) {
+        throw Exception('Google Sign-In aborted');
+      }
+
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+      final AuthCredential credential = GoogleAuthProvider.credential(
+        accessToken: googleAuth.accessToken,
+        idToken: googleAuth.idToken,
+      );
+
+      UserCredential userCredential =
+          await FirebaseAuth.instance.signInWithCredential(credential);
+
+      await authService.handlesigninWithGoogle(userCredential);
+
+      Navigator.of(context).pushNamed(AppRoutes.homeRoute);
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(e.toString())),
+      );
+    } finally {
+      setState(() {
+        isLoading = false;
+      });
     }
   }
 
@@ -88,29 +126,31 @@ class SignUpScreenState extends State<SignUpScreen> {
                         color: Colors.red),
                   ),
 
-                  //Name
+                  // Name
                   const SizedBox(height: 70),
                   AuthTextFormField(
-                      emailController: nameController,
-                      isPassword: false,
-                      labelText: 'Name',
-                      icon: const IconData(0xe043, fontFamily: 'MaterialIcons'),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter your name';
-                        }
-                        return null;
-                      }),
+                    emailController: nameController,
+                    isPassword: false,
+                    labelText: 'Name',
+                    icon: const IconData(0xe043, fontFamily: 'MaterialIcons'),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your name';
+                      }
+                      return null;
+                    },
+                  ),
 
-                  //Email
+                  // Email
                   const SizedBox(height: 16),
                   AuthTextFormField(
-                      emailController: emailController,
-                      isPassword: false,
-                      labelText: 'Email',
-                      icon: Icons.email),
+                    emailController: emailController,
+                    isPassword: false,
+                    labelText: 'Email',
+                    icon: Icons.email,
+                  ),
 
-                  //Password
+                  // Password
                   const SizedBox(height: 16),
                   AuthTextFormField(
                     emailController: passwordController,
@@ -125,7 +165,7 @@ class SignUpScreenState extends State<SignUpScreen> {
                     },
                   ),
 
-                  //Phone Number
+                  // Phone Number
                   const SizedBox(height: 16),
                   AuthTextFormField(
                     emailController: phoneNumberController,
@@ -140,7 +180,7 @@ class SignUpScreenState extends State<SignUpScreen> {
                     },
                   ),
 
-                  //Drop Down Menu Bar
+                  // Drop Down Menu Bar
                   const SizedBox(height: 16),
                   DropdownButtonHideUnderline(
                     child: Container(
@@ -206,16 +246,21 @@ class SignUpScreenState extends State<SignUpScreen> {
                       style: TextStyle(color: Colors.blue.shade900)),
                   const SizedBox(height: 20),
 
-                  //signin with google button
-                  const ButtonWithImage(
-                      image: AssetImage('assets/logos/google_logo.jpg'),
-                      label: 'Login With Google'),
+                  // Sign in with Google button
+                  ButtonWithImage(
+                    image: const AssetImage('assets/logos/google_logo.jpg'),
+                    label: 'SignIn With Google',
+                    loginSignupFunction: signInWithGoogle,
+                  ),
 
-                  //signin with fb button
                   const SizedBox(height: 10),
-                  const ButtonWithImage(
-                      image: AssetImage('assets/logos/fb_logo.jpg'),
-                      label: 'Login With Facebook'),
+                  ButtonWithImage(
+                    image: const AssetImage('assets/logos/fb_logo.jpg'),
+                    label: 'SignIn With Facebook',
+                    loginSignupFunction: () {
+                      // Add your Facebook sign-in logic here
+                    },
+                  ),
 
                   const SizedBox(height: 15),
                   TextButton(
