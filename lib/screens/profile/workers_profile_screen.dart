@@ -13,7 +13,7 @@ class WorkersProfileScreen extends StatefulWidget {
 }
 
 class _WorkersProfileScreenState extends State<WorkersProfileScreen> {
-  bool isFavorited = false;
+  bool isFavorited = false; // add the fav functionality also secondary task
 
   @override
   Widget build(BuildContext context) {
