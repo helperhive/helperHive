@@ -21,7 +21,7 @@ class AuthService {
           email: email, password: password);
       User? user = result.user;
       // Create a new user document in Firestore
-      await _firestore.collection('users').doc(user!.uid).set({
+      await _firestore.collection('users').doc(user!.uid).set({ //use from and to json to send and receicve the data from the db
         'uid': user.uid,
         'email': email,
         'name': name,
