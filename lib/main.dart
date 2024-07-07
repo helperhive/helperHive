@@ -1,4 +1,4 @@
-//main.dart without saving state
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       title: 'HelperHive',
       // home: const OnboardingScreens(), //use this when you need the login instance are not required to save 
       home: StreamBuilder(
-          stream: FirebaseAuth.instance.authStateChanges(),
+          stream: FirebaseAuth.instance.authStateChanges(), // this stream builder enable you to login to the app 
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return const HomePage();
