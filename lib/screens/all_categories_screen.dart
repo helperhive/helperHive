@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:helperhive/widgets/cards/all_categories_card.dart';
 import 'package:helperhive/constants/color_them.dart';
 
+// remove this static info and make it to be dynamic and if possible retrive it from the data base
 class AllCategoriesColumn extends StatefulWidget {
   const AllCategoriesColumn({super.key});
 
