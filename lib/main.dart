@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       routes: AppRoutes.routes,
       title: 'HelperHive',
-      // home: const OnboardingScreens(),
+      // home: const OnboardingScreens(), //use this when you need the login instance are not required to save 
       home: StreamBuilder(
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (context, snapshot) {
