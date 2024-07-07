@@ -6,7 +6,7 @@ import 'package:helperhive/widgets/search_bar_home.dart';
 
 
 //this search bar functionality as to be dynamic
-
+// require proper state management
 class ServiceSearchScreen extends StatefulWidget {
   const ServiceSearchScreen({super.key});
 
