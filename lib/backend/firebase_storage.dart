@@ -5,6 +5,8 @@ import "package:firebase_auth/firebase_auth.dart";
 import "package:firebase_storage/firebase_storage.dart";
 import "package:uuid/uuid.dart";
 
+
+//use this file for the storing the media in the firebase and get the network url 
 class StorageMethods {
   final FirebaseStorage firebaseStorage = FirebaseStorage.instance;
   final FirebaseAuth auth = FirebaseAuth.instance;
