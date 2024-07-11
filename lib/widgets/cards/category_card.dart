@@ -15,14 +15,24 @@ class CategoryCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Card(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(25.0),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Icon(icon, size: 42, color: blueColor),
-              )),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 6),
+            child: Container(
+              padding: const EdgeInsets.all(10),
+              // margin: const EdgeInsets.only(bottom: 4),
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  color: Colors.white,
+                  boxShadow: const [
+                    BoxShadow(
+                        color: Color.fromARGB(31, 27, 27, 27),
+                        offset: Offset(0, 2),
+                        spreadRadius: 2,
+                        blurRadius: 8)
+                  ]),
+              child: Icon(icon, size: 42, color: blueColor),
+            ),
+          ),
           // const SizedBox(height: 4.0),
           Text(label,
               style:

@@ -3,9 +3,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:helperhive/enums/service_enum.dart';
 import 'package:helperhive/routes/app_routes.dart';
 import 'package:helperhive/backend/auth_methods.dart';
-import 'package:helperhive/model/user_model.dart';
 import 'package:helperhive/widgets/custum_auth_button.dart';
 import 'package:helperhive/screens/auth/widgets/auth_text_form_field.dart';
 import 'package:helperhive/screens/auth/widgets/button_with_image.dart';
@@ -223,7 +223,7 @@ class SignUpScreenState extends State<SignUpScreen> {
                                     children: [
                                       Icon(getIconForService(service)),
                                       const SizedBox(width: 10),
-                                      Text(service.toString().split('.').last),
+                                      Text(service.toString()),
                                     ],
                                   ),
                                 );

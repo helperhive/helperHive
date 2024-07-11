@@ -30,6 +30,8 @@ migrate_working_dir/
 .pub-cache/
 .pub/
 /build/
+.cmake
+.cc
 
 # Symbolication related
 app.*.symbols

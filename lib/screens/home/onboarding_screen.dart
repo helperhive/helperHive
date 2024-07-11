@@ -169,17 +169,21 @@ class OnboardingScreen extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20.0),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           imageType == 'lottie'
               ? Lottie.asset(imagePath, height: 400)
-              : Container(
+              : SizedBox(
                   child: Image.asset(
                     imagePath,
-                    height: 250,
+                    height: 150,
                   ),
                 ),
+          if (imageType != 'lottie')
+            const SizedBox(
+              height: 100,
+            ),
           Text(
             title,
             textAlign: TextAlign.center,
@@ -193,6 +197,9 @@ class OnboardingScreen extends StatelessWidget {
                 color: primaryColor,
                 fontWeight: FontWeight.w400),
           ),
+          const SizedBox(
+            height: 100,
+          )
         ],
       ),
     );

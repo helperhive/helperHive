@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:helperhive/constants/color_them.dart';
 import 'package:helperhive/screens/booking/widgets/categorybutton.dart';
-import 'package:helperhive/screens/booking/widgets/lists/booking_screen_list.dart';
+import 'package:helperhive/screens/booking/lists/booking_screen_list.dart';
 import 'package:helperhive/widgets/search_bar_home.dart';
 
 class BookingScreen extends StatefulWidget {

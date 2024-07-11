@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:helperhive/constants/color_them.dart';
-import 'package:helperhive/screens/booking/booking_time_screen.dart';
+import 'package:intl/intl.dart';
+
+import 'booking_time_screen.dart';
+import 'widgets/calender.dart';
 
 class BookingDateScreen extends StatefulWidget {
   const BookingDateScreen({super.key});
@@ -24,7 +26,7 @@ class _BookingDateScreenState extends State<BookingDateScreen> {
   final String userSpecialty = 'Electrician';
   final String userLocation = 'Bhimavaram, Andhra Pradesh';
   final String userImageUrl =
-      'assets/naruto.jpeg'; // Replace with your image path
+      "assets/services/repair_service.jpg"; // Replace with your image path
 
   final List<TimeOfDay> availableTimes = [
     const TimeOfDay(hour: 10, minute: 0),
@@ -41,8 +43,8 @@ class _BookingDateScreenState extends State<BookingDateScreen> {
   void initState() {
     super.initState();
     // Generate initial list of displayed dates (replace with your logic)
-    displayedDates =
-        List.generate(7, (index) => DateTime.now().add(Duration(days: index)));
+    // displayedDates =
+    //     List.generate(7, (index) => DateTime.now().add(Duration(days: index)));
   }
 
   void _selectTime(TimeOfDay time) {
@@ -114,148 +116,141 @@ class _BookingDateScreenState extends State<BookingDateScreen> {
         padding:
             const EdgeInsets.all(12.0), // Adjust the padding values as needed
         child: SingleChildScrollView(
-          child: ConstrainedBox(
-            constraints: BoxConstraints(
-              minHeight: MediaQuery.of(context).size.height,
-            ),
-            child: IntrinsicHeight(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    leading: CircleAvatar(
-                      radius: 30,
-                      backgroundImage: AssetImage("assets/naruto.jpeg"),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const ListTile(
+                contentPadding: EdgeInsets.zero,
+                leading: CircleAvatar(
+                  radius: 30,
+                  backgroundImage:
+                      AssetImage("assets/services/repair_service.jpg"),
+                ),
+                title: Text(
+                  'Vishnu',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                ),
+                subtitle: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Electrician',
+                      style: TextStyle(fontSize: 16),
                     ),
-                    title: Text(
-                      'Vishnu',
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                    ),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    SizedBox(height: 4),
+                    Row(
                       children: [
-                        Text(
-                          'Electrician',
-                          style: TextStyle(fontSize: 16),
-                        ),
-                        SizedBox(height: 4),
-                        Row(
-                          children: [
-                            Icon(Icons.location_on,
-                                size: 16, color: Colors.red),
-                            SizedBox(width: 4),
-                            Flexible(
-                              child: Text(
-                                'Bhimavaram, Andhra Pradesh',
-                                style: TextStyle(fontSize: 16),
-                              ),
-                            ),
-                          ],
+                        Icon(Icons.location_on, size: 16, color: Colors.red),
+                        SizedBox(width: 4),
+                        Flexible(
+                          child: Text(
+                            'Bhimavaram, Andhra Pradesh',
+                            style: TextStyle(fontSize: 16),
+                          ),
                         ),
                       ],
                     ),
-                  ),
-
-                  const SizedBox(height: 30),
-                  const Text(
-                    'Select Date : ',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-                  ),
-                  const SizedBox(height: 17),
-                  // Booking Calendar with Scrollbar
-                  Scrollbar(
-                    controller: scrollController,
-                    thumbVisibility: true,
-                    child: SingleChildScrollView(
-                      controller: scrollController,
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
-                        children: displayedDates
-                            .map((date) => _buildDateBox(date))
-                            .toList(),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  Text(
-                    selectedDate != null
-                        ? DateFormat('EEEE, MMMM d, y').format(selectedDate!)
-                        : '',
-                    style: const TextStyle(fontSize: 15),
-                  ),
-                  const SizedBox(height: 25),
-                  const Text(
-                    'Select Time : ',
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-                  ),
-                  const SizedBox(height: 16),
-                  // Static Time Buttons
-                  Wrap(
-                    spacing: 10.0,
-                    runSpacing: 10.0,
-                    children: availableTimes
-                        .map((time) => _buildTimeBox(time))
-                        .toList(),
-                  ),
-                  const SizedBox(height: 16),
-                  // Display selected time (if available)
-                  if (selectedTime != null)
-                    Text(
-                      DateFormat('h:mm a')
-                          .format(_convertTimeOfDayToDateTime(selectedTime!)),
-                      style: const TextStyle(fontSize: 15),
-                    ),
-                  const SizedBox(height: 30),
-                  // Button to book appointment (enabled only if date and time are selected)
-                  SizedBox(
-                    width: double.infinity,
-                    height: 43,
-                    child: ElevatedButton(
-                      onPressed: isBooking ||
-                              (selectedDate == null || selectedTime == null)
-                          ? null
-                          : () async {
-                              setState(() {
-                                isBooking = true;
-                              });
-                              // Implement your booking logic here
-                              await Future.delayed(const Duration(
-                                  seconds: 1)); // Simulate network latency
-                              setState(() {
-                                isBooking = false;
-                              });
-                              Navigator.push(
-                                // ignore: use_build_context_synchronously
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      const BookingTimeScreen(),
-                                ),
-                              );
-                              // final bookedDateTime =
-                              //     _convertTimeOfDayToDateTime(selectedTime!);
-                              // ignore: use_build_context_synchronously
-                              //   ScaffoldMessenger.of(context).showSnackBar(
-                              //     SnackBar(
-                              //       content: Text(
-                              //           'Appointment Booked for ${DateFormat('EEEE, MMMM d, y - h:mm a').format(bookedDateTime)}'),
-                              //       backgroundColor: Colors.green,
-                              //     ),
-                              //   );
-                            },
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.blue,
-                          foregroundColor: Colors.white,
-                          minimumSize: const Size(double.infinity, 50)),
-                      child: const Text('Next'),
-                    ),
-                  ),
-                  // const SizedBox(height: 20),
-                ],
+                  ],
+                ),
               ),
-            ),
+
+              const SizedBox(height: 30),
+              // const Text(
+              //   'Select Date : ',
+              //   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+              // ),
+              // const SizedBox(height: 17),
+
+              const CalendarTabBoking(),
+              // Booking Calendar with Scrollbar
+              // Scrollbar(
+              //   controller: scrollController,
+              //   thumbVisibility: true,
+              //   child: SingleChildScrollView(
+              //     controller: scrollController,
+              //     scrollDirection: Axis.horizontal,
+              //     child: Row(
+              //       children: displayedDates
+              //           .map((date) => _buildDateBox(date))
+              //           .toList(),
+              //     ),
+              //   ),
+              // ),
+              // const SizedBox(height: 20),
+              // Text(
+              //   selectedDate != null
+              //     ? DateFormat('EEEE, MMMM d, y').format(selectedDate!)
+              //       : '',
+              //   style: const TextStyle(fontSize: 15),
+              // ),
+              const SizedBox(height: 25),
+              const Text(
+                'Select Time : ',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+              ),
+              const SizedBox(height: 16),
+              // Static Time Buttons
+              Wrap(
+                spacing: 10.0,
+                runSpacing: 10.0,
+                children:
+                    availableTimes.map((time) => _buildTimeBox(time)).toList(),
+              ),
+              const SizedBox(height: 16),
+              // Display selected time (if available)
+              if (selectedTime != null)
+                Text(
+                  DateFormat('h:mm a')
+                      .format(_convertTimeOfDayToDateTime(selectedTime!)),
+                  style: const TextStyle(fontSize: 15),
+                ),
+              const SizedBox(height: 30),
+              // Button to book appointment (enabled only if date and time are selected)
+              SizedBox(
+                width: double.infinity,
+                height: 43,
+                child: ElevatedButton(
+                  onPressed: isBooking ||
+                          (selectedDate == null || selectedTime == null)
+                      ? null
+                      : () async {
+                          setState(() {
+                            isBooking = true;
+                          });
+                          // Implement your booking logic here
+                          await Future.delayed(const Duration(
+                              seconds: 1)); // Simulate network latency
+                          setState(() {
+                            isBooking = false;
+                          });
+                          Navigator.push(
+                            // ignore: use_build_context_synchronously
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const BookingTimeScreen(),
+                            ),
+                          );
+                          // final bookedDateTime =
+                          //     _convertTimeOfDayToDateTime(selectedTime!);
+                          // ignore: use_build_context_synchronously
+                          //   ScaffoldMessenger.of(context).showSnackBar(
+                          //     SnackBar(
+                          //       content: Text(
+                          //           'Appointment Booked for ${DateFormat('EEEE, MMMM d, y - h:mm a').format(bookedDateTime)}'),
+                          //       backgroundColor: Colors.green,
+                          //     ),
+                          //   );
+                        },
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      foregroundColor: Colors.white,
+                      minimumSize: const Size(double.infinity, 50)),
+                  child: const Text('Next'),
+                ),
+              ),
+              // // const SizedBox(height: 20),
+            ],
           ),
         ),
       ),

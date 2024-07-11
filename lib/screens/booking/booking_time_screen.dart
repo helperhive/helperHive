@@ -72,7 +72,8 @@ class _BookingTimeScreenState extends State<BookingTimeScreen> {
                     contentPadding: EdgeInsets.zero,
                     leading: CircleAvatar(
                       radius: 30,
-                      backgroundImage: AssetImage("assets/naruto.jpeg"),
+                      backgroundImage:
+                          AssetImage("assets/services/services_cleaning.png"),
                     ),
                     title: Text(
                       'Vishnu',

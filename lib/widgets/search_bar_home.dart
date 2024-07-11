@@ -1,11 +1,17 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+
 import 'package:helperhive/constants/color_them.dart';
 
 class SearchBarHome extends StatefulWidget {
-  final Function(String) onSearch;
+  final Function(String)? onSearch;
+  final Widget? suffixIcon;
+  final String? searchText;
   const SearchBarHome({
     super.key,
-    required this.onSearch,
+    this.onSearch,
+    this.suffixIcon,
+    this.searchText,
   });
 
   @override
@@ -28,24 +34,14 @@ class _SearchBarHomeState extends State<SearchBarHome> {
         onChanged: widget.onSearch,
         controller: searchController,
         decoration: InputDecoration(
-          hintText: 'Search for service...',
+          hintText: widget.searchText ?? 'Search for service...',
           hintStyle: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
           prefixIcon: const Icon(
             Icons.search,
             size: 26,
             color: primaryColor,
           ),
-          suffixIcon: GestureDetector(
-            onTap: () {},
-            child: Container(
-              padding: const EdgeInsets.all(8),
-              margin: const EdgeInsets.all(4),
-              decoration: BoxDecoration(
-                  color: blueColor, borderRadius: BorderRadius.circular(10)),
-              child: const Icon(Icons.filter_alt_outlined,
-                  size: 30, color: Colors.white),
-            ),
-          ),
+          suffixIcon: widget.suffixIcon,
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(8.0),
             borderSide: BorderSide.none,

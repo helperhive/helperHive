@@ -1,10 +1,30 @@
+import 'package:delightful_toast/toast/utils/enums.dart';
 import 'package:flutter/material.dart';
 
 import 'package:google_fonts/google_fonts.dart';
+import 'package:helperhive/constants/toast.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-class CalendarTabBoking extends StatelessWidget {
+class CalendarTabBoking extends StatefulWidget {
   const CalendarTabBoking({super.key});
+
+  @override
+  State<CalendarTabBoking> createState() => _CalendarTabBokingState();
+}
+
+class _CalendarTabBokingState extends State<CalendarTabBoking> {
+  DateTime selectedDate = DateTime.now();
+  DateTime focusedDate = DateTime.now();
+  CalendarFormat format = CalendarFormat.week;
+  bool isSelected = true;
+  void isSelectedDateOk(DateTime selectedDate, DateTime focusedDate) {
+    if (selectedDate
+        .isBefore(DateTime.now().subtract(const Duration(days: 1)))) {
+      isSelected = false;
+    } else {
+      isSelected = true;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +37,8 @@ class CalendarTabBoking extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 2),
               child: TableCalendar(
-                key: key,
                 pageJumpingEnabled: false,
-                calendarFormat: CalendarFormat.week,
+                calendarFormat: format,
                 headerStyle: HeaderStyle(
                   formatButtonVisible: false,
                   formatButtonShowsNext: false,
@@ -37,14 +56,16 @@ class CalendarTabBoking extends StatelessWidget {
                   headerPadding: const EdgeInsets.only(bottom: 8.0),
                 ),
                 currentDay: DateTime.now(),
-                firstDay: DateTime.now(),
+                firstDay: DateTime.now().subtract(
+                  const Duration(days: 1460),
+                ),
                 lastDay: DateTime.now().add(
                   const Duration(days: 1460),
                 ),
-                focusedDay: DateTime
-                    .now(), // You can replace this with your viewModel.selectedDate if needed
+                focusedDay:
+                    focusedDate, // You can replace this with your viewModel.selectedDate if needed
                 selectedDayPredicate: (date) => isSameDay(
-                    DateTime.now(), date), // Replace with your predicate
+                    selectedDate, date), // Replace with your predicate
                 startingDayOfWeek: StartingDayOfWeek.monday,
                 daysOfWeekStyle: DaysOfWeekStyle(
                   weekdayStyle: GoogleFonts.dmSans(
@@ -57,6 +78,23 @@ class CalendarTabBoking extends StatelessWidget {
                 ),
                 onDaySelected: (selectedDay, focusedDay) {
                   // Implement your onDaySelected logic here
+                  isSelectedDateOk(selectedDay, focusedDay);
+                  if (!isSelected) {
+                    toastMessage(
+                        context: context,
+                        message: 'Please select a valid date',
+                        position: DelightSnackbarPosition.top,
+                        messageColor: Colors.red,
+                        leadingIcon: const Icon(
+                          Icons.cancel,
+                          color: Colors.red,
+                        ));
+                  } else {
+                    setState(() {
+                      selectedDate = selectedDay;
+                      focusedDate = focusedDay;
+                    });
+                  }
                 },
                 calendarStyle: CalendarStyle(
                   defaultTextStyle: GoogleFonts.dmSans(
@@ -113,8 +151,19 @@ class CalendarTabBoking extends StatelessWidget {
                   GestureDetector(
                     onTap: () {
                       // Implement your onTap logic here
+                      setState(() {
+                        if (format != CalendarFormat.month) {
+                          format = CalendarFormat.month;
+                        } else {
+                          format = CalendarFormat.week;
+                        }
+                      });
                     },
-                    child: const Icon(Icons.calendar_view_week_rounded),
+                    child: const Icon(
+                      Icons.calendar_month_rounded,
+                      size: 32,
+                      color: Colors.blue,
+                    ),
                   ),
                 ],
               ),

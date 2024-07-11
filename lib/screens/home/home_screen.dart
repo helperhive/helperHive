@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:helperhive/constants/color_them.dart';
 import 'package:helperhive/screens/booking/booking_details_screen.dart';
-import 'package:helperhive/screens/feed_screen.dart';
+import 'package:helperhive/screens/chats/chat_view.dart';
+import 'package:helperhive/screens/home_feed/feed_screen.dart';
 import 'package:helperhive/screens/service_search_screen.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:helperhive/screens/profile/user_profile_screen.dart';
@@ -27,7 +28,8 @@ class _HomePageState extends State<HomePage> {
       const FeedScreen(),
       const ServiceSearchScreen(),
       const BookingScreen(),
-      const Center(child: Text("chats")),
+      // const Center(child: Text("chats")),
+      const ChatView(),
       const UserProfileScreen(),
     ];
   }

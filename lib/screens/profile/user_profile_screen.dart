@@ -28,7 +28,8 @@ class UserProfileScreenState extends State<UserProfileScreen> {
                 children: [
                   const CircleAvatar(
                     radius: 40,
-                    backgroundImage: AssetImage('assets/naruto.jpeg'),
+                    backgroundImage:
+                        AssetImage('assets/services/services_cleaning.png'),
                   ),
                   const SizedBox(height: 8),
                   Text(
