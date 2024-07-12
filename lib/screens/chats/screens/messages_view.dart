@@ -5,8 +5,8 @@ import 'package:helperhive/model/message.dart';
 import 'package:helperhive/model/user_model.dart';
 import 'package:provider/provider.dart';
 
-import 'widgets/chat_field.dart';
-import 'widgets/message_bubble.dart';
+import '../widgets/chat_field.dart';
+import '../widgets/message_bubble.dart';
 
 class MessagesView extends StatefulWidget {
   final Function(bool)? onBack;

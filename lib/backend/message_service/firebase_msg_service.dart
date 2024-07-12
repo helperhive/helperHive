@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:helperhive/backend/constants/chat_id_generate.dart';
-import 'package:helperhive/backend/firebase_storage.dart';
+import 'package:helperhive/backend/storage/firebase_storage.dart';
 import 'package:helperhive/model/message.dart';
 
 class FirebaseFirestoreServiceMessages {

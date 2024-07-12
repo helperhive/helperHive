@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:helperhive/screens/auth/widgets/auth_text_form_field.dart';
-import 'package:helperhive/backend/auth_methods.dart';
+import 'package:helperhive/backend/auth/auth_methods.dart';
 import 'package:helperhive/widgets/custum_auth_button.dart';
 import 'package:helperhive/screens/auth/widgets/button_with_image.dart';
 import 'package:helperhive/screens/auth/signupscreen.dart';

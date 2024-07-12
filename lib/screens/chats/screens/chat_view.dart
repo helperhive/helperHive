@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:helperhive/backend/providers/message_provider.dart';
 import 'package:helperhive/constants/hover_button.dart';
 import 'package:helperhive/model/user_model.dart';
-import 'package:helperhive/screens/chats/messages_view.dart';
+import 'package:helperhive/screens/chats/screens/messages_view.dart';
 import 'package:helperhive/widgets/search_bar_home.dart';
 import 'package:provider/provider.dart';
 
