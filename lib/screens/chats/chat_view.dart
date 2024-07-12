@@ -47,7 +47,8 @@ class ChatView extends StatelessWidget {
                   user: user,
                   onChatSelected: (UserModel selectedUser) {
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => MessagesView(user: user)));
+                        builder: (context) =>
+                            MessagesView(selectedUser: user)));
                   });
             }),
       );

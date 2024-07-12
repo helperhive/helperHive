@@ -10,13 +10,13 @@ class MessageProvider extends ChangeNotifier {
 
   List<Message>? _messages;
   ScrollController scrollController = ScrollController();
-  List<Message> get getMessages => _messages!;
+  List<Message> get messages => _messages!;
   List<UserModel> _connections = [];
   List<UserModel> _allUsers = [];
   List<UserModel> get users => _connections;
   UserModel? user;
 
-  void fetchMessages(String senderId, String receiverId) {
+  void fetchMessages({required String senderId, required String receiverId}) {
     String chatId = ChatIdGenerate.generateChatId(senderId, receiverId);
     FirebaseFirestore.instance
         .collection('Messages')
