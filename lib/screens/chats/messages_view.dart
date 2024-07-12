@@ -81,7 +81,7 @@ class _MessagesViewState extends State<MessagesView>
 
   AppBar messageCardAppBar() {
     return AppBar(
-      automaticallyImplyLeading: false,
+      automaticallyImplyLeading: true,
       elevation: 0,
       foregroundColor: Colors.black,
       backgroundColor: Colors.transparent,
@@ -89,19 +89,19 @@ class _MessagesViewState extends State<MessagesView>
         return value.user != null
             ? Row(
                 children: [
-                  IconButton(
-                      onPressed: () {
-                        if (widget.onBack != null) {
-                          widget.onBack!(false);
-                        }
-                      },
-                      icon: const Icon(
-                        Icons.arrow_back_ios,
-                        color: Colors.blue,
-                      )),
-                  const SizedBox(
-                    width: 15,
-                  ),
+                  // IconButton(
+                  //     onPressed: () {
+                  //       if (widget.onBack != null) {
+                  //         widget.onBack!(false);
+                  //       }
+                  //     },
+                  //     icon: const Icon(
+                  //       Icons.arrow_back_ios,
+                  //       color: Colors.blue,
+                  //     )),
+                  // const SizedBox(
+                  //   width: 15,
+                  // ),
                   CircleAvatar(
                     radius: 20,
                     foregroundImage: value.user!.profileUrl != ''
@@ -123,14 +123,13 @@ class _MessagesViewState extends State<MessagesView>
                             fontWeight: FontWeight.bold,
                             color: Colors.black),
                       ),
-                      // Text(
-                      //   value.user!.isonline ? 'Online' : 'Offline',
-                      //   style: TextStyle(
-                      //     color:
-                      //         value.user!.isonline ? Colors.green : Colors.grey,
-                      //     fontSize: 14,
-                      //   ),
-                      // )
+                      Text(
+                        value.user!.service.toString(),
+                        style: const TextStyle(
+                          color: Colors.blue,
+                          fontSize: 14,
+                        ),
+                      )
                     ],
                   )
                 ],

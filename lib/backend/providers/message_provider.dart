@@ -19,9 +19,9 @@ class MessageProvider extends ChangeNotifier {
   void fetchMessages({required String senderId, required String receiverId}) {
     String chatId = ChatIdGenerate.generateChatId(senderId, receiverId);
     FirebaseFirestore.instance
-        .collection('Messages')
-        .doc(chatId)
         .collection('chats')
+        .doc(chatId)
+        .collection('messages')
         // .doc(receiverId)
         // .collection('messages')
         .orderBy('sentTime', descending: false)

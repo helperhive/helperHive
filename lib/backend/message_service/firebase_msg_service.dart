@@ -2,12 +2,13 @@ import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:helperhive/backend/constants/chat_id_generate.dart';
 import 'package:helperhive/backend/firebase_storage.dart';
 import 'package:helperhive/model/message.dart';
 
 class FirebaseFirestoreServiceMessages {
   static final firestore = FirebaseFirestore.instance;
-
+  static final currentUid = FirebaseAuth.instance.currentUser!.uid;
   static Future<void> addTextMessage({
     required String content,
     required String receiverId,
@@ -17,9 +18,10 @@ class FirebaseFirestoreServiceMessages {
       sentTime: DateTime.now(),
       receiverId: receiverId,
       messageType: MessageType.text,
-      senderId: FirebaseAuth.instance.currentUser!.uid,
+      senderId: currentUid,
     );
-    await _addMessageToChat(receiverId, message);
+    await _addMessageToChat(
+        receiverId: receiverId, message: message, senderId: currentUid);
   }
 
   static Future<void> addImageMessage({
@@ -34,35 +36,40 @@ class FirebaseFirestoreServiceMessages {
       sentTime: DateTime.now(),
       receiverId: receiverId,
       messageType: MessageType.image,
-      senderId: FirebaseAuth.instance.currentUser!.uid,
+      senderId: currentUid,
     );
-    await _addMessageToChat(receiverId, message);
+    await _addMessageToChat(
+        receiverId: receiverId, message: message, senderId: currentUid);
   }
 
-  static Future<void> _addMessageToChat(
-    String receiverId,
-    Message message,
-  ) async {
+  static Future<void> _addMessageToChat({
+    required String receiverId,
+    required Message message,
+    required String senderId,
+  }) async {
+    String chatId = ChatIdGenerate.generateChatId(senderId, receiverId);
     await firestore
-        .collection('Users')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .collection('chat')
-        .doc(receiverId)
+        .collection('chats')
+        .doc(chatId)
         .collection('messages')
         .add(message.toJson());
+    // await firestore
+    //     .collection('Users')
+    //     .doc(currentUid)
+    //     .collection('chat')
+    //     .doc(receiverId)
+    //     .collection('messages')
+    //     .add(message.toJson());
 
-    await firestore
-        .collection('Users')
-        .doc(receiverId)
-        .collection('chat')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .collection('messages')
-        .add(message.toJson());
+    // await firestore
+    //     .collection('Users')
+    //     .doc(receiverId)
+    //     .collection('chat')
+    //     .doc(currentUid)
+    //     .collection('messages')
+    //     .add(message.toJson());
   }
 
   static Future<void> updateUserData(Map<String, dynamic> data) async =>
-      await firestore
-          .collection('Users')
-          .doc(FirebaseAuth.instance.currentUser!.uid)
-          .update(data);
+      await firestore.collection('Users').doc(currentUid).update(data);
 }
