@@ -56,7 +56,7 @@ class UserModel {
         discount: map['discount'],
         price: map['price'],
         connections: List<String>.from(
-          (map['members'] as List<String>),
+          (map['connections'] as List<String>),
         )
         // lastSeen: map['lastSeen'],
         );

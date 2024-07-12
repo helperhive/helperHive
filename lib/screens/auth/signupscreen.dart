@@ -1,10 +1,11 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:helperhive/enums/service_enum.dart';
-import 'package:helperhive/routes/app_routes.dart';
+import 'package:helperhive/app/app_routes.dart';
 import 'package:helperhive/backend/auth/auth_methods.dart';
 import 'package:helperhive/widgets/custum_auth_button.dart';
 import 'package:helperhive/screens/auth/widgets/auth_text_form_field.dart';
@@ -241,16 +242,19 @@ class SignUpScreenState extends State<SignUpScreen> {
                   ),
 
                   const SizedBox(height: 30),
-                  isLoading
-                      ? const CircularProgressIndicator()
-                      : SizedBox(
-                          width: 300,
-                          child: CustomAuthElevatedButton(
+
+                  SizedBox(
+                    width: 300,
+                    child: isLoading
+                        ? const Center(
+                            child: CupertinoActivityIndicator(),
+                          )
+                        : CustomAuthElevatedButton(
                             text: 'Sign Up',
                             color: Colors.orange.shade300,
                             onPressed: signUp,
                           ),
-                        ),
+                  ),
 
                   const SizedBox(height: 20),
                   Text('Or log in with',

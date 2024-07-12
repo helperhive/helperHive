@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:helperhive/backend/providers/user_provider.dart';
 import 'package:helperhive/constants/color_them.dart';
 import 'package:helperhive/screens/booking/booking_details_screen.dart';
 import 'package:helperhive/screens/chats/screens/chat_view.dart';
@@ -6,6 +7,7 @@ import 'package:helperhive/screens/home_feed/feed_screen.dart';
 import 'package:helperhive/screens/service_search_screen.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:helperhive/screens/profile/user_profile_screen.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -20,7 +22,14 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+
     _controller = PersistentTabController(initialIndex: 0);
+    userData();
+  }
+
+  userData() async {
+    UserProvider userProvider = Provider.of(context, listen: false);
+    await userProvider.fetchUser();
   }
 
   List<Widget> _buildScreens() {
@@ -91,41 +100,48 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: PersistentTabView(
-        context,
-        controller: _controller,
-        screens: _buildScreens(),
-        items: _navBarsItems(),
-        confineInSafeArea: true,
-        resizeToAvoidBottomInset: true,
-        backgroundColor: appbarColor,
-        navBarHeight: 70,
-        padding: const NavBarPadding.only(bottom: 10, left: 10, right: 10),
-        hideNavigationBarWhenKeyboardShows: true,
-        decoration: NavBarDecoration(
-          borderRadius: BorderRadius.circular(10.0),
-          colorBehindNavBar: appbarColor,
-          boxShadow: [
-            const BoxShadow(
-              color: Colors.black12,
-              blurRadius: 10,
-              spreadRadius: 2,
-            ),
-          ],
-        ),
-        popAllScreensOnTapOfSelectedTab: true,
-        popActionScreens: PopActionScreensType.all,
-        itemAnimationProperties: const ItemAnimationProperties(
-          duration: Duration(milliseconds: 200),
-          curve: Curves.ease,
-        ),
-        screenTransitionAnimation: const ScreenTransitionAnimation(
-          animateTabTransition: true,
-          curve: Curves.ease,
-          duration: Duration(milliseconds: 200),
-        ),
-        navBarStyle: NavBarStyle.style1,
-      ),
+      body: Consumer<UserProvider>(builder: (context, userProvider, _) {
+        return userProvider.isLoading
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : PersistentTabView(
+                context,
+                controller: _controller,
+                screens: _buildScreens(),
+                items: _navBarsItems(),
+                confineInSafeArea: true,
+                resizeToAvoidBottomInset: true,
+                backgroundColor: appbarColor,
+                navBarHeight: 70,
+                padding:
+                    const NavBarPadding.only(bottom: 10, left: 10, right: 10),
+                hideNavigationBarWhenKeyboardShows: true,
+                decoration: NavBarDecoration(
+                  borderRadius: BorderRadius.circular(10.0),
+                  colorBehindNavBar: appbarColor,
+                  boxShadow: [
+                    const BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 10,
+                      spreadRadius: 2,
+                    ),
+                  ],
+                ),
+                popAllScreensOnTapOfSelectedTab: true,
+                popActionScreens: PopActionScreensType.all,
+                itemAnimationProperties: const ItemAnimationProperties(
+                  duration: Duration(milliseconds: 200),
+                  curve: Curves.ease,
+                ),
+                screenTransitionAnimation: const ScreenTransitionAnimation(
+                  animateTabTransition: true,
+                  curve: Curves.ease,
+                  duration: Duration(milliseconds: 200),
+                ),
+                navBarStyle: NavBarStyle.style1,
+              );
+      }),
     );
   }
 }
