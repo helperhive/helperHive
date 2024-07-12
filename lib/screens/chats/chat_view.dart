@@ -1,41 +1,57 @@
 import 'package:flutter/material.dart';
+import 'package:helperhive/backend/providers/message_provider.dart';
 import 'package:helperhive/constants/hover_button.dart';
 import 'package:helperhive/model/user_model.dart';
+import 'package:helperhive/screens/chats/messages_view.dart';
 import 'package:helperhive/widgets/search_bar_home.dart';
+import 'package:provider/provider.dart';
 
 class ChatView extends StatelessWidget {
   const ChatView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: false,
-        title: const Text(
-          'Chats',
-          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-        ),
-        actions: [
-          IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.notifications_none,
-                size: 32,
-                color: Colors.black,
-              )),
-          const SizedBox(
-            width: 10,
-          )
-        ],
-        bottom: const PreferredSize(
-          preferredSize: Size.fromHeight(52),
-          child: SearchBarHome(
-            // onSearch: onSearch,
-            searchText: 'Search',
+    return Consumer<MessageProvider>(builder: (context, value, _) {
+      return Scaffold(
+        appBar: AppBar(
+          centerTitle: false,
+          title: const Text(
+            'Chats',
+            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+          ),
+          actions: [
+            IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.notifications_none,
+                  size: 32,
+                  color: Colors.black,
+                )),
+            const SizedBox(
+              width: 10,
+            )
+          ],
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(52),
+            child: SearchBarHome(
+              onSearch: value.onSearch,
+              searchText: 'Search',
+            ),
           ),
         ),
-      ),
-    );
+        body: ListView.builder(
+            itemCount: value.users.length,
+            itemBuilder: (context, index) {
+              UserModel user = value.users[index];
+              return UserItem(
+                  user: user,
+                  onChatSelected: (UserModel selectedUser) {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => MessagesView(user: user)));
+                  });
+            }),
+      );
+    });
   }
 }
 

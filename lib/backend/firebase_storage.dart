@@ -6,14 +6,13 @@ import "package:firebase_storage/firebase_storage.dart";
 import "package:uuid/uuid.dart";
 
 class StorageMethods {
-  final FirebaseStorage firebaseStorage = FirebaseStorage.instance;
-  final FirebaseAuth auth = FirebaseAuth.instance;
+  static final FirebaseStorage firebaseStorage = FirebaseStorage.instance;
+  static final FirebaseAuth auth = FirebaseAuth.instance;
 
-  Future<String> uploadImageToStorage(
+  static Future<String> uploadImageToStorage(
       {required String childName,
       required Uint8List file,
       String? chatId}) async {
-    
     Reference storageRef =
         firebaseStorage.ref().child(childName).child(auth.currentUser!.uid);
     if (chatId != null) {

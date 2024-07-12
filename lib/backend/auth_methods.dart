@@ -32,7 +32,8 @@ class AuthService {
           description: '',
           profileUrl: '',
           discount: 0.0,
-          price: 0.0);
+          price: 0.0,
+          connections: []);
       await firestore.collection('users').doc(user.uid).set(userModel.toMap());
     } catch (e) {
       throw Exception('Failed to create user account: $e');
@@ -98,7 +99,7 @@ class AuthService {
         DocumentSnapshot snapshot =
             await firestore.collection('users').doc(user.uid).get();
         if (snapshot.exists) {
-          return UserModel.fromMap(snapshot.data() as Map<String, dynamic>);
+          return UserModel.fromSnapshot(snapshot);
         } else {
           throw Exception('User document does not exist');
         }
