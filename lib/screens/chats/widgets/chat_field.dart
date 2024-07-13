@@ -82,6 +82,7 @@ class _ChatTextFieldState extends State<ChatTextField> {
   }
 }
 
+//text field for the chats
 class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
     super.key,
