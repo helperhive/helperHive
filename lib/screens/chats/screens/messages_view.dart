@@ -89,19 +89,6 @@ class _MessagesViewState extends State<MessagesView>
         return value.user != null
             ? Row(
                 children: [
-                  // IconButton(
-                  //     onPressed: () {
-                  //       if (widget.onBack != null) {
-                  //         widget.onBack!(false);
-                  //       }
-                  //     },
-                  //     icon: const Icon(
-                  //       Icons.arrow_back_ios,
-                  //       color: Colors.blue,
-                  //     )),
-                  // const SizedBox(
-                  //   width: 15,
-                  // ),
                   CircleAvatar(
                     radius: 20,
                     foregroundImage: value.user!.profileUrl != ''
