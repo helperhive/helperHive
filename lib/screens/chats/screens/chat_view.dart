@@ -83,13 +83,7 @@ class UserItem extends StatelessWidget {
                   user.profileUrl != '' ? NetworkImage(user.profileUrl) : null,
               child: user.profileUrl == '' ? Text(user.name[0]) : null,
             ),
-            // Padding(
-            //   padding: const EdgeInsets.only(bottom: 4, right: 3),
-            //   child: CircleAvatar(
-            //     radius: 5,
-            //     backgroundColor: user.isonline ? Colors.green : Colors.red,
-            //   ),
-            // )
+   
           ],
         ),
         title: Text(
