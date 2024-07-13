@@ -16,9 +16,9 @@ class UserModel {
   final Map<String, String> workingHours;
   final String description;
   final String profileUrl;
-  final double discount;
+  // final double discount;
   final double price;
-  final List<String> connections;
+  final List connections;
   // final DateTime lastSeen;
 
   UserModel({
@@ -33,7 +33,7 @@ class UserModel {
     required this.workingHours,
     required this.description,
     required this.profileUrl,
-    required this.discount,
+    // required this.discount,
     required this.price,
     required this.connections,
     // required this.lastSeen,
@@ -42,24 +42,23 @@ class UserModel {
   static UserModel fromSnapshot(DocumentSnapshot documentSnapshot) {
     var map = documentSnapshot.data() as Map<String, dynamic>;
     return UserModel(
-        uid: map['uid'],
-        name: map['name'],
-        email: map['email'],
-        phoneNumber: map['phoneNumber'],
-        service: stringToService(map['service']),
-        location: map['location'],
-        rating: map['rating'],
-        experience: map['experience'],
-        workingHours: Map<String, String>.from(map['workingHours']),
-        description: map['description'],
-        profileUrl: map['profileUrl'],
-        discount: map['discount'],
-        price: map['price'],
-        connections: List<String>.from(
-          (map['connections'] as List<String>),
-        )
-        // lastSeen: map['lastSeen'],
-        );
+      uid: map['uid'],
+      name: map['name'],
+      email: map['email'],
+      phoneNumber: map['phoneNumber'],
+      service: stringToService(map['service']),
+      location: map['location'],
+      rating: map['rating'],
+      experience: map['experience'],
+      workingHours: Map<String, String>.from(map['workingHours']),
+      description: map['description'],
+      profileUrl: map['profileUrl'],
+      // discount: map['discount'],
+      price: map['price'],
+      connections: map['connections'] ?? [],
+
+      // lastSeen: map['lastSeen'],
+    );
   }
 
   static Service stringToService(String service) {
@@ -79,7 +78,7 @@ class UserModel {
       'workingHours': workingHours,
       'description': description,
       'profileUrl': profileUrl,
-      'discount': discount,
+      // 'discount': discount,
       'price': price,
       'connections': connections
       // 'lastSeen': lastSeen

@@ -31,7 +31,7 @@ class AuthService {
           workingHours: {},
           description: '',
           profileUrl: '',
-          discount: 0.0,
+          // discount: 0.0,
           price: 0.0,
           connections: []);
       await firestore.collection('users').doc(user.uid).set(userModel.toMap());

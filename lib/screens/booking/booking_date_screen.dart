@@ -53,32 +53,32 @@ class _BookingDateScreenState extends State<BookingDateScreen> {
     });
   }
 
-  Widget _buildDateBox(DateTime date) {
-    final isSelected = selectedDate == date;
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 0),
-      padding: const EdgeInsets.symmetric(vertical: 23.0, horizontal: 6.0),
-      decoration: BoxDecoration(
-        color: isSelected ? blueColor : Colors.grey[200],
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      child: TextButton(
-        onPressed: () {
-          setState(() {
-            selectedDate = date;
-            selectedTime = null; // Reset selected time
-          });
-        },
-        child: Text(
-          DateFormat('EEE\nMMM d').format(date),
-          style: TextStyle(
-            color: isSelected ? Colors.white : Colors.black,
-          ),
-          textAlign: TextAlign.center,
-        ),
-      ),
-    );
-  }
+  // Widget _buildDateBox(DateTime date) {
+  //   final isSelected = selectedDate == date;
+  //   return Container(
+  //     margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 0),
+  //     padding: const EdgeInsets.symmetric(vertical: 23.0, horizontal: 6.0),
+  //     decoration: BoxDecoration(
+  //       color: isSelected ? blueColor : Colors.grey[200],
+  //       borderRadius: BorderRadius.circular(8.0),
+  //     ),
+  //     child: TextButton(
+  //       onPressed: () {
+  //         setState(() {
+  //           selectedDate = date;
+  //           selectedTime = null; // Reset selected time
+  //         });
+  //       },
+  //       child: Text(
+  //         DateFormat('EEE\nMMM d').format(date),
+  //         style: TextStyle(
+  //           color: isSelected ? Colors.white : Colors.black,
+  //         ),
+  //         textAlign: TextAlign.center,
+  //       ),
+  //     ),
+  //   );
+  // }
 
   Widget _buildTimeBox(TimeOfDay time) {
     final isSelected = selectedTime == time;

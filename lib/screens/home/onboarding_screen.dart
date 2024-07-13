@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:helperhive/app/app_routes.dart';
 import 'package:helperhive/constants/color_them.dart';
 import 'package:lottie/lottie.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -127,10 +128,8 @@ class _OnboardingScreensState extends State<OnboardingScreens> {
                       backgroundColor: blueColor,
                       foregroundColor: Colors.white,
                     ),
-                    onPressed: () => Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const LoginScreen())),
+                    onPressed: () => Navigator.of(context)
+                        .pushReplacementNamed(AppRoutes.loginRoute),
                     child: const Padding(
                       padding: EdgeInsets.symmetric(vertical: 3.0),
                       child: Text(
