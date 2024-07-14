@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:helperhive/enums/service_enum.dart';
 import 'package:helperhive/model/user_model.dart';
 
 class AuthService {
@@ -18,21 +19,22 @@ class AuthService {
       UserCredential result = await auth.createUserWithEmailAndPassword(
           email: email, password: password);
       User? user = result.user;
-      await firestore.collection('users').doc(user!.uid).set({
-        'uid': user.uid,
-        'email': email,
-        'name': name,
-        'phoneNumber': phoneNumber,
-        'service': service.toString().split('.').last,
-        'location': '',
-        'rating': 0.0,
-        'experience': 0,
-        'workingHours': {},
-        'description': '',
-        'imageUrl': '',
-        'discount': 0.0,
-        'price': 0.0,
-      });
+      UserModel userModel = UserModel(
+          uid: user!.uid,
+          email: email,
+          name: name,
+          phoneNumber: phoneNumber,
+          service: service,
+          location: '',
+          rating: 0.0,
+          experience: 0,
+          workingHours: {},
+          description: '',
+          profileUrl: '',
+          // discount: 0.0,
+          price: 0.0,
+          connections: []);
+      await firestore.collection('users').doc(user.uid).set(userModel.toMap());
     } catch (e) {
       throw Exception('Failed to create user account: $e');
     }
@@ -63,8 +65,8 @@ class AuthService {
           'imageUrl': '',
           'discount': 0.0,
           'price': 0.0,
-          'createdAt': FieldValue.serverTimestamp(),
-          'lastSignIn': FieldValue.serverTimestamp(),
+          // 'createdAt': FieldValue.serverTimestamp(),
+          // 'lastSignIn': FieldValue.serverTimestamp(),
         });
       } else {
         // If the user exists, update the last sign-in time
@@ -97,7 +99,7 @@ class AuthService {
         DocumentSnapshot snapshot =
             await firestore.collection('users').doc(user.uid).get();
         if (snapshot.exists) {
-          return UserModel.fromMap(snapshot.data() as Map<String, dynamic>);
+          return UserModel.fromSnapshot(snapshot);
         } else {
           throw Exception('User document does not exist');
         }
@@ -137,7 +139,7 @@ class AuthService {
   }
 
   // Sign out
-  Future<void> signOut() async {
+  Future<void> signOutUser() async {
     try {
       await auth.signOut();
     } catch (e) {

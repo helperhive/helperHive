@@ -33,7 +33,7 @@ class EditProfileScreen extends StatelessWidget {
                       const CircleAvatar(
                         radius: 50,
                         backgroundImage: AssetImage(
-                            'assets/naruto.jpeg'), // Replace with the actual image URL or asset
+                            'assets/services/services_cleaning.png'), // Replace with the actual image URL or asset
                       ),
                       TextButton(
                         onPressed: () {

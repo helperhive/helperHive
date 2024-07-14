@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:helperhive/app/app_routes.dart';
 import 'package:helperhive/constants/color_them.dart';
 import 'package:lottie/lottie.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -127,10 +128,8 @@ class _OnboardingScreensState extends State<OnboardingScreens> {
                       backgroundColor: blueColor,
                       foregroundColor: Colors.white,
                     ),
-                    onPressed: () => Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const LoginScreen())),
+                    onPressed: () => Navigator.of(context)
+                        .pushReplacementNamed(AppRoutes.loginRoute),
                     child: const Padding(
                       padding: EdgeInsets.symmetric(vertical: 3.0),
                       child: Text(
@@ -169,17 +168,21 @@ class OnboardingScreen extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20.0),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           imageType == 'lottie'
               ? Lottie.asset(imagePath, height: 400)
-              : Container(
+              : SizedBox(
                   child: Image.asset(
                     imagePath,
-                    height: 250,
+                    height: 150,
                   ),
                 ),
+          if (imageType != 'lottie')
+            const SizedBox(
+              height: 100,
+            ),
           Text(
             title,
             textAlign: TextAlign.center,
@@ -193,6 +196,9 @@ class OnboardingScreen extends StatelessWidget {
                 color: primaryColor,
                 fontWeight: FontWeight.w400),
           ),
+          const SizedBox(
+            height: 100,
+          )
         ],
       ),
     );

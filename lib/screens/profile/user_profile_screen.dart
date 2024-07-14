@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:helperhive/app/app_routes.dart';
+import 'package:helperhive/screens/home/onboarding_screen.dart';
 import 'package:helperhive/screens/profile/edit_profile_screen.dart';
 import 'package:helperhive/screens/payment_screen.dart';
 import 'package:helperhive/screens/auth/loginscreen.dart';
 
 class UserProfileScreen extends StatefulWidget {
-  const UserProfileScreen({super.key});
+  final Function()? onTap;
+  const UserProfileScreen({
+    super.key,
+    this.onTap,
+  });
 
   @override
   UserProfileScreenState createState() => UserProfileScreenState();
@@ -28,7 +34,8 @@ class UserProfileScreenState extends State<UserProfileScreen> {
                 children: [
                   const CircleAvatar(
                     radius: 40,
-                    backgroundImage: AssetImage('assets/naruto.jpeg'),
+                    backgroundImage:
+                        AssetImage('assets/services/services_cleaning.png'),
                   ),
                   const SizedBox(height: 8),
                   Text(
@@ -95,15 +102,7 @@ class UserProfileScreenState extends State<UserProfileScreen> {
                   ProfileMenuItem(
                     icon: Icons.logout,
                     text: 'Logout',
-                    onTap: () {
-                      Navigator.push(
-                        // ignore: use_build_context_synchronously
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const LoginScreen(),
-                        ),
-                      );
-                    },
+                    onTap: widget.onTap ?? () {},
                   ),
                 ],
               ),
