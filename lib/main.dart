@@ -30,29 +30,29 @@ class MyApp extends StatelessWidget {
         routes: AppRoutes.routes,
         title: 'HelperHive',
 
-        home: LoginScreenNew(),
+        // home: LoginScreenNew(),
         // home: const OnboardingScreens(), //use this when you need the login instance are not required to save
-        // home: StreamBuilder(
-        //     stream: FirebaseAuth.instance
-        //         .authStateChanges(), // this stream builder enable you to login to the app
-        //     builder: (context, snapshot) {
-        //       if (snapshot.hasData) {
-        //         return const HomePage();
-        //       } else if (snapshot.hasError) {
-        //         return const Center(
-        //           child: Text("error will loading the data"),
-        //         );
-        //       }
-        //       if (snapshot.connectionState == ConnectionState.waiting) {
-        //         return const Center(
-        //           child: CircularProgressIndicator(
-        //               // color: primaryColor,
-        //               ),
-        //         );
-        //       }
+        home: StreamBuilder(
+            stream: FirebaseAuth.instance
+                .authStateChanges(), // this stream builder enable you to login to the app
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return const HomePage();
+              } else if (snapshot.hasError) {
+                return const Center(
+                  child: Text("error will loading the data"),
+                );
+              }
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(
+                  child: CircularProgressIndicator(
+                      // color: primaryColor,
+                      ),
+                );
+              }
 
-        //       return const OnboardingScreens();
-        //     }),
+              return const OnboardingScreens();
+            }),
       ),
     );
   }
