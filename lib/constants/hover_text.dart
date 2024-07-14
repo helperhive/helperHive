@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 class HoverText extends StatefulWidget {
   final String text;
-  final TextStyle defaultStyle;
+  final TextStyle? defaultStyle;
   final TextStyle hoverStyle;
   final VoidCallback? onTap;
 
   const HoverText({
     super.key,
     required this.text,
-    required this.defaultStyle,
+    this.defaultStyle,
     required this.hoverStyle,
     this.onTap,
   });

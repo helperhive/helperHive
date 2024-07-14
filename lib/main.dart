@@ -7,6 +7,7 @@ import 'package:helperhive/screens/home/onboarding_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'app/app_providers.dart';
+import 'screens/auth/screens/login.dart';
 import 'screens/home/home_screen.dart';
 
 void main() async {
@@ -28,28 +29,30 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         routes: AppRoutes.routes,
         title: 'HelperHive',
-        // home: const OnboardingScreens(), //use this when you need the login instance are not required to save
-        home: StreamBuilder(
-            stream: FirebaseAuth.instance
-                .authStateChanges(), // this stream builder enable you to login to the app
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return const HomePage();
-              } else if (snapshot.hasError) {
-                return const Center(
-                  child: Text("error will loading the data"),
-                );
-              }
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(
-                      // color: primaryColor,
-                      ),
-                );
-              }
 
-              return const OnboardingScreens();
-            }),
+        home: LoginScreenNew(),
+        // home: const OnboardingScreens(), //use this when you need the login instance are not required to save
+        // home: StreamBuilder(
+        //     stream: FirebaseAuth.instance
+        //         .authStateChanges(), // this stream builder enable you to login to the app
+        //     builder: (context, snapshot) {
+        //       if (snapshot.hasData) {
+        //         return const HomePage();
+        //       } else if (snapshot.hasError) {
+        //         return const Center(
+        //           child: Text("error will loading the data"),
+        //         );
+        //       }
+        //       if (snapshot.connectionState == ConnectionState.waiting) {
+        //         return const Center(
+        //           child: CircularProgressIndicator(
+        //               // color: primaryColor,
+        //               ),
+        //         );
+        //       }
+
+        //       return const OnboardingScreens();
+        //     }),
       ),
     );
   }
