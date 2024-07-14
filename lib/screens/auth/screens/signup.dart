@@ -113,18 +113,18 @@ class _SignupScreenNewState extends State<SignupScreenNew> {
                   // const SizedBox(height: 30), // Space for the top margin
                   Lottie.asset(
                     'assets/auth/signup.json',
-                    height: 100,
+                    height: 120,
                   ), // Image
                   const SizedBox(height: 20),
                   const Text(
                     'Create An Account',
                     style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 15),
                   CustomTextField(
                     controller: phoneNumberController,
                     hintText: 'Enter Name',
-                    label: 'Name',
+                    // label: 'Name',
                     leadingIcon:
                         const IconData(0xe043, fontFamily: 'MaterialIcons'),
                     validator: (value) {
@@ -134,11 +134,11 @@ class _SignupScreenNewState extends State<SignupScreenNew> {
                       return null;
                     },
                   ),
-                  const SizedBox(height: 5),
+                  const SizedBox(height: 15),
                   CustomTextField(
                     controller: emailController,
                     hintText: 'Enter Email Address',
-                    label: 'Email Address',
+                    // label: 'Email Address',
                     leadingIcon: Icons.email,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -150,11 +150,11 @@ class _SignupScreenNewState extends State<SignupScreenNew> {
                       return null;
                     },
                   ),
-                  const SizedBox(height: 5),
+                  const SizedBox(height: 15),
                   CustomTextField(
                     controller: passwordController,
                     hintText: 'Enter Password',
-                    label: 'Password',
+                    // label: 'Password',
                     obscureText: true,
                     leadingIcon:
                         const IconData(0xe3ae, fontFamily: 'MaterialIcons'),
@@ -167,12 +167,12 @@ class _SignupScreenNewState extends State<SignupScreenNew> {
                       return null;
                     },
                   ),
-                  const SizedBox(height: 5),
+                  const SizedBox(height: 15),
 
                   CustomTextField(
                     controller: phoneNumberController,
                     hintText: 'Enter Phone Number',
-                    label: 'Phone Number',
+                    // label: 'Phone Number',
                     leadingIcon:
                         const IconData(0xe4a2, fontFamily: 'MaterialIcons'),
                     validator: (value) {
@@ -185,19 +185,19 @@ class _SignupScreenNewState extends State<SignupScreenNew> {
                       FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
                     ],
                   ),
-                  const SizedBox(height: 5),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Text(
-                      'Service',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.grey.shade400,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 10),
+                  // const SizedBox(height: 15),
+                  // Align(
+                  //   alignment: Alignment.centerLeft,
+                  //   child: Text(
+                  //     'Service',
+                  //     style: TextStyle(
+                  //       fontSize: 16,
+                  //       fontWeight: FontWeight.bold,
+                  //       color: Colors.grey.shade400,
+                  //     ),
+                  //   ),
+                  // ),
+                  const SizedBox(height: 15),
 
                   Theme(
                     data: Theme.of(context).copyWith(
@@ -255,7 +255,7 @@ class _SignupScreenNewState extends State<SignupScreenNew> {
                     ),
                   ),
 
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 20),
                   AuthButton(
                       onTap: () {
                         signUp();
@@ -265,16 +265,16 @@ class _SignupScreenNewState extends State<SignupScreenNew> {
                       textColor: Colors.black,
                       isloading: false,
                       width: 250),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 15),
                   // const Text('Or Continue with'),
                   const DividerWithText(
                     text: 'Or Continue with',
                     thickness: 2,
                   ),
-                  // const SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   SizedBox(
-                    height: 45,
-                    width: 100,
+                    height: 60,
+                    width: 120,
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
@@ -282,7 +282,7 @@ class _SignupScreenNewState extends State<SignupScreenNew> {
                           child: const CircleAvatar(
                             backgroundImage:
                                 AssetImage('assets/auth/google_logo.jpg'),
-                            radius: 20,
+                            radius: 25,
                           ),
                           onTap: () {
                             signInWithGoogle();
@@ -292,20 +292,21 @@ class _SignupScreenNewState extends State<SignupScreenNew> {
                           child: const CircleAvatar(
                             backgroundImage:
                                 AssetImage('assets/auth/fb_logo.jpg'),
-                            radius: 18,
+                            radius: 23,
                           ),
                           onTap: () {},
                         ),
                         // IconButton(
                         //   icon: Image.asset('assets/github_icon.png'),
                         //   onPressed: () {
-                        //     // TODO: Implement GitHub login
                         //   },
                         // ),
                       ],
                     ),
                   ),
-
+                  const SizedBox(
+                    height: 10,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

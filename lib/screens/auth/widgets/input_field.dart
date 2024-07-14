@@ -5,7 +5,7 @@ class CustomTextField extends StatefulWidget {
   final TextEditingController controller;
   final String hintText;
   final bool obscureText;
-  final String label;
+  final String? label;
   final String? Function(String?)? validator;
   final IconData? leadingIcon;
   final bool? enable;
@@ -16,7 +16,7 @@ class CustomTextField extends StatefulWidget {
       required this.controller,
       required this.hintText,
       this.obscureText = false,
-      required this.label,
+      this.label,
       this.validator,
       this.leadingIcon,
       this.enable,
@@ -41,15 +41,17 @@ class _CustomTextFieldState extends State<CustomTextField> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          widget.label,
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-            color: Colors.grey.shade400,
+        if (widget.label != null) ...[
+          Text(
+            widget.label ?? '',
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.grey.shade400,
+            ),
           ),
-        ),
-        const SizedBox(height: 10),
+          const SizedBox(height: 10),
+        ],
         TextFormField(
           enabled: widget.enable ?? true,
           controller: widget.controller,
