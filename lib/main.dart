@@ -7,7 +7,6 @@ import 'package:helperhive/screens/home/onboarding_screen.dart';
 import 'package:provider/provider.dart';
 
 import 'app/app_providers.dart';
-import 'screens/auth/screens/login.dart';
 import 'screens/home/home_screen.dart';
 
 void main() async {

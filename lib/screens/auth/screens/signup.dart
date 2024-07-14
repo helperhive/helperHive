@@ -13,14 +13,16 @@ import 'package:helperhive/screens/auth/widgets/input_field.dart';
 import 'package:helperhive/widgets/divider_text.dart';
 import 'package:lottie/lottie.dart';
 
-class SignupScreenNew extends StatefulWidget {
-  const SignupScreenNew({super.key});
+class SignupScreen extends StatefulWidget {
+  final bool isUser; // Flag to determine if it's user signup or worker signup
+
+  const SignupScreen({super.key, required this.isUser});
 
   @override
-  State<SignupScreenNew> createState() => _SignupScreenNewState();
+  State<SignupScreen> createState() => _SignupScreenState();
 }
 
-class _SignupScreenNewState extends State<SignupScreenNew> {
+class _SignupScreenState extends State<SignupScreen> {
   final AuthService authService = AuthService();
   final formKey = GlobalKey<FormState>();
   final TextEditingController nameController = TextEditingController();
@@ -38,22 +40,34 @@ class _SignupScreenNewState extends State<SignupScreenNew> {
       });
 
       try {
-        await authService.signUpWithEmailAndPassword(
-          email: emailController.text.trim(),
-          password: passwordController.text.trim(),
-          name: nameController.text.trim(),
-          phoneNumber: phoneNumberController.text.trim(),
-          service: _selectedService!,
-        );
+        if (widget.isUser) {
+          // User signup
+          await authService.signUpWithEmailAndPasswordfor_users(
+            email: emailController.text.trim(),
+            password: passwordController.text.trim(),
+            name: nameController.text.trim(),
+            phoneNumber: phoneNumberController.text.trim(),
+            // Adjust parameters as per your user signup method
+          );
+        } else {
+          // Worker signup
+          await authService.signUpWithEmailAndPasswordfor_workers(
+            email: emailController.text.trim(),
+            password: passwordController.text.trim(),
+            name: nameController.text.trim(),
+            phoneNumber: phoneNumberController.text.trim(),
+            service: _selectedService!,
+            // Adjust parameters as per your worker signup method
+          );
+        }
         Navigator.of(context).pushNamed(AppRoutes.homeRoute);
       } catch (e) {
-        // ScaffoldMessenger.of(context).showSnackBar(
-        //   SnackBar(content: Text(e.toString())),
-        // );
         toastMessage(
-            context: context,
-            message: e.toString(),
-            position: DelightSnackbarPosition.top);
+          leadingIcon: Icon(const IconData(0xe238, fontFamily: 'MaterialIcons')),
+          context: context,
+          message: e.toString(),
+          position: DelightSnackbarPosition.top,
+        );
       } finally {
         setState(() {
           isLoading = false;
@@ -83,13 +97,19 @@ class _SignupScreenNewState extends State<SignupScreenNew> {
       UserCredential userCredential =
           await FirebaseAuth.instance.signInWithCredential(credential);
 
-      await authService.handlesigninWithGoogle(userCredential);
+      if(widget.isUser) {
+        await authService.handlesigninWithGooglefor_users(userCredential);
+      } else {
+        await authService.handlesigninWithGooglefor_workers(userCredential);
+      }
 
       Navigator.of(context).pushNamed(AppRoutes.homeRoute);
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(e.toString())),
-      );
+      toastMessage(
+          context: context,
+          message: e.toString(),
+          position: DelightSnackbarPosition.top,
+        );
     } finally {
       setState(() {
         isLoading = false;
@@ -106,269 +126,191 @@ class _SignupScreenNewState extends State<SignupScreenNew> {
           padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16),
           child: Center(
             child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                // crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // const SizedBox(height: 30), // Space for the top margin
-                  Lottie.asset(
-                    'assets/auth/signup.json',
-                    height: 120,
-                  ), // Image
-                  const SizedBox(height: 20),
-                  const Text(
-                    'Create An Account',
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                  ),
-                  const SizedBox(height: 15),
-                  CustomTextField(
-                    controller: phoneNumberController,
-                    hintText: 'Enter Name',
-                    // label: 'Name',
-                    leadingIcon:
-                        const IconData(0xe043, fontFamily: 'MaterialIcons'),
-                    validator: (value) {
-                      if (value == null || value.isEmpty || value.length < 10) {
-                        return 'Please enter a valid phone number';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 15),
-                  CustomTextField(
-                    controller: emailController,
-                    hintText: 'Enter Email Address',
-                    // label: 'Email Address',
-                    leadingIcon: Icons.email,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Email is required';
-                      } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+')
-                          .hasMatch(value)) {
-                        return 'Enter a valid email';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 15),
-                  CustomTextField(
-                    controller: passwordController,
-                    hintText: 'Enter Password',
-                    // label: 'Password',
-                    obscureText: true,
-                    leadingIcon:
-                        const IconData(0xe3ae, fontFamily: 'MaterialIcons'),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Password is required';
-                      } else if (value.length < 6) {
-                        return 'Password must be at least 6 characters';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(height: 15),
-
-                  CustomTextField(
-                    controller: phoneNumberController,
-                    hintText: 'Enter Phone Number',
-                    // label: 'Phone Number',
-                    leadingIcon:
-                        const IconData(0xe4a2, fontFamily: 'MaterialIcons'),
-                    validator: (value) {
-                      if (value == null || value.isEmpty || value.length < 10) {
-                        return 'Please enter a valid phone number';
-                      }
-                      return null;
-                    },
-                    formatter: [
+              child: Form(
+                key: formKey,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Lottie.asset(
+                      'assets/auth/signup.json',
+                      height: 120,
+                    ),
+                    const SizedBox(height: 20),
+                    const Text(
+                      'Create An Account',
+                      style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 15),
+                    CustomTextField(
+                      controller: nameController,
+                      hintText: 'Enter Name',
+                      leadingIcon: const IconData(0xe043, fontFamily: 'MaterialIcons'),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Name is required';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 15),
+                    CustomTextField(
+                      controller: emailController,
+                      hintText: 'Enter Email Address',
+                      leadingIcon: Icons.email,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Email is required';
+                        } else if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                          return 'Enter a valid email';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 15),
+                    CustomTextField(
+                      controller: passwordController,
+                      hintText: 'Enter Password',
+                      leadingIcon: const IconData(0xe3ae, fontFamily: 'MaterialIcons'),
+                      obscureText: true,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Password is required';
+                        } else if (value.length < 6) {
+                          return 'Password must be at least 6 characters';
+                        }
+                        return null;
+                      },
+                    ),
+                    const SizedBox(height: 15),
+                    CustomTextField(
+                      controller: phoneNumberController,
+                      hintText: 'Enter Phone Number',
+                      leadingIcon: const IconData(0xe4a2, fontFamily: 'MaterialIcons'),
+                      validator: (value) {
+                        if (value == null || value.isEmpty || value.length < 10) {
+                          return 'Please enter a valid phone number';
+                        }
+                        return null;
+                      },
+                      formatter: [
                       FilteringTextInputFormatter.allow(RegExp(r'[0-9]')),
                     ],
-                  ),
-                  // const SizedBox(height: 15),
-                  // Align(
-                  //   alignment: Alignment.centerLeft,
-                  //   child: Text(
-                  //     'Service',
-                  //     style: TextStyle(
-                  //       fontSize: 16,
-                  //       fontWeight: FontWeight.bold,
-                  //       color: Colors.grey.shade400,
-                  //     ),
-                  //   ),
-                  // ),
-                  const SizedBox(height: 15),
-
-                  Theme(
-                    data: Theme.of(context).copyWith(
-                      canvasColor: Colors.white,
                     ),
-                    child: DropdownButtonFormField<Service>(
-                      value: _selectedService,
-                      hint: const Text('Select Service'),
-                      decoration: InputDecoration(
-                        contentPadding:
-                            const EdgeInsets.symmetric(horizontal: 10),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(width: 1.5, color: Colors.blue),
-                          borderRadius: BorderRadius.circular(16),
+                    if (!widget.isUser) ...[
+                      const SizedBox(height: 15),
+                      Theme(
+                        data: Theme.of(context).copyWith(
+                          canvasColor: Colors.white,
                         ),
-                        border: OutlineInputBorder(
-                          gapPadding: 6,
-                          borderSide:
-                              const BorderSide(width: 1.5, color: Colors.black),
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        disabledBorder: OutlineInputBorder(
-                          gapPadding: 6,
-                          borderSide:
-                              const BorderSide(width: 1.5, color: Colors.black),
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          gapPadding: 6,
-                          borderSide:
-                              const BorderSide(width: 1.5, color: Colors.black),
-                          borderRadius: BorderRadius.circular(16),
+                        child: DropdownButtonFormField<Service>(
+                          value: _selectedService,
+                          hint: const Text('Select Service'),
+                          decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: const BorderSide(width: 1.5, color: Colors.blue),
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            border: OutlineInputBorder(
+                              gapPadding: 6,
+                              borderSide: const BorderSide(width: 1.5, color: Colors.black),
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            disabledBorder: OutlineInputBorder(
+                              gapPadding: 6,
+                              borderSide: const BorderSide(width: 1.5, color: Colors.black),
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              gapPadding: 6,
+                              borderSide: const BorderSide(width: 1.5, color: Colors.black),
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                          ),
+                          onChanged: (Service? newValue) {
+                            setState(() {
+                              _selectedService = newValue;
+                            });
+                          },
+                          items: Service.values.map((Service service) {
+                            return DropdownMenuItem<Service>(
+                              value: service,
+                              child: Row(
+                                children: [
+                                  Icon(getIconForService(service)),
+                                  const SizedBox(width: 10),
+                                  Text(service.toTitle()),
+                                ],
+                              ),
+                            );
+                          }).toList(),
                         ),
                       ),
-                      onChanged: (Service? newValue) {
-                        setState(() {
-                          _selectedService = newValue;
-
-                          // serviceController.text = _selectedService!.toTitle();
-                        });
-                      },
-                      items: Service.values.map((Service service) {
-                        return DropdownMenuItem<Service>(
-                          value: service,
-                          child: Row(
-                            children: [
-                              Icon(getIconForService(service)),
-                              const SizedBox(width: 10),
-                              Text(service.toTitle()),
-                            ],
-                          ),
-                        );
-                      }).toList(),
-                    ),
-                  ),
-
-                  const SizedBox(height: 20),
-                  AuthButton(
-                      onTap: () {
-                        signUp();
-                      },
+                    ],
+                    const SizedBox(height: 20),
+                    AuthButton(
+                      onTap: signUp,
                       text: 'Signup',
                       backgroundcolor: Colors.blue.shade300,
                       textColor: Colors.black,
-                      isloading: false,
-                      width: 250),
-                  const SizedBox(height: 15),
-                  // const Text('Or Continue with'),
-                  const DividerWithText(
-                    text: 'Or Continue with',
-                    thickness: 2,
-                  ),
-                  const SizedBox(height: 10),
-                  SizedBox(
-                    height: 60,
-                    width: 120,
-                    child: Row(
+                      isloading: isLoading,
+                      width: 250,
+                    ),
+                    const SizedBox(height: 15),
+                    const DividerWithText(
+                      text: 'Or Continue with',
+                      thickness: 2,
+                    ),
+                    const SizedBox(height: 10),
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         GestureDetector(
                           child: const CircleAvatar(
-                            backgroundImage:
-                                AssetImage('assets/auth/google_logo.jpg'),
+                            backgroundImage: AssetImage('assets/auth/google_logo.jpg'),
                             radius: 25,
                           ),
-                          onTap: () {
-                            signInWithGoogle();
-                          },
+                          onTap: signInWithGoogle,
                         ),
                         GestureDetector(
                           child: const CircleAvatar(
-                            backgroundImage:
-                                AssetImage('assets/auth/fb_logo.jpg'),
+                            backgroundImage: AssetImage('assets/auth/fb_logo.jpg'),
                             radius: 23,
                           ),
                           onTap: () {},
                         ),
-                        // IconButton(
-                        //   icon: Image.asset('assets/github_icon.png'),
-                        //   onPressed: () {
-                        //   },
-                        // ),
                       ],
                     ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text('Already have an account?'),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      GestureDetector(
+                    const SizedBox(height: 10),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text('Already have an account?'),
+                        const SizedBox(width: 5),
+                        GestureDetector(
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => const LoginScreenNew()));
+                              builder: (context) => const LoginScreenNew(),
+                            ));
                           },
                           child: const Text(
                             'Login',
                             style: TextStyle(
-                                color: Colors.blue,
-                                fontSize: 14,
-                                fontWeight: FontWeight.bold),
-                          )),
-                    ],
-                  ),
-                ],
+                              color: Colors.blue,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
         ),
       ),
-    );
-  }
-
-  DropdownButton<Service> serviceDropDown() {
-    return DropdownButton<Service>(
-      hint: const Text('Select Service'),
-      value: _selectedService,
-      icon: const Icon(Icons.arrow_downward),
-      iconSize: 24,
-      elevation: 16,
-      style: const TextStyle(color: Colors.deepPurple),
-      underline: Container(
-        height: 2,
-        color: Colors.deepPurpleAccent,
-      ),
-      onChanged: (Service? newValue) {
-        setState(() {
-          _selectedService = newValue!;
-          serviceController = TextEditingController(
-            text: _selectedService!.toTitle(),
-          );
-        });
-      },
-      items: Service.values.map<DropdownMenuItem<Service>>((Service service) {
-        return DropdownMenuItem<Service>(
-          value: service,
-          child: Row(
-            children: [
-              Icon(getIconForService(service)),
-              const SizedBox(width: 10),
-              Text(service.toString()),
-            ],
-          ),
-        );
-      }).toList(),
     );
   }
 }

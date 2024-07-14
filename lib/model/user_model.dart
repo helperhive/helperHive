@@ -9,15 +9,15 @@ class UserModel {
   final String name;
   final String email;
   final String phoneNumber;
-  final Service service;
-  final String location;
-  final double rating;
-  final int experience;
-  final Map<String, String> workingHours;
-  final String description;
+  final Service? service;
+  final String? location;
+  final double? rating;
+  final int? experience;
+  final Map<String, String>? workingHours;
+  final String? description;
   final String profileUrl;
   // final double discount;
-  final double price;
+  final double? price;
   final List connections;
   // final DateTime lastSeen;
 
@@ -26,15 +26,15 @@ class UserModel {
     required this.name,
     required this.email,
     required this.phoneNumber,
-    required this.service,
-    required this.location,
-    required this.rating,
-    required this.experience,
-    required this.workingHours,
-    required this.description,
+    this.service,
+    this.location,
+    this.rating,
+    this.experience,
+    this.workingHours,
+    this.description,
     required this.profileUrl,
     // required this.discount,
-    required this.price,
+    this.price,
     required this.connections,
     // required this.lastSeen,
   });

@@ -45,7 +45,7 @@ class SignUpScreenState extends State<SignUpScreen> {
       });
 
       try {
-        await authService.signUpWithEmailAndPassword(
+        await authService.signUpWithEmailAndPasswordfor_workers(
           email: emailController.text.trim(),
           password: passwordController.text.trim(),
           name: nameController.text.trim(),
@@ -91,7 +91,7 @@ class SignUpScreenState extends State<SignUpScreen> {
       UserCredential userCredential =
           await FirebaseAuth.instance.signInWithCredential(credential);
 
-      await authService.handlesigninWithGoogle(userCredential);
+      await authService.handlesigninWithGooglefor_workers(userCredential);
 
       Navigator.of(context).pushNamed(AppRoutes.homeRoute);
     } catch (e) {
