@@ -97,8 +97,12 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Password is required';
-                      } else if (value.length < 6) {
-                        return 'Password must be at least 6 characters';
+                      } else if (value.length < 8) {
+                        return 'Password must be at least 8 characters';
+                      } else if (!RegExp(r'[A-Z]').hasMatch(value)) {
+                        return 'Password must contain at least one uppercase letter';
+                      } else if (!RegExp(r'\d').hasMatch(value)) {
+                        return 'Password must contain at least one number';
                       }
                       return null;
                     },
