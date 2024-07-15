@@ -17,7 +17,7 @@ class _BookingDateScreenState extends State<BookingDateScreen> {
   final ScrollController scrollController =
       ScrollController(); // Scroll controller for horizontal scrolling
   List<DateTime> displayedDates = []; // List of dates to display
-  DateTime? selectedDate; // Currently selected date
+  DateTime? selectedDate = DateTime.now(); // Currently selected date
   TimeOfDay? selectedTime; // Currently selected time
   bool isBooking = false; // Flag to prevent multiple bookings
 
@@ -216,6 +216,7 @@ class _BookingDateScreenState extends State<BookingDateScreen> {
                 height: 43,
                 child: ElevatedButton(
                   onPressed: () {
+                    print(selectedDate);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
