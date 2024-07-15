@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:helperhive/app/app_routes.dart';
 import 'package:helperhive/backend/auth/auth_methods.dart';
 import 'package:helperhive/constants/toast.dart';
+import 'package:helperhive/screens/auth/screens/forgot_password.dart';
 import 'package:helperhive/screens/auth/screens/signup.dart';
 import 'package:helperhive/screens/auth/widgets/auth_button.dart';
 import 'package:helperhive/widgets/divider_text.dart';
@@ -30,22 +31,32 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
   }
 
   void logIn() async {
+    if (emailController.text.isEmpty || passwordController.text.isEmpty) {
+      toastMessage(context: context, message: 'Fill the fields');
+      return;
+    }
     setState(() {
       isLoading = true;
     });
 
-    try {
-      await authService.logInWithEmailAndPassword(
-        emailController.text.trim(),
-        passwordController.text.trim(),
-      );
-      setState(() {
-        isLoading = false;
-      });
+    String res = await authService.logInWithEmailAndPassword(
+      emailController.text.trim(),
+      passwordController.text.trim(),
+    );
+
+    response(res);
+
+    setState(() {
+      isLoading = false;
+    });
+  }
+
+  void response(String res) {
+    if (res == 'success') {
       Navigator.of(context).pushReplacementNamed(AppRoutes.homeRoute);
-    } catch (e) {
-      toastMessage(context: context, message: 'Sign in failed: $e');
     }
+
+    toastMessage(context: context, message: res);
   }
 
   @override
@@ -112,7 +123,10 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
                     alignment: Alignment.centerRight,
                     child: TextButton(
                       onPressed: () {
-                        // TODO: Implement forgot password
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => ForgotPassword(
+                                  email: emailController.text.trim(),
+                                )));
                       },
                       child: const Text(
                         'Forgot Password?',

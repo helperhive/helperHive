@@ -13,7 +13,8 @@ enum Service {
   saloon,
   foodAndBeverage,
   beautyAndSpa,
-  others;
+  others,
+  user;
 
   @override
   String toString() {
@@ -31,6 +32,7 @@ enum Service {
       Service.foodAndBeverage => "Food And Beverage",
       Service.beautyAndSpa => "Beauty And Spa",
       Service.others => "Others",
+      Service.user => "User",
     };
   }
 
@@ -49,6 +51,7 @@ enum Service {
       Service.foodAndBeverage => "Food and Beverage Service",
       Service.beautyAndSpa => "Beauty and Spa Service",
       Service.others => "Other Services",
+      Service.user => 'User',
     };
   }
 }

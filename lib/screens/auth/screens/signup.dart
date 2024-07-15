@@ -36,14 +36,21 @@ class _SignupScreenState extends State<SignupScreen> {
 
   void signUp() async {
     if (formKey.currentState!.validate()) {
+      if (emailController.text.isEmpty ||
+          passwordController.text.isEmpty ||
+          nameController.text.isEmpty ||
+          phoneNumberController.text.isEmpty) {
+        message('Fill all the fields');
+        return;
+      }
       setState(() {
         isLoading = true;
       });
-
+      String res = '';
       try {
         if (widget.isUser) {
           // User signup
-          await authService.signUpWithEmailAndPasswordforUsers(
+          res = await authService.signUpWithEmailAndPasswordforUsers(
             email: emailController.text.trim(),
             password: passwordController.text.trim(),
             name: nameController.text.trim(),
@@ -52,7 +59,7 @@ class _SignupScreenState extends State<SignupScreen> {
           );
         } else {
           // Worker signup
-          await authService.signUpWithEmailAndPasswordforWorkers(
+          res = await authService.signUpWithEmailAndPasswordforWorkers(
             email: emailController.text.trim(),
             password: passwordController.text.trim(),
             name: nameController.text.trim(),
@@ -60,19 +67,12 @@ class _SignupScreenState extends State<SignupScreen> {
             service: _selectedService!,
           );
         }
-        Navigator.of(context).pushNamed(AppRoutes.homeRoute);
-      } catch (e) {
-        toastMessage(
-          leadingIcon:
-              const Icon(IconData(0xe238, fontFamily: 'MaterialIcons')),
-          context: context,
-          message: e.toString(),
-          position: DelightSnackbarPosition.top,
-        );
-      } finally {
+
         setState(() {
           isLoading = false;
         });
+      } catch (e) {
+        message(e.toString());
       }
     }
   }
@@ -106,16 +106,23 @@ class _SignupScreenState extends State<SignupScreen> {
 
       Navigator.of(context).pushNamed(AppRoutes.homeRoute);
     } catch (e) {
-      toastMessage(
-        context: context,
-        message: e.toString(),
-        position: DelightSnackbarPosition.top,
-      );
+      message(e.toString());
     } finally {
       setState(() {
         isLoading = false;
       });
     }
+  }
+
+  void message(String msg) {
+    if (msg == 'success') {
+      Navigator.of(context).pushNamed(AppRoutes.homeRoute);
+    }
+    toastMessage(
+      context: context,
+      message: msg,
+      position: DelightSnackbarPosition.top,
+    );
   }
 
   @override
