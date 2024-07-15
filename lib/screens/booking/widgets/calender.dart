@@ -1,12 +1,17 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:delightful_toast/toast/utils/enums.dart';
 import 'package:flutter/material.dart';
-
 import 'package:google_fonts/google_fonts.dart';
-import 'package:helperhive/constants/toast.dart';
 import 'package:table_calendar/table_calendar.dart';
 
+import 'package:helperhive/constants/toast.dart';
+
 class CalendarTabBoking extends StatefulWidget {
-  const CalendarTabBoking({super.key});
+  final Function(DateTime?) dateSelect;
+  const CalendarTabBoking({
+    super.key,
+    required this.dateSelect,
+  });
 
   @override
   State<CalendarTabBoking> createState() => _CalendarTabBokingState();
@@ -93,6 +98,7 @@ class _CalendarTabBokingState extends State<CalendarTabBoking> {
                     setState(() {
                       selectedDate = selectedDay;
                       focusedDate = focusedDay;
+                      widget.dateSelect(selectedDate);
                     });
                   }
                 },

@@ -162,7 +162,11 @@ class _BookingDateScreenState extends State<BookingDateScreen> {
               // ),
               // const SizedBox(height: 17),
 
-              const CalendarTabBoking(),
+              CalendarTabBoking(
+                dateSelect: (DateTime? dateTime) {
+                  selectedDate = dateTime;
+                },
+              ),
               // Booking Calendar with Scrollbar
               // Scrollbar(
               //   controller: scrollController,
@@ -211,37 +215,45 @@ class _BookingDateScreenState extends State<BookingDateScreen> {
                 width: double.infinity,
                 height: 43,
                 child: ElevatedButton(
-                  onPressed: isBooking ||
-                          (selectedDate == null || selectedTime == null)
-                      ? null
-                      : () async {
-                          setState(() {
-                            isBooking = true;
-                          });
-                          // Implement your booking logic here
-                          await Future.delayed(const Duration(
-                              seconds: 1)); // Simulate network latency
-                          setState(() {
-                            isBooking = false;
-                          });
-                          Navigator.push(
-                            // ignore: use_build_context_synchronously
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const BookingTimeScreen(),
-                            ),
-                          );
-                          // final bookedDateTime =
-                          //     _convertTimeOfDayToDateTime(selectedTime!);
-                          // ignore: use_build_context_synchronously
-                          //   ScaffoldMessenger.of(context).showSnackBar(
-                          //     SnackBar(
-                          //       content: Text(
-                          //           'Appointment Booked for ${DateFormat('EEEE, MMMM d, y - h:mm a').format(bookedDateTime)}'),
-                          //       backgroundColor: Colors.green,
-                          //     ),
-                          //   );
-                        },
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const BookingTimeScreen(),
+                      ),
+                    );
+                  },
+                  // onPressed: isBooking ||
+                  //         (selectedDate == null || selectedTime == null)
+                  //     ? null
+                  //     : () async {
+                  //         setState(() {
+                  //           isBooking = true;
+                  //         });
+                  //         // Implement your booking logic here
+                  //         await Future.delayed(const Duration(
+                  //             seconds: 1)); // Simulate network latency
+                  //         setState(() {
+                  //           isBooking = false;
+                  //         });
+                  //         Navigator.push(
+                  //           // ignore: use_build_context_synchronously
+                  //           context,
+                  //           MaterialPageRoute(
+                  //             builder: (context) => const BookingTimeScreen(),
+                  //           ),
+                  //         );
+                  //         // final bookedDateTime =
+                  //         //     _convertTimeOfDayToDateTime(selectedTime!);
+                  //         // ignore: use_build_context_synchronously
+                  //         //   ScaffoldMessenger.of(context).showSnackBar(
+                  //         //     SnackBar(
+                  //         //       content: Text(
+                  //         //           'Appointment Booked for ${DateFormat('EEEE, MMMM d, y - h:mm a').format(bookedDateTime)}'),
+                  //         //       backgroundColor: Colors.green,
+                  //         //     ),
+                  //         //   );
+                  //       },
                   style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.blue,
                       foregroundColor: Colors.white,

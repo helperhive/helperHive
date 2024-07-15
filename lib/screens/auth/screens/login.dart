@@ -103,17 +103,20 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
                       return null;
                     },
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 6),
                   Align(
                     alignment: Alignment.centerRight,
                     child: TextButton(
                       onPressed: () {
                         // TODO: Implement forgot password
                       },
-                      child: const Text('Forgot Password?'),
+                      child: const Text(
+                        'Forgot Password?',
+                        style: TextStyle(fontWeight: FontWeight.w600),
+                      ),
                     ),
                   ),
-                  const SizedBox(height: 10),
+                  // const SizedBox(height: 6),
 
                   AuthButton(
                       onTap: () => logIn(),
@@ -122,7 +125,7 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
                       textColor: Colors.black,
                       isloading: isLoading,
                       width: 250),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 25),
                   // const Text('Or Continue with'),
                   const DividerWithText(
                     text: 'Or Continue with',
@@ -136,7 +139,7 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
                         icon: const CircleAvatar(
                           backgroundImage:
                               AssetImage('assets/auth/google_logo.jpg'),
-                          radius: 25,
+                          radius: 28,
                         ),
                         onPressed: () {},
                       ),
@@ -164,7 +167,9 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
                       TextButton(
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const SignupScreenNew()));
+                              builder: (context) => const SignupScreen(
+                                    isUser: true,
+                                  )));
                         },
                         child: const Text(
                           'SignUp',
