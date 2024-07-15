@@ -38,6 +38,7 @@ class AuthService {
           .collection('workers')
           .doc(user.uid)
           .set(userModel.toMap());
+      await firestore.collection('users').doc(user.uid).set(userModel.toMap());
     } catch (e) {
       throw Exception('Failed to create user account: $e');
     }
