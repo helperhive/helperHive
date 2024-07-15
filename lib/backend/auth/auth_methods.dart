@@ -7,13 +7,13 @@ class AuthService {
   final FirebaseAuth auth = FirebaseAuth.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
-  // Signin using Email and Password
-  Future<void> signUpWithEmailAndPassword({
+  // Signin using Email and Password for workers
+  Future<void> signUpWithEmailAndPasswordfor_workers({
     required String email,
     required String password,
     required String name,
     required String phoneNumber,
-    required Service service,
+    Service? service,
   }) async {
     try {
       UserCredential result = await auth.createUserWithEmailAndPassword(
@@ -24,7 +24,7 @@ class AuthService {
           email: email,
           name: name,
           phoneNumber: phoneNumber,
-          service: service,
+          service: service!,
           location: '',
           rating: 0.0,
           experience: 0,
@@ -34,14 +34,78 @@ class AuthService {
           // discount: 0.0,
           price: 0.0,
           connections: []);
+      await firestore.collection('workers').doc(user.uid).set(userModel.toMap());
+    } catch (e) {
+      throw Exception('Failed to create user account: $e');
+    }
+  }
+
+
+   // Signin using Email and Password for Users
+  Future<void> signUpWithEmailAndPasswordfor_users({
+    required String email,
+    required String password,
+    required String name,
+    required String phoneNumber,
+  }) async {
+    try {
+      UserCredential result = await auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      User? user = result.user;
+      UserModel userModel = UserModel(
+          uid: user!.uid,
+          email: email,
+          name: name,
+          phoneNumber: phoneNumber,
+          location: '',
+          profileUrl: '',
+          connections: []);
       await firestore.collection('users').doc(user.uid).set(userModel.toMap());
     } catch (e) {
       throw Exception('Failed to create user account: $e');
     }
   }
 
-  //Signin using google
-  Future<void> handlesigninWithGoogle(UserCredential userCredential) async {
+  //Signin using google for workers
+  Future<void> handlesigninWithGooglefor_workers(UserCredential userCredential) async {
+    User? user = userCredential.user;
+
+    if (user != null) {
+      // Check if the user already exists in Firestore
+      DocumentSnapshot userDoc =
+          await firestore.collection('workers').doc(user.uid).get();
+
+      if (!userDoc.exists) {
+        // If the user does not exist, create a new user document
+        UserModel userModel = UserModel(
+          uid: user.uid,
+          email: user.email!,
+          name: "",
+          phoneNumber: user.phoneNumber!,
+          service: Service.others,
+          location: '',
+          rating: 0.0,
+          experience: 0,
+          workingHours: {},
+          description: '',
+          profileUrl: '',
+          // discount: 0.0,
+          price: 0.0,
+          connections: []);
+        await firestore.collection('workers').doc(user.uid).set(userModel.toMap());
+      } else {
+        // If the user exists, update the last sign-in time
+        await firestore.collection('workers').doc(user.uid).update({
+          'lastSignIn': FieldValue.serverTimestamp(),
+        });
+      }
+    } else {
+      throw Exception("Worker is null");
+    }
+  }
+
+  //Signin using google for users
+  Future<void> handlesigninWithGooglefor_users(UserCredential userCredential) async {
     User? user = userCredential.user;
 
     if (user != null) {
@@ -51,23 +115,15 @@ class AuthService {
 
       if (!userDoc.exists) {
         // If the user does not exist, create a new user document
-        await firestore.collection('users').doc(user.uid).set({
-          'uid': user.uid,
-          'email': user.email,
-          'name': user.displayName,
-          'phoneNumber': user.phoneNumber,
-          'service': '',
-          'location': '',
-          'rating': 0.0,
-          'experience': 0,
-          'workingHours': {},
-          'description': '',
-          'imageUrl': '',
-          'discount': 0.0,
-          'price': 0.0,
-          // 'createdAt': FieldValue.serverTimestamp(),
-          // 'lastSignIn': FieldValue.serverTimestamp(),
-        });
+        UserModel userModel = UserModel(
+          uid: user.uid,
+          email: user.email!,
+          name: "",
+          phoneNumber: user.phoneNumber!,
+          profileUrl: '',
+          // discount: 0.0,
+          connections: []);
+        await firestore.collection('users').doc(user.uid).set(userModel.toMap());
       } else {
         // If the user exists, update the last sign-in time
         await firestore.collection('users').doc(user.uid).update({
@@ -88,10 +144,30 @@ class AuthService {
     }
   }
 
-  // Get the current user
+  // Get the current  worker
   User? get currentUser => auth.currentUser;
 
-  // Get the user details from Firestore
+  // Get the worker details from Firestore
+  Future<UserModel> getWorkerDetails() async {
+    try {
+      User? user = auth.currentUser;
+      if (user != null) {
+        DocumentSnapshot snapshot =
+            await firestore.collection('workers').doc(user.uid).get();
+        if (snapshot.exists) {
+          return UserModel.fromSnapshot(snapshot);
+        } else {
+          throw Exception('Worker document does not exist');
+        }
+      } else {
+        throw Exception('Worker not found');
+      }
+    } catch (e) {
+      throw Exception('Failed to get Worker details: $e');
+    }
+  }
+
+   // Get the user details from Firestore
   Future<UserModel> getUserDetails() async {
     try {
       User? user = auth.currentUser;
@@ -107,9 +183,28 @@ class AuthService {
         throw Exception('User not found');
       }
     } catch (e) {
-      throw Exception('Failed to get user details: $e');
+      throw Exception('Failed to get User details: $e');
     }
   }
+
+
+// Update the worker details in Firestore
+  Future<void> updateWorkerDetails(UserModel userModel) async {
+    try {
+      User? user = auth.currentUser;
+      if (user != null) {
+        await firestore
+            .collection('workers')
+            .doc(user.uid)
+            .update(userModel.toMap());
+      } else {
+        throw Exception('Worker not found');
+      }
+    } catch (e) {
+      throw Exception('Failed to update Worker details: $e');
+    }
+  }
+
 
   // Update the user details in Firestore
   Future<void> updateUserDetails(UserModel userModel) async {
@@ -125,6 +220,16 @@ class AuthService {
       }
     } catch (e) {
       throw Exception('Failed to update user details: $e');
+    }
+  }
+
+  // Update a specific field in the user document
+  Future<void> updateWorkerDetailsField(
+      String uid, Map<String, dynamic> updateData) async {
+    try {
+      await firestore.collection('workers').doc(uid).update(updateData);
+    } catch (e) {
+      throw Exception('Failed to update Worker details: $e');
     }
   }
 

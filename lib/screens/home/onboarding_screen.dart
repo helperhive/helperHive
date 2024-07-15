@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:helperhive/app/app_routes.dart';
 import 'package:helperhive/constants/color_them.dart';
+import 'package:helperhive/screens/home/selection_screen.dart';
 import 'package:lottie/lottie.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-import '../auth/loginscreen.dart';
 
 class OnboardingScreens extends StatefulWidget {
   const OnboardingScreens({super.key});
@@ -78,7 +78,7 @@ class _OnboardingScreensState extends State<OnboardingScreens> {
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const LoginScreen()));
+                          builder: (context) => const SelectionScreen()));
                 },
                 buttontext: 'Get Started',
                 imageType: 'lottie',
@@ -129,7 +129,7 @@ class _OnboardingScreensState extends State<OnboardingScreens> {
                       foregroundColor: Colors.white,
                     ),
                     onPressed: () => Navigator.of(context)
-                        .pushReplacementNamed(AppRoutes.loginRoute),
+                        .pushReplacementNamed(AppRoutes.selectionRoute),
                     child: const Padding(
                       padding: EdgeInsets.symmetric(vertical: 3.0),
                       child: Text(
