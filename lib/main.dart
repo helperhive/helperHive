@@ -1,8 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:helperhive/firebase_options.dart';
 import 'package:helperhive/app/app_routes.dart';
+import 'package:helperhive/firebase_options.dart';
+// import 'package:helperhive/routes/app_routes.dart';
+import 'package:helperhive/screens/home/home_screen.dart';
 import 'package:helperhive/screens/home/onboarding_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -28,10 +30,9 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         routes: AppRoutes.routes,
         title: 'HelperHive',
-        // home: const OnboardingScreens(), //use this when you need the login instance are not required to save
+        // home: const OnboardingScreens(),
         home: StreamBuilder(
-            stream: FirebaseAuth.instance
-                .authStateChanges(), // this stream builder enable you to login to the app
+            stream: FirebaseAuth.instance.authStateChanges(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 return const HomePage();

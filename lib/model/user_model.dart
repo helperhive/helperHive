@@ -9,15 +9,15 @@ class UserModel {
   final String name;
   final String email;
   final String phoneNumber;
-  final Service service;
-  final String location;
-  final double rating;
-  final int experience;
-  final Map<String, String> workingHours;
-  final String description;
+  final Service? service;
+  final String? location;
+  final double? rating;
+  final int? experience;
+  final Map<String, String>? workingHours;
+  final String? description;
   final String profileUrl;
   // final double discount;
-  final double price;
+  final double? price;
   final List connections;
   // final DateTime lastSeen;
 
@@ -26,15 +26,15 @@ class UserModel {
     required this.name,
     required this.email,
     required this.phoneNumber,
-    required this.service,
-    required this.location,
-    required this.rating,
-    required this.experience,
-    required this.workingHours,
-    required this.description,
+    this.service,
+    this.location,
+    this.rating,
+    this.experience,
+    this.workingHours,
+    this.description,
     required this.profileUrl,
     // required this.discount,
-    required this.price,
+    this.price,
     required this.connections,
     // required this.lastSeen,
   });
@@ -46,15 +46,19 @@ class UserModel {
       name: map['name'],
       email: map['email'],
       phoneNumber: map['phoneNumber'],
-      service: stringToService(map['service']),
+      service: map['service'] == null
+          ? Service.user
+          : stringToService(map['service']),
       location: map['location'],
-      rating: map['rating'],
-      experience: map['experience'],
-      workingHours: Map<String, String>.from(map['workingHours']),
-      description: map['description'],
-      profileUrl: map['profileUrl'],
+      rating: map['rating'] ?? 0,
+      experience: map['experience'] ?? 0,
+      workingHours: map['workingHours'] == null
+          ? {}
+          : Map<String, String>.from(map['workingHours']),
+      description: map['description'] ?? '',
+      profileUrl: map['profileUrl'] ?? '',
       // discount: map['discount'],
-      price: map['price'],
+      price: map['price'] ?? 0,
       connections: map['connections'] ?? [],
 
       // lastSeen: map['lastSeen'],

@@ -92,7 +92,7 @@ flutter:
     - assets/services/
     - assets/logos/
     - assets/onboarding/
-    # - assets/payment_screen_logos/
+    - assets/auth/
     - assets/discount_arousel_images/
   #   - images/a_dot_ham.jpeg
 

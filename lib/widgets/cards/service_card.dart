@@ -34,7 +34,7 @@ class ServiceCard extends StatelessWidget {
             boxShadow: const [
               BoxShadow(
                   color: Color.fromARGB(31, 27, 27, 27),
-                  offset: Offset(0, 2),
+                  offset: Offset(0, 4),
                   spreadRadius: 2,
                   blurRadius: 8)
             ]),
