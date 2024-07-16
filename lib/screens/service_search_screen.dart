@@ -1,23 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:helperhive/constants/color_them.dart';
-import 'package:helperhive/widgets/cards/category_filter_search.dart';
 import 'package:helperhive/screens/booking/widgets/service_providers.dart';
+import 'package:helperhive/widgets/cards/category_filter_search.dart';
 import 'package:helperhive/widgets/search_bar_home.dart';
-
 
 //this search bar functionality as to be dynamic
 // require proper state management
 class ServiceSearchScreen extends StatefulWidget {
-  const ServiceSearchScreen({super.key});
+  final String? sevice;
+  const ServiceSearchScreen({super.key, this.sevice});
 
   @override
-  State<ServiceSearchScreen> createState() => _ServiceSearchScreenState();
+  State<ServiceSearchScreen> createState() => ServiceSearchScreenState();
 }
 
-class _ServiceSearchScreenState extends State<ServiceSearchScreen> {
+class ServiceSearchScreenState extends State<ServiceSearchScreen> {
   String selectedCategory = 'All';
   String searchQuery = '';
   bool isHovering = false;
+
+  @override
+  void initState() {
+    selectedCategory = widget.sevice ?? 'All';
+    super.initState();
+  }
 
   void selectCategory(String category) {
     setState(() {

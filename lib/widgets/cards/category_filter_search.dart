@@ -15,48 +15,88 @@ class CategoryFilter extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      child: SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: Row(
-          children: [
-            CategoryButton(
-              icon: Icons.miscellaneous_services,
-              label: 'All',
-              isSelected: selectedCategory == 'All',
-              onPressed: () => onSelectCategory('All'),
-            ),
-            CategoryButton(
-              icon: Icons.build_circle_sharp,
-              label: 'Repair',
-              isSelected: selectedCategory == 'Repair',
-              onPressed: () => onSelectCategory('Repair'),
-            ),
-            CategoryButton(
-              icon: Icons.local_laundry_service_sharp,
-              label: 'Washing',
-              isSelected: selectedCategory == 'Washing',
-              onPressed: () => onSelectCategory('Washing'),
-            ),
-            CategoryButton(
-              icon: Icons.plumbing,
-              label: 'Plumbing',
-              isSelected: selectedCategory == 'Plumbing',
-              onPressed: () => onSelectCategory('Plumbing'),
-            ),
-            CategoryButton(
-              icon: Icons.cleaning_services,
-              label: 'Cleaning',
-              isSelected: selectedCategory == 'Cleaning',
-              onPressed: () => onSelectCategory('Cleaning'),
-            ),
-            CategoryButton(
-              icon: Icons.format_paint_outlined,
-              label: 'Painting',
-              isSelected: selectedCategory == 'Painting',
-              onPressed: () => onSelectCategory('Painting'),
-            ),
-          ],
-        ),
+      child: Row(
+        children: [
+          CategoryButton(
+            icon: Icons.miscellaneous_services,
+            label: 'All',
+            isSelected: selectedCategory == 'All',
+            onPressed: () => onSelectCategory('All'),
+          ),
+          CategoryButton(
+            icon: Icons.build_circle_sharp,
+            label: 'Repair',
+            isSelected: selectedCategory == 'Repair',
+            onPressed: () => onSelectCategory('Repair'),
+          ),
+          CategoryButton(
+            icon: Icons.local_laundry_service_sharp,
+            label: 'Washing',
+            isSelected: selectedCategory == 'Washing',
+            onPressed: () => onSelectCategory('Washing'),
+          ),
+          CategoryButton(
+            icon: Icons.plumbing,
+            label: 'Plumbing',
+            isSelected: selectedCategory == 'Plumbing',
+            onPressed: () => onSelectCategory('Plumbing'),
+          ),
+          CategoryButton(
+            icon: Icons.cleaning_services,
+            label: 'Cleaning',
+            isSelected: selectedCategory == 'Cleaning',
+            onPressed: () => onSelectCategory('Cleaning'),
+          ),
+          CategoryButton(
+            icon: Icons.format_paint_outlined,
+            label: 'Painting',
+            isSelected: selectedCategory == 'Painting',
+            onPressed: () => onSelectCategory('Painting'),
+          ),
+          CategoryButton(
+            icon: Icons.local_hospital,
+            label: 'Health Care',
+            isSelected: selectedCategory == 'Health Care',
+            onPressed: () => onSelectCategory('Health Care'),
+          ),
+          CategoryButton(
+            icon: Icons.home,
+            label: 'Home',
+            isSelected: selectedCategory == 'Home',
+            onPressed: () => onSelectCategory('Home'),
+          ),
+          CategoryButton(
+            icon: Icons.directions_car,
+            label: 'Transportation',
+            isSelected: selectedCategory == 'Transportation',
+            onPressed: () => onSelectCategory('Transportation'),
+          ),
+          CategoryButton(
+            icon: Icons.bug_report,
+            label: 'Pest Control',
+            isSelected: selectedCategory == 'Pest Control',
+            onPressed: () => onSelectCategory('Pest Control'),
+          ),
+          CategoryButton(
+            icon: Icons.content_cut,
+            label: 'Saloon',
+            isSelected: selectedCategory == 'Saloon',
+            onPressed: () => onSelectCategory('Saloon'),
+          ),
+          CategoryButton(
+            icon: Icons.local_dining,
+            label: 'Food & Beverage',
+            isSelected: selectedCategory == 'Food & Beverage',
+            onPressed: () => onSelectCategory('Food & Beverage'),
+          ),
+          CategoryButton(
+            icon: Icons.spa,
+            label: 'Beauty & Spa',
+            isSelected: selectedCategory == 'Beauty & Spa',
+            onPressed: () => onSelectCategory('Beauty & Spa'),
+          ),
+          // Add more categories here if needed
+        ],
       ),
     );
   }
