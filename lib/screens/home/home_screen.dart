@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> {
       UserProfileScreen(
         onTap: () {
           AuthService().signOutUser();
-          Navigator.of(context).pushReplacementNamed(AppRoutes.onBording);
+          Navigator.of(context).pushReplacementNamed(AppRoutes.loginRoute);
         },
       ),
     ];

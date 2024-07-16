@@ -11,9 +11,11 @@ class UserProvider extends ChangeNotifier {
   bool _isLoading = false;
   bool get isLoading => _isLoading;
   Future<void> fetchUser() async {
+    // print('fetch user');
     _isLoading = true;
     try {
       var snap = await _firestore.collection('users').doc(uid).get();
+      // print(snap.data());
       _user = UserModel.fromSnapshot(snap);
     } catch (e) {
       print(e.toString());

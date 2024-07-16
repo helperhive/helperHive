@@ -8,13 +8,14 @@ class AuthService {
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   // Signin using Email and Password for workers
-  Future<void> signUpWithEmailAndPasswordforWorkers({
+  Future<String> signUpWithEmailAndPasswordforWorkers({
     required String email,
     required String password,
     required String name,
     required String phoneNumber,
     Service? service,
   }) async {
+    String res = '';
     try {
       UserCredential result = await auth.createUserWithEmailAndPassword(
           email: email, password: password);
@@ -24,7 +25,7 @@ class AuthService {
           email: email,
           name: name,
           phoneNumber: phoneNumber,
-          service: service!,
+          service: service ?? Service.others,
           location: '',
           rating: 0.0,
           experience: 0,
@@ -39,19 +40,32 @@ class AuthService {
           .doc(user.uid)
           .set(userModel.toMap());
       await firestore.collection('users').doc(user.uid).set(userModel.toMap());
+      res = 'success';
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        res = 'The password provided is too weak.';
+      } else if (e.code == 'email-already-in-use') {
+        res = 'The account already exists for that email.';
+      } else if (e.code == "invalid-email") {
+        res = "Email is Badly Formated";
+      } else {
+        res = e.message.toString();
+      }
     } catch (e) {
-      throw Exception('Failed to create user account: $e');
+      res = e.toString();
     }
+    return res;
   }
 
   // Signin using Email and Password for Users
-  Future<void> signUpWithEmailAndPasswordforUsers({
+  Future<String> signUpWithEmailAndPasswordforUsers({
     required String email,
     required String password,
     required String name,
     required String phoneNumber,
     required String location,
   }) async {
+    String res = '';
     try {
       UserCredential result = await auth.createUserWithEmailAndPassword(
           email: email, password: password);
@@ -63,11 +77,24 @@ class AuthService {
           phoneNumber: phoneNumber,
           location: location,
           profileUrl: '',
+          service: Service.user,
           connections: []);
       await firestore.collection('users').doc(user.uid).set(userModel.toMap());
+      res = 'success';
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        res = 'The password provided is too weak.';
+      } else if (e.code == 'email-already-in-use') {
+        res = 'The account already exists for that email.';
+      } else if (e.code == "invalid-email") {
+        res = "Email is Badly Formated";
+      } else {
+        res = e.message.toString();
+      }
     } catch (e) {
-      throw Exception('Failed to create user account: $e');
+      res = e.toString();
     }
+    return res;
   }
 
   //Signin using google for workers
@@ -130,7 +157,7 @@ class AuthService {
             name: "",
             phoneNumber: user.phoneNumber!,
             profileUrl: '',
-            // discount: 0.0,
+            service: Service.user,
             connections: []);
         await firestore
             .collection('users')
@@ -148,12 +175,40 @@ class AuthService {
   }
 
   // Login in with email and password
-  Future<void> logInWithEmailAndPassword(String email, String password) async {
+  Future<String> logInWithEmailAndPassword(
+      String email, String password) async {
+    String res = '';
     try {
       await auth.signInWithEmailAndPassword(email: email, password: password);
+      res = 'success';
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        res = 'No user found for that email';
+      } else if (e.code == 'wrong-password') {
+        res = 'Invalid Password ';
+      } else if (e.message.toString() ==
+          "The supplied auth credential is incorrect, malformed or has expired.") {
+        res = "Invalid credential";
+      } else {
+        res = e.message.toString();
+      }
     } catch (e) {
       throw Exception('Failed to sign in: $e');
     }
+    return res;
+  }
+
+// Reset Password
+
+  Future<String> resetPassword(String email) async {
+    String res = '';
+    try {
+      await auth.sendPasswordResetEmail(email: email);
+      res = 'Password Reset Email Sent to $email';
+    } on FirebaseAuthException catch (e) {
+      res = e.toString();
+    }
+    return res;
   }
 
   // Get the current  worker

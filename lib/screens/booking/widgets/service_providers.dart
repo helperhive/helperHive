@@ -70,14 +70,14 @@ class ServicePersonCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      servicePerson.providerName,
+                      servicePerson.serviceName,
                       style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 16.0,
                       ),
                     ),
                     const SizedBox(height: 4.0),
-                    Text(servicePerson.serviceName),
+                    Text(servicePerson.providerName),
                     const SizedBox(height: 4.0),
                     Row(
                       children: [

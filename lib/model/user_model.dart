@@ -46,15 +46,19 @@ class UserModel {
       name: map['name'],
       email: map['email'],
       phoneNumber: map['phoneNumber'],
-      service: stringToService(map['service']),
+      service: map['service'] == null
+          ? Service.user
+          : stringToService(map['service']),
       location: map['location'],
-      rating: map['rating'],
-      experience: map['experience'],
-      workingHours: Map<String, String>.from(map['workingHours']),
-      description: map['description'],
-      profileUrl: map['profileUrl'],
+      rating: map['rating'] ?? 0,
+      experience: map['experience'] ?? 0,
+      workingHours: map['workingHours'] == null
+          ? {}
+          : Map<String, String>.from(map['workingHours']),
+      description: map['description'] ?? '',
+      profileUrl: map['profileUrl'] ?? '',
       // discount: map['discount'],
-      price: map['price'],
+      price: map['price'] ?? 0,
       connections: map['connections'] ?? [],
 
       // lastSeen: map['lastSeen'],

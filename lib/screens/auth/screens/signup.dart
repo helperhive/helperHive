@@ -36,14 +36,21 @@ class _SignupScreenState extends State<SignupScreen> {
 
   void signUp() async {
     if (formKey.currentState!.validate()) {
+      if (emailController.text.isEmpty ||
+          passwordController.text.isEmpty ||
+          nameController.text.isEmpty ||
+          phoneNumberController.text.isEmpty) {
+        message('Fill all the fields');
+        return;
+      }
       setState(() {
         isLoading = true;
       });
-
+      String res = '';
       try {
         if (widget.isUser) {
           // User signup
-          await authService.signUpWithEmailAndPasswordforUsers(
+          res = await authService.signUpWithEmailAndPasswordforUsers(
             email: emailController.text.trim(),
             password: passwordController.text.trim(),
             name: nameController.text.trim(),
@@ -52,7 +59,7 @@ class _SignupScreenState extends State<SignupScreen> {
           );
         } else {
           // Worker signup
-          await authService.signUpWithEmailAndPasswordforWorkers(
+          res = await authService.signUpWithEmailAndPasswordforWorkers(
             email: emailController.text.trim(),
             password: passwordController.text.trim(),
             name: nameController.text.trim(),
@@ -60,19 +67,12 @@ class _SignupScreenState extends State<SignupScreen> {
             service: _selectedService!,
           );
         }
-        Navigator.of(context).pushNamed(AppRoutes.homeRoute);
-      } catch (e) {
-        toastMessage(
-          leadingIcon:
-              const Icon(IconData(0xe238, fontFamily: 'MaterialIcons')),
-          context: context,
-          message: e.toString(),
-          position: DelightSnackbarPosition.top,
-        );
-      } finally {
+        message(res);
         setState(() {
           isLoading = false;
         });
+      } catch (e) {
+        message(e.toString());
       }
     }
   }
@@ -106,16 +106,24 @@ class _SignupScreenState extends State<SignupScreen> {
 
       Navigator.of(context).pushNamed(AppRoutes.homeRoute);
     } catch (e) {
-      toastMessage(
-        context: context,
-        message: e.toString(),
-        position: DelightSnackbarPosition.top,
-      );
+      message(e.toString());
     } finally {
       setState(() {
         isLoading = false;
       });
     }
+  }
+
+  void message(String msg) {
+    if (msg == 'success') {
+      Navigator.of(context).pushReplacementNamed(AppRoutes.homeRoute);
+    }
+
+    toastMessage(
+      context: context,
+      message: msg == 'success' ? "Welcome OnBoard" : msg,
+      position: DelightSnackbarPosition.top,
+    );
   }
 
   @override
@@ -223,59 +231,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       ),
                     if (!widget.isUser) ...[
                       // const SizedBox(height: 15),
-                      Theme(
-                        data: Theme.of(context).copyWith(
-                          canvasColor: Colors.white,
-                        ),
-                        child: DropdownButtonFormField<Service>(
-                          value: _selectedService,
-                          hint: const Text('Select Service'),
-                          decoration: InputDecoration(
-                            contentPadding:
-                                const EdgeInsets.symmetric(horizontal: 10),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1.5, color: Colors.blue),
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                            border: OutlineInputBorder(
-                              gapPadding: 6,
-                              borderSide: const BorderSide(
-                                  width: 1.5, color: Colors.black),
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                            disabledBorder: OutlineInputBorder(
-                              gapPadding: 6,
-                              borderSide: const BorderSide(
-                                  width: 1.5, color: Colors.black),
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              gapPadding: 6,
-                              borderSide: const BorderSide(
-                                  width: 1.5, color: Colors.black),
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                          ),
-                          onChanged: (Service? newValue) {
-                            setState(() {
-                              _selectedService = newValue;
-                            });
-                          },
-                          items: Service.values.map((Service service) {
-                            return DropdownMenuItem<Service>(
-                              value: service,
-                              child: Row(
-                                children: [
-                                  Icon(getIconForService(service)),
-                                  const SizedBox(width: 10),
-                                  Text(service.toTitle()),
-                                ],
-                              ),
-                            );
-                          }).toList(),
-                        ),
-                      ),
+                      serviceDropDown(context),
                     ],
                     const SizedBox(height: 20),
                     AuthButton(
@@ -325,7 +281,9 @@ class _SignupScreenState extends State<SignupScreen> {
                         GestureDetector(
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const LoginScreenNew(),
+                              builder: (context) => LoginScreenNew(
+                                isUser: widget.isUser,
+                              ),
                             ));
                           },
                           child: const Text(
@@ -345,6 +303,59 @@ class _SignupScreenState extends State<SignupScreen> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Theme serviceDropDown(BuildContext context) {
+    return Theme(
+      data: Theme.of(context).copyWith(
+        canvasColor: Colors.white,
+      ),
+      child: DropdownButtonFormField<Service>(
+        value: _selectedService,
+        hint: const Text('Select Service'),
+        decoration: InputDecoration(
+          contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+          focusedBorder: OutlineInputBorder(
+            borderSide: const BorderSide(width: 1.5, color: Colors.blue),
+            borderRadius: BorderRadius.circular(16),
+          ),
+          border: OutlineInputBorder(
+            gapPadding: 6,
+            borderSide: const BorderSide(width: 1.5, color: Colors.black),
+            borderRadius: BorderRadius.circular(16),
+          ),
+          disabledBorder: OutlineInputBorder(
+            gapPadding: 6,
+            borderSide: const BorderSide(width: 1.5, color: Colors.black),
+            borderRadius: BorderRadius.circular(16),
+          ),
+          enabledBorder: OutlineInputBorder(
+            gapPadding: 6,
+            borderSide: const BorderSide(width: 1.5, color: Colors.black),
+            borderRadius: BorderRadius.circular(16),
+          ),
+        ),
+        onChanged: (Service? newValue) {
+          setState(() {
+            _selectedService = newValue;
+          });
+        },
+        items: Service.values.map((Service service) {
+          return DropdownMenuItem<Service>(
+            value: service,
+            child: service == Service.user
+                ? Row(
+                    children: [
+                      Icon(getIconForService(service)),
+                      const SizedBox(width: 10),
+                      Text(service.toTitle()),
+                    ],
+                  )
+                : const SizedBox(),
+          );
+        }).toList(),
       ),
     );
   }
