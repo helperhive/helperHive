@@ -84,6 +84,8 @@ IconData getIconForService(Service service) {
       return Icons.spa;
     case Service.others:
       return const IconData(0xf7f4, fontFamily: 'MaterialIcons');
+    case Service.user:
+      return Icons.account_circle_sharp;
     default:
       throw Exception('Unexpected service: $service');
   }

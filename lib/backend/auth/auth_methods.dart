@@ -25,7 +25,7 @@ class AuthService {
           email: email,
           name: name,
           phoneNumber: phoneNumber,
-          service: service!,
+          service: service ?? Service.others,
           location: '',
           rating: 0.0,
           experience: 0,
@@ -77,6 +77,7 @@ class AuthService {
           phoneNumber: phoneNumber,
           location: location,
           profileUrl: '',
+          service: Service.user,
           connections: []);
       await firestore.collection('users').doc(user.uid).set(userModel.toMap());
       res = 'success';
@@ -156,7 +157,7 @@ class AuthService {
             name: "",
             phoneNumber: user.phoneNumber!,
             profileUrl: '',
-            // discount: 0.0,
+            service: Service.user,
             connections: []);
         await firestore
             .collection('users')

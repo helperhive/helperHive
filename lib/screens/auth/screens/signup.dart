@@ -118,9 +118,10 @@ class _SignupScreenState extends State<SignupScreen> {
     if (msg == 'success') {
       Navigator.of(context).pushReplacementNamed(AppRoutes.homeRoute);
     }
+
     toastMessage(
       context: context,
-      message: msg,
+      message: msg == 'success' ? "Welcome OnBoard" : msg,
       position: DelightSnackbarPosition.top,
     );
   }
@@ -280,7 +281,9 @@ class _SignupScreenState extends State<SignupScreen> {
                         GestureDetector(
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const LoginScreenNew(),
+                              builder: (context) => LoginScreenNew(
+                                isUser: widget.isUser,
+                              ),
                             ));
                           },
                           child: const Text(

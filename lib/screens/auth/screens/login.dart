@@ -11,7 +11,8 @@ import 'package:lottie/lottie.dart';
 import '../widgets/input_field.dart';
 
 class LoginScreenNew extends StatefulWidget {
-  const LoginScreenNew({super.key});
+  final bool? isUser;
+  const LoginScreenNew({super.key, this.isUser});
 
   @override
   State<LoginScreenNew> createState() => _LoginScreenNewState();
@@ -54,6 +55,7 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
   void response(String res) {
     if (res == 'success') {
       Navigator.of(context).pushReplacementNamed(AppRoutes.homeRoute);
+      return;
     }
 
     toastMessage(context: context, message: res);
@@ -172,7 +174,7 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
                       // IconButton(
                       //   icon: Image.asset('assets/github_icon.png'),
                       //   onPressed: () {
-                      //     // TODO: Implement GitHub login
+                      //
                       //   },
                       // ),
                     ],
@@ -185,8 +187,8 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
                       TextButton(
                         onPressed: () {
                           Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const SignupScreen(
-                                    isUser: true,
+                              builder: (context) => SignupScreen(
+                                    isUser: widget.isUser ?? true,
                                   )));
                         },
                         child: const Text(
