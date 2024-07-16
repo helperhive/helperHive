@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:helperhive/constants/color_them.dart';
+import 'package:helperhive/model/service_person.dart';
 import 'package:intl/intl.dart';
 
 import 'booking_time_screen.dart';
 import 'widgets/calender.dart';
 
 class BookingDateScreen extends StatefulWidget {
-  const BookingDateScreen({super.key});
+  final ServicePerson servicePerson;
+  const BookingDateScreen({super.key, required this.servicePerson});
 
   @override
   // ignore: library_private_types_in_public_api
@@ -107,7 +109,7 @@ class _BookingDateScreenState extends State<BookingDateScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text(
-          'Booking Appointment',
+          'Booking Screen',
           style: TextStyle(fontSize: Checkbox.width),
         ),
         backgroundColor: blueColor,
@@ -120,33 +122,37 @@ class _BookingDateScreenState extends State<BookingDateScreen> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const ListTile(
+              ListTile(
                 contentPadding: EdgeInsets.zero,
                 leading: CircleAvatar(
                   radius: 30,
                   backgroundImage:
-                      AssetImage("assets/services/repair_service.jpg"),
+                      NetworkImage(widget.servicePerson.profileUrl),
                 ),
                 title: Text(
-                  'Vishnu',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                  widget.servicePerson.name,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 20),
                 ),
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Electrician',
-                      style: TextStyle(fontSize: 16),
+                      widget.servicePerson.service.toString(),
+                      style: const TextStyle(fontSize: 16),
                     ),
-                    SizedBox(height: 4),
+                    const SizedBox(height: 4),
                     Row(
                       children: [
-                        Icon(Icons.location_on, size: 16, color: Colors.red),
-                        SizedBox(width: 4),
+                        const Icon(Icons.location_on,
+                            size: 16, color: Colors.red),
+                        const SizedBox(width: 4),
                         Flexible(
                           child: Text(
-                            'Bhimavaram, Andhra Pradesh',
-                            style: TextStyle(fontSize: 16),
+                            widget.servicePerson.location != ''
+                                ? widget.servicePerson.location
+                                : 'Bhimavaram, Andhra Pradesh',
+                            style: const TextStyle(fontSize: 16),
                           ),
                         ),
                       ],

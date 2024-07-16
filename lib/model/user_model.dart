@@ -13,7 +13,7 @@ class UserModel {
   final String? location;
   final double? rating;
   final int? experience;
-  final Map<String, String>? workingHours;
+  final Map? workingHours;
   final String? description;
   final String profileUrl;
   // final double discount;
@@ -52,9 +52,7 @@ class UserModel {
       location: map['location'],
       rating: map['rating'] ?? 0,
       experience: map['experience'] ?? 0,
-      workingHours: map['workingHours'] == null
-          ? {}
-          : Map<String, String>.from(map['workingHours']),
+      workingHours: map['workingHours'] ?? {},
       description: map['description'] ?? '',
       profileUrl: map['profileUrl'] ?? '',
       // discount: map['discount'],

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:helperhive/model/service_card_model.dart';
-import 'package:helperhive/screens/booking/widgets/service_providers.dart';
+import 'package:helperhive/screens/search/widgets/service_providers.dart';
 
 class FilteredBookings extends StatelessWidget {
   final List<ServicePersonData> servicePersons =
@@ -29,7 +29,9 @@ class FilteredBookings extends StatelessWidget {
     return ListView.builder(
       itemCount: filteredSpecialists.length,
       itemBuilder: (context, index) {
-        return ServicePersonCard(servicePerson: filteredSpecialists[index]);
+        return null;
+
+        // return ServicePersonCard(servicePerson: filteredSpecialists[index]);
       },
     );
   }
