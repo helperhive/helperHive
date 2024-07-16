@@ -41,27 +41,16 @@ class ServiceSearchScreenState extends State<ServiceSearchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.menu,
-                color: primaryColor,
-                size: 32,
-              ),
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.notifications_outlined,
+              color: primaryColor,
+              size: 32,
             ),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.notifications_outlined,
-                color: primaryColor,
-                size: 32,
-              ),
-            )
-          ],
-        ),
+          )
+        ],
         bottom: PreferredSize(
             preferredSize: const Size.fromHeight(50),
             child: SearchBarHome(

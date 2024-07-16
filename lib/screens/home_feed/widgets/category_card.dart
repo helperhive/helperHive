@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:helperhive/constants/color_them.dart';
+import 'package:helperhive/screens/all_services/all_categories_screen.dart';
 import 'package:helperhive/screens/search/service_search_screen.dart';
 
 class CategoryCard extends StatelessWidget {
@@ -11,10 +12,13 @@ class CategoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => ServiceSearchScreen(
-                sevice: label,
-              ))),
+      onTap: () => label == 'All Services'
+          ? Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => const AllCategoriesColumn()))
+          : Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => ServiceSearchScreen(
+                    sevice: label,
+                  ))),
       child: Padding(
         padding: const EdgeInsets.all(4.0),
         child: Column(
@@ -31,10 +35,10 @@ class CategoryCard extends StatelessWidget {
                     color: Colors.white,
                     boxShadow: const [
                       BoxShadow(
-                          color: Colors.black38,
-                          offset: Offset(2, 4),
-                          spreadRadius: 1,
-                          blurRadius: 16)
+                          color: Colors.black26,
+                          offset: Offset(0, 6),
+                          spreadRadius: 2,
+                          blurRadius: 8)
                     ]),
                 child: Icon(icon, size: 42, color: blueColor),
               ),

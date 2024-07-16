@@ -32,7 +32,14 @@ class DiscountCard extends StatelessWidget {
             ),
             elevation: 2,
             child: Container(
-              color: Colors.white,
+              decoration: BoxDecoration(color: Colors.white, boxShadow: [
+                BoxShadow(
+                  offset: Offset(0, 4),
+                  blurRadius: 5,
+                  spreadRadius: 1,
+                  color: Colors.black26,
+                )
+              ]),
               child: Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Column(
