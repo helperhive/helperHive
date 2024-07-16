@@ -67,7 +67,7 @@ class _SignupScreenState extends State<SignupScreen> {
             service: _selectedService!,
           );
         }
-
+        message(res);
         setState(() {
           isLoading = false;
         });
@@ -116,7 +116,7 @@ class _SignupScreenState extends State<SignupScreen> {
 
   void message(String msg) {
     if (msg == 'success') {
-      Navigator.of(context).pushNamed(AppRoutes.homeRoute);
+      Navigator.of(context).pushReplacementNamed(AppRoutes.homeRoute);
     }
     toastMessage(
       context: context,
@@ -230,59 +230,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       ),
                     if (!widget.isUser) ...[
                       // const SizedBox(height: 15),
-                      Theme(
-                        data: Theme.of(context).copyWith(
-                          canvasColor: Colors.white,
-                        ),
-                        child: DropdownButtonFormField<Service>(
-                          value: _selectedService,
-                          hint: const Text('Select Service'),
-                          decoration: InputDecoration(
-                            contentPadding:
-                                const EdgeInsets.symmetric(horizontal: 10),
-                            focusedBorder: OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  width: 1.5, color: Colors.blue),
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                            border: OutlineInputBorder(
-                              gapPadding: 6,
-                              borderSide: const BorderSide(
-                                  width: 1.5, color: Colors.black),
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                            disabledBorder: OutlineInputBorder(
-                              gapPadding: 6,
-                              borderSide: const BorderSide(
-                                  width: 1.5, color: Colors.black),
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              gapPadding: 6,
-                              borderSide: const BorderSide(
-                                  width: 1.5, color: Colors.black),
-                              borderRadius: BorderRadius.circular(16),
-                            ),
-                          ),
-                          onChanged: (Service? newValue) {
-                            setState(() {
-                              _selectedService = newValue;
-                            });
-                          },
-                          items: Service.values.map((Service service) {
-                            return DropdownMenuItem<Service>(
-                              value: service,
-                              child: Row(
-                                children: [
-                                  Icon(getIconForService(service)),
-                                  const SizedBox(width: 10),
-                                  Text(service.toTitle()),
-                                ],
-                              ),
-                            );
-                          }).toList(),
-                        ),
-                      ),
+                      serviceDropDown(context),
                     ],
                     const SizedBox(height: 20),
                     AuthButton(
@@ -352,6 +300,59 @@ class _SignupScreenState extends State<SignupScreen> {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Theme serviceDropDown(BuildContext context) {
+    return Theme(
+      data: Theme.of(context).copyWith(
+        canvasColor: Colors.white,
+      ),
+      child: DropdownButtonFormField<Service>(
+        value: _selectedService,
+        hint: const Text('Select Service'),
+        decoration: InputDecoration(
+          contentPadding: const EdgeInsets.symmetric(horizontal: 10),
+          focusedBorder: OutlineInputBorder(
+            borderSide: const BorderSide(width: 1.5, color: Colors.blue),
+            borderRadius: BorderRadius.circular(16),
+          ),
+          border: OutlineInputBorder(
+            gapPadding: 6,
+            borderSide: const BorderSide(width: 1.5, color: Colors.black),
+            borderRadius: BorderRadius.circular(16),
+          ),
+          disabledBorder: OutlineInputBorder(
+            gapPadding: 6,
+            borderSide: const BorderSide(width: 1.5, color: Colors.black),
+            borderRadius: BorderRadius.circular(16),
+          ),
+          enabledBorder: OutlineInputBorder(
+            gapPadding: 6,
+            borderSide: const BorderSide(width: 1.5, color: Colors.black),
+            borderRadius: BorderRadius.circular(16),
+          ),
+        ),
+        onChanged: (Service? newValue) {
+          setState(() {
+            _selectedService = newValue;
+          });
+        },
+        items: Service.values.map((Service service) {
+          return DropdownMenuItem<Service>(
+            value: service,
+            child: service == Service.user
+                ? Row(
+                    children: [
+                      Icon(getIconForService(service)),
+                      const SizedBox(width: 10),
+                      Text(service.toTitle()),
+                    ],
+                  )
+                : const SizedBox(),
+          );
+        }).toList(),
       ),
     );
   }
