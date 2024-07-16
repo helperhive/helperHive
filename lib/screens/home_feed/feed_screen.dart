@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:helperhive/backend/providers/user_provider.dart';
 import 'package:helperhive/constants/color_them.dart';
-import 'package:helperhive/screens/all_categories_screen.dart';
-import 'package:helperhive/screens/service_search_screen.dart';
+import 'package:helperhive/screens/all_services/all_categories_screen.dart';
+import 'package:helperhive/screens/booking/booking_details_screen.dart';
 import 'package:helperhive/screens/home_feed/widgets/book_again_list.dart';
 import 'package:helperhive/screens/home_feed/widgets/categories_column.dart';
 import 'package:helperhive/screens/home_feed/widgets/discount_carousel.dart';
 import 'package:helperhive/screens/home_feed/widgets/label_row.dart';
-import 'package:helperhive/widgets/search_bar_home.dart';
 import 'package:helperhive/screens/home_feed/widgets/swiper_builder.dart';
 import 'package:helperhive/screens/home_feed/widgets/top_services_list.dart';
-import 'package:helperhive/screens/booking/booking_details_screen.dart';
+import 'package:helperhive/screens/search/service_search_screen.dart';
+import 'package:helperhive/widgets/search_bar_home.dart';
 import 'package:provider/provider.dart';
 // import 'package:helperhive/screens/booking/widgets/service_providers.dart';
 

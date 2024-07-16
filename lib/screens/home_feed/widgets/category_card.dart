@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:helperhive/constants/color_them.dart';
-import 'package:helperhive/screens/service_search_screen.dart';
+import 'package:helperhive/screens/search/service_search_screen.dart';
 
 class CategoryCard extends StatelessWidget {
   final IconData icon;

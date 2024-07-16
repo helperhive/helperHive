@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:helperhive/constants/color_them.dart';
-import 'package:helperhive/widgets/cards/all_categories_card.dart';
+import 'package:helperhive/screens/all_services/widgets/all_categories_card.dart';
 
-import 'service_search_screen.dart';
+import '../search/service_search_screen.dart';
 
 class AllCategoriesColumn extends StatelessWidget {
   const AllCategoriesColumn({super.key});
