@@ -72,7 +72,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             ),
             const Text(
               textAlign: TextAlign.center,
-              'Recive an Email to\nReset Your Password',
+              'Receive an Email to\nReset Your Password',
               maxLines: 2,
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
