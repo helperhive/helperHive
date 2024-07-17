@@ -41,7 +41,7 @@ class _CalendarTabBokingState extends State<CalendarTabBoking> {
                     titleCentered: false,
                     titleTextStyle: GoogleFonts.dmSans(
                       textStyle: const TextStyle(
-                        color: Color(0xFF1F2937),
+                        color: Colors.black,
                         fontSize: 22,
                         fontWeight: FontWeight.w500,
                       ),
@@ -58,15 +58,14 @@ class _CalendarTabBokingState extends State<CalendarTabBoking> {
                   lastDay: DateTime.now().add(
                     const Duration(days: 1460),
                   ),
-                  focusedDay: provider
-                      .focusedDate, // You can replace this with your viewModel.selectedDate if needed
+                  focusedDay: provider.focusedDate,
                   selectedDayPredicate: (date) =>
                       isSameDay(provider.selectedDate, date),
                   startingDayOfWeek: StartingDayOfWeek.monday,
                   daysOfWeekStyle: DaysOfWeekStyle(
                     weekdayStyle: GoogleFonts.dmSans(
                       textStyle: const TextStyle(
-                        color: Color(0xFF4B5563),
+                        color: Colors.black,
                         letterSpacing: 0.50,
                         fontSize: 15,
                       ),
@@ -90,26 +89,30 @@ class _CalendarTabBokingState extends State<CalendarTabBoking> {
                   calendarStyle: CalendarStyle(
                     defaultTextStyle: GoogleFonts.dmSans(
                       textStyle: const TextStyle(
-                        color: Color(0xFF1F2937),
+                        color: Colors.black,
                         letterSpacing: 0.50,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                     outsideTextStyle: GoogleFonts.dmSans(
                       textStyle: const TextStyle(
-                        color: Color(0xFF1F2937),
+                        color: Colors.black,
                         letterSpacing: 0.50,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                     weekendTextStyle: GoogleFonts.dmSans(
                       textStyle: const TextStyle(
-                        color: Color(0xFF1F2937),
+                        color: Colors.black,
                         letterSpacing: 0.50,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                     todayTextStyle: GoogleFonts.dmSans(
                       textStyle: const TextStyle(
                         color: Colors.black,
                         letterSpacing: 0.50,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
                     todayDecoration: BoxDecoration(
@@ -123,6 +126,7 @@ class _CalendarTabBokingState extends State<CalendarTabBoking> {
                       textStyle: const TextStyle(
                         color: Colors.black,
                         letterSpacing: 0.50,
+                        fontWeight: FontWeight.w700,
                       ),
                     ),
                     isTodayHighlighted: true,

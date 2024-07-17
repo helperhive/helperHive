@@ -50,7 +50,7 @@ class _InputTextFieldState extends State<InputTextField> {
               color: Colors.grey.shade400,
             ),
           ),
-          const SizedBox(height: 10),
+          const SizedBox(height: 5),
         ],
         TextFormField(
           enabled: widget.enable ?? true,
@@ -68,17 +68,17 @@ class _InputTextFieldState extends State<InputTextField> {
               borderRadius: BorderRadius.circular(16),
             ),
             border: OutlineInputBorder(
-              gapPadding: 6,
+              gapPadding: 5,
               borderSide: const BorderSide(width: 1.5, color: Colors.black54),
               borderRadius: BorderRadius.circular(16),
             ),
             disabledBorder: OutlineInputBorder(
-              gapPadding: 6,
+              gapPadding: 5,
               borderSide: const BorderSide(width: 1.5, color: Colors.black54),
               borderRadius: BorderRadius.circular(16),
             ),
             enabledBorder: OutlineInputBorder(
-              gapPadding: 6,
+              gapPadding: 5,
               borderSide: const BorderSide(width: 1.5, color: Colors.black54),
               borderRadius: BorderRadius.circular(16),
             ),

@@ -64,7 +64,7 @@ class MessageBubble extends StatelessWidget {
               const SizedBox(height: 5),
               Text(
                 textAlign: isMe ? TextAlign.right : TextAlign.left,
-                DateTimeManager().formatDateTime(message.sentTime),
+                DateTimeManager.formatDateTime(message.sentTime),
                 // timeago.format(message.sentTime),
                 style: const TextStyle(
                   color: Colors.white,

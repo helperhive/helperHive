@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:helperhive/backend/providers/service_person_provider.dart';
 import 'package:helperhive/constants/color_them.dart';
+import 'package:helperhive/enums/service_enum.dart';
 import 'package:helperhive/model/service_card_model.dart';
 import 'package:helperhive/model/service_person.dart';
 import 'package:helperhive/screens/profile/workers_profile_screen.dart';
@@ -83,11 +84,14 @@ class ServicePersonCard extends StatelessWidget {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
-            child: CircleAvatar(
-              backgroundImage: NetworkImage(
-                servicePerson.profileUrl,
+            child: SizedBox(
+              width: 65,
+              height: 50,
+              child: Image(
+                image: AssetImage(
+                  getAssetForService(servicePerson.service),
+                ),
               ),
-              radius: 35,
             ),
           ),
           Expanded(

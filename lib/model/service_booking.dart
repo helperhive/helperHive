@@ -1,6 +1,4 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:helperhive/enums/issue_type.dart';
 import 'package:helperhive/enums/service_enum.dart';
@@ -9,31 +7,34 @@ class ServiceBooking {
   final String name;
   final String uid;
   final Service service;
-  final DateTime bookingDate;
+  final String bookingDate;
   final String location;
-  final Timestamp time;
-  final IssueType issueType;
-  final Timestamp? alternateTime;
+  final String timeSlot;
+  final IssueType? issueType;
+  final String? alternateTimeSlot;
+  final String? note;
   ServiceBooking(
       {required this.name,
       required this.uid,
       required this.service,
       required this.bookingDate,
       required this.location,
-      required this.issueType,
-      this.alternateTime,
-      required this.time});
+      this.issueType,
+      this.alternateTimeSlot,
+      this.note,
+      required this.timeSlot});
 
   Map<String, dynamic> toMap() {
     return {
       'name': name,
       'uid': uid,
       'service': service.toString(),
-      'bookingDate': bookingDate.millisecondsSinceEpoch,
+      'bookingDate': bookingDate,
       'location': location,
-      'time': time,
+      'timeSlot': timeSlot,
       'issueType': issueType,
-      'alternateTime': alternateTime ?? '',
+      'note': note ?? '',
+      'alternateTimeSlot': alternateTimeSlot ?? '',
     };
   }
 
@@ -45,9 +46,10 @@ class ServiceBooking {
       service: stringToService(map['service']),
       bookingDate: map['bookingDate'],
       location: map['location'] as String,
-      time: map['time'],
+      timeSlot: map['timeSlot'],
       issueType: stringToIssue(map['issueType']),
-      alternateTime: map['alternateTime'],
+      alternateTimeSlot: map['alternateTimeSlot'],
+      note: map['nate'] ?? '',
     );
   }
 

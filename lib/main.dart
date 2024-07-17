@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:helperhive/app/app_routes.dart';
 import 'package:helperhive/firebase_options.dart';
 // import 'package:helperhive/routes/app_routes.dart';
@@ -29,6 +30,10 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         routes: AppRoutes.routes,
         title: 'HelperHive',
+        theme: ThemeData().copyWith(
+            textTheme: GoogleFonts.dmSansTextTheme(
+          Theme.of(context).textTheme,
+        )),
         // home: const OnboardingScreens(),
         home: StreamBuilder(
             stream: FirebaseAuth.instance.authStateChanges(),

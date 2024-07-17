@@ -33,11 +33,11 @@ class CategoryCard extends StatelessWidget {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(15),
                     color: Colors.white,
-                    boxShadow: const [
+                    boxShadow: [
                       BoxShadow(
-                          color: Colors.black26,
-                          offset: Offset(0, 6),
-                          spreadRadius: 2,
+                          color: Colors.grey.shade400,
+                          offset: const Offset(0, 4),
+                          spreadRadius: 1,
                           blurRadius: 8)
                     ]),
                 child: Icon(icon, size: 42, color: blueColor),
