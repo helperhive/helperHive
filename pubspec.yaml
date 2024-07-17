@@ -94,6 +94,23 @@ flutter:
     - assets/onboarding/
     - assets/auth/
     - assets/discount_arousel_images/
+    - assets/service_icons/
+    # - assets/service_icons/cleaning.png
+    # - assets/service_icons/washing.png
+    # - assets/service_icons/repair.png
+    # - assets/service_icons/painter.png
+    # - assets/service_icons/plumbing.png
+    # - assets/service_icons/healthcare.png
+    # - assets/service_icons/electrician.png
+    # - assets/service_icons/carpenter.png
+    # - assets/service_icons/transportation.png
+    # - assets/service_icons/saloon.png
+    # - assets/service_icons/food.png
+    # - assets/service_icons/beauty_and_spa.png
+    # - assets/service_icons/pest_control.png
+    # - assets/service_icons/electical_app.png
+
+    
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

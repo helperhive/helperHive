@@ -104,7 +104,7 @@ class _SignupScreenState extends State<SignupScreen> {
         await authService.handlesigninWithGoogleforWorkers(userCredential);
       }
 
-      Navigator.of(context).pushNamed(AppRoutes.homeRoute);
+      // Navigator.of(context).pushNamed(AppRoutes.homeRoute);
     } catch (e) {
       message(e.toString());
     } finally {

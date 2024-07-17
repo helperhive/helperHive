@@ -9,19 +9,19 @@ class AllCategoriesColumn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Map<String, IconData> categoryIcons = {
-      'Cleaning': Icons.cleaning_services,
-      'Washing': Icons.local_laundry_service,
-      'Repair': Icons.build,
-      'Painting': Icons.format_paint,
-      'Plumbing': Icons.plumbing,
-      'Healthcare': Icons.local_hospital,
-      'Real Estate': Icons.home,
-      'Transportation': Icons.directions_car,
-      'Pest Control': Icons.bug_report,
-      'Saloon': Icons.content_cut,
-      'Food and Beverage': Icons.local_dining,
-      'Beauty and Spa': Icons.spa,
+    final Map<String, String> categoryIcons = {
+      'Cleaning': 'assets/service_icons/cleaning.png',
+      'Washing': 'assets/service_icons/washing.png',
+      'Repair': 'assets/service_icons/repair.png',
+      'Painting': 'assets/service_icons/painter.png',
+      'Plumbing': 'assets/service_icons/plumbing.png',
+      'Healthcare': 'assets/service_icons/healthcare.png',
+      'Carpenter': 'assets/service_icons/carpenter.png',
+      'Electrician': 'assets/service_icons/electrician.png',
+      'PestXpert': 'assets/service_icons/pest_control.png',
+      'Saloon': 'assets/service_icons/saloon.png',
+      'Movers': 'assets/service_icons/movers.png',
+      'Spa': 'assets/service_icons/beauty_and_spa.png',
     };
 
     return Scaffold(
@@ -37,7 +37,7 @@ class AllCategoriesColumn extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            const SizedBox(height: 30), // Adjust height as needed for spacing
+            const SizedBox(height: 30),
             Expanded(
               child: GridView.builder(
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
@@ -49,14 +49,13 @@ class AllCategoriesColumn extends StatelessWidget {
                 itemCount: categoryIcons.length,
                 itemBuilder: (context, index) {
                   final String label = categoryIcons.keys.elementAt(index);
-                  final IconData icon = categoryIcons.values.elementAt(index);
+                  final String iconPath = categoryIcons.values.elementAt(index);
 
                   return AllCategoriesCard(
-                    icon: icon,
+                    iconPath: iconPath,
                     label: label,
                     onTap: () {
                       // Navigate to CategoryFilterSearch with the selected category
-
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => ServiceSearchScreen(
                                 sevice: label,
