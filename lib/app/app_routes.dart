@@ -26,7 +26,7 @@ class AppRoutes {
         ),
     searchScreenRoute: (context) => const ServiceSearchScreen(),
     userProfileRoute: (context) => const UserProfileScreen(),
-    workersProfileRoute: (context) => const WorkersProfileScreen(),
+    // workersProfileRoute: (context) => const WorkersProfileScreen(),
     bookingRoute: (context) => const BookingScreen(),
     onBording: (context) => const OnboardingScreens(),
     selectionRoute: (context) => const SelectionScreen(),

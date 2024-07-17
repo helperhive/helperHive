@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:helperhive/app/app_routes.dart';
 import 'package:helperhive/backend/auth/auth_methods.dart';
+import 'package:helperhive/backend/providers/service_person_provider.dart';
 import 'package:helperhive/backend/providers/user_provider.dart';
 import 'package:helperhive/constants/color_them.dart';
 import 'package:helperhive/screens/booking/booking_details_screen.dart';
@@ -31,7 +32,10 @@ class _HomePageState extends State<HomePage> {
 
   userData() async {
     UserProvider userProvider = Provider.of(context, listen: false);
+    ServicePersonProvider servicePersonProvider =
+        Provider.of(context, listen: false);
     await userProvider.fetchUser();
+    servicePersonProvider.fectchServiceProviders();
   }
 
   List<Widget> _buildScreens() {

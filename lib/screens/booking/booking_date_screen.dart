@@ -1,283 +1,132 @@
 import 'package:flutter/material.dart';
+import 'package:helperhive/backend/providers/booking_provider.dart';
 import 'package:helperhive/constants/color_them.dart';
-import 'package:intl/intl.dart';
+import 'package:helperhive/model/service_person.dart';
+import 'package:helperhive/screens/booking/widgets/text_filed.dart';
+import 'package:provider/provider.dart';
 
 import 'booking_time_screen.dart';
 import 'widgets/calender.dart';
 
-class BookingDateScreen extends StatefulWidget {
-  const BookingDateScreen({super.key});
+class BookingDateScreen extends StatelessWidget {
+  final ServicePerson servicePerson;
+  BookingDateScreen({super.key, required this.servicePerson});
 
-  @override
-  // ignore: library_private_types_in_public_api
-  _BookingDateScreenState createState() => _BookingDateScreenState();
-}
-
-class _BookingDateScreenState extends State<BookingDateScreen> {
-  final ScrollController scrollController =
-      ScrollController(); // Scroll controller for horizontal scrolling
-  List<DateTime> displayedDates = []; // List of dates to display
-  DateTime? selectedDate = DateTime.now(); // Currently selected date
-  TimeOfDay? selectedTime; // Currently selected time
-  bool isBooking = false; // Flag to prevent multiple bookings
-
-  // User details
-  final String userName = 'Vishnu';
-  final String userSpecialty = 'Electrician';
-  final String userLocation = 'Bhimavaram, Andhra Pradesh';
-  final String userImageUrl =
-      "assets/services/repair_service.jpg"; // Replace with your image path
-
-  final List<TimeOfDay> availableTimes = [
-    const TimeOfDay(hour: 10, minute: 0),
-    const TimeOfDay(hour: 11, minute: 0),
-    const TimeOfDay(hour: 12, minute: 0),
-    const TimeOfDay(hour: 1, minute: 0),
-    const TimeOfDay(hour: 2, minute: 0),
-    const TimeOfDay(hour: 3, minute: 0),
-    const TimeOfDay(hour: 4, minute: 0),
-    const TimeOfDay(hour: 5, minute: 0),
-  ];
-
-  @override
-  void initState() {
-    super.initState();
-    // Generate initial list of displayed dates (replace with your logic)
-    // displayedDates =
-    //     List.generate(7, (index) => DateTime.now().add(Duration(days: index)));
-  }
-
-  void _selectTime(TimeOfDay time) {
-    setState(() {
-      selectedTime = time;
-    });
-  }
-
-  // Widget _buildDateBox(DateTime date) {
-  //   final isSelected = selectedDate == date;
-  //   return Container(
-  //     margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 0),
-  //     padding: const EdgeInsets.symmetric(vertical: 23.0, horizontal: 6.0),
-  //     decoration: BoxDecoration(
-  //       color: isSelected ? blueColor : Colors.grey[200],
-  //       borderRadius: BorderRadius.circular(8.0),
-  //     ),
-  //     child: TextButton(
-  //       onPressed: () {
-  //         setState(() {
-  //           selectedDate = date;
-  //           selectedTime = null; // Reset selected time
-  //         });
-  //       },
-  //       child: Text(
-  //         DateFormat('EEE\nMMM d').format(date),
-  //         style: TextStyle(
-  //           color: isSelected ? Colors.white : Colors.black,
-  //         ),
-  //         textAlign: TextAlign.center,
-  //       ),
-  //     ),
-  //   );
-  // }
-
-  Widget _buildTimeBox(TimeOfDay time) {
-    final isSelected = selectedTime == time;
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5),
-      padding: const EdgeInsets.all(8.0),
-      decoration: BoxDecoration(
-        color: isSelected ? blueColor : Colors.grey[200],
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      child: TextButton(
-        onPressed: selectedDate == null ? null : () => _selectTime(time),
-        child: Text(
-          time.format(context),
-          style: TextStyle(
-            color: isSelected ? Colors.white : Colors.black,
-          ),
-          textAlign: TextAlign.center,
-        ),
-      ),
-    );
-  }
-
+  TextEditingController dateController = TextEditingController();
+  TextEditingController timeController = TextEditingController();
+  TextEditingController alternateTimeController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'Booking Appointment',
-          style: TextStyle(fontSize: Checkbox.width),
+    return Consumer<BookingProvider>(builder: (context, provider, _) {
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text(
+            'Booking Screen',
+            style: TextStyle(fontSize: Checkbox.width),
+          ),
+          backgroundColor: blueColor,
         ),
-        backgroundColor: blueColor,
-      ),
-      body: Padding(
-        padding:
-            const EdgeInsets.all(12.0), // Adjust the padding values as needed
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const ListTile(
-                contentPadding: EdgeInsets.zero,
-                leading: CircleAvatar(
-                  radius: 30,
-                  backgroundImage:
-                      AssetImage("assets/services/repair_service.jpg"),
-                ),
-                title: Text(
-                  'Vishnu',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                ),
-                subtitle: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Electrician',
-                      style: TextStyle(fontSize: 16),
-                    ),
-                    SizedBox(height: 4),
-                    Row(
-                      children: [
-                        Icon(Icons.location_on, size: 16, color: Colors.red),
-                        SizedBox(width: 4),
-                        Flexible(
-                          child: Text(
-                            'Bhimavaram, Andhra Pradesh',
-                            style: TextStyle(fontSize: 16),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-
-              const SizedBox(height: 30),
-              // const Text(
-              //   'Select Date : ',
-              //   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-              // ),
-              // const SizedBox(height: 17),
-
-              CalendarTabBoking(
-                dateSelect: (DateTime? dateTime) {
-                  selectedDate = dateTime;
-                },
-              ),
-              // Booking Calendar with Scrollbar
-              // Scrollbar(
-              //   controller: scrollController,
-              //   thumbVisibility: true,
-              //   child: SingleChildScrollView(
-              //     controller: scrollController,
-              //     scrollDirection: Axis.horizontal,
-              //     child: Row(
-              //       children: displayedDates
-              //           .map((date) => _buildDateBox(date))
-              //           .toList(),
-              //     ),
-              //   ),
-              // ),
-              // const SizedBox(height: 20),
-              // Text(
-              //   selectedDate != null
-              //     ? DateFormat('EEEE, MMMM d, y').format(selectedDate!)
-              //       : '',
-              //   style: const TextStyle(fontSize: 15),
-              // ),
-              const SizedBox(height: 25),
-              const Text(
-                'Select Time : ',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
-              ),
-              const SizedBox(height: 16),
-              // Static Time Buttons
-              Wrap(
-                spacing: 10.0,
-                runSpacing: 10.0,
-                children:
-                    availableTimes.map((time) => _buildTimeBox(time)).toList(),
-              ),
-              const SizedBox(height: 16),
-              // Display selected time (if available)
-              if (selectedTime != null)
-                Text(
-                  DateFormat('h:mm a')
-                      .format(_convertTimeOfDayToDateTime(selectedTime!)),
-                  style: const TextStyle(fontSize: 15),
-                ),
-              const SizedBox(height: 30),
-              // Button to book appointment (enabled only if date and time are selected)
-              SizedBox(
-                width: double.infinity,
-                height: 43,
-                child: ElevatedButton(
-                  onPressed: () {
-                    print(selectedDate);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const BookingTimeScreen(),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12),
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: CircleAvatar(
+                    radius: 30,
+                    backgroundImage: NetworkImage(servicePerson.profileUrl),
+                  ),
+                  title: Text(
+                    servicePerson.name,
+                    style: const TextStyle(
+                        fontWeight: FontWeight.bold, fontSize: 20),
+                  ),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        servicePerson.service.toString(),
+                        style: const TextStyle(fontSize: 16),
                       ),
-                    );
-                  },
-                  // onPressed: isBooking ||
-                  //         (selectedDate == null || selectedTime == null)
-                  //     ? null
-                  //     : () async {
-                  //         setState(() {
-                  //           isBooking = true;
-                  //         });
-                  //         // Implement your booking logic here
-                  //         await Future.delayed(const Duration(
-                  //             seconds: 1)); // Simulate network latency
-                  //         setState(() {
-                  //           isBooking = false;
-                  //         });
-                  //         Navigator.push(
-                  //           // ignore: use_build_context_synchronously
-                  //           context,
-                  //           MaterialPageRoute(
-                  //             builder: (context) => const BookingTimeScreen(),
-                  //           ),
-                  //         );
-                  //         // final bookedDateTime =
-                  //         //     _convertTimeOfDayToDateTime(selectedTime!);
-                  //         // ignore: use_build_context_synchronously
-                  //         //   ScaffoldMessenger.of(context).showSnackBar(
-                  //         //     SnackBar(
-                  //         //       content: Text(
-                  //         //           'Appointment Booked for ${DateFormat('EEEE, MMMM d, y - h:mm a').format(bookedDateTime)}'),
-                  //         //       backgroundColor: Colors.green,
-                  //         //     ),
-                  //         //   );
-                  //       },
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blue,
-                      foregroundColor: Colors.white,
-                      minimumSize: const Size(double.infinity, 50)),
-                  child: const Text('Next'),
+                      const SizedBox(height: 4),
+                      Row(
+                        children: [
+                          const Icon(Icons.location_on,
+                              size: 16, color: Colors.red),
+                          const SizedBox(width: 4),
+                          Flexible(
+                            child: Text(
+                              servicePerson.location != ''
+                                  ? servicePerson.location
+                                  : 'Bhimavaram, Andhra Pradesh',
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              // // const SizedBox(height: 20),
-            ],
+                const SizedBox(height: 20),
+                const CalendarTabBoking(
+                    // dateSelect: (DateTime? dateTime) {
+                    //   selectedDate = dateTime;
+                    // },
+                    ),
+                const SizedBox(height: 15),
+                GestureDetector(
+                  onTap: () {
+                    provider.slotTimeSelect(context);
+                    // timeController = TextEditingController(text: provider.slotTime);
+                  },
+                  child: InputTextField(
+                      enable: false,
+                      leadingIcon: Icons.access_time_outlined,
+                      controller: timeController,
+                      hintText: 'Slot Time'),
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                GestureDetector(
+                  onTap: () => provider.slotAlternateTimeSelect(context),
+                  child: InputTextField(
+                      enable: false,
+                      leadingIcon: Icons.access_time_outlined,
+                      controller: alternateTimeController,
+                      hintText: 'Alternate Slot Time'),
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                SizedBox(
+                  width: double.infinity,
+                  height: 42,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const BookingTimeScreen(),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.blue,
+                        foregroundColor: Colors.white,
+                        minimumSize: const Size(double.infinity, 50)),
+                    child: const Text('Next'),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-    );
-  }
-
-  DateTime _convertTimeOfDayToDateTime(TimeOfDay time) {
-    return DateTime(
-      selectedDate!.year,
-      selectedDate!.month,
-      selectedDate!.day,
-      time.hour,
-      time.minute,
-    );
+      );
+    });
   }
 }
 

@@ -344,16 +344,28 @@ class _SignupScreenState extends State<SignupScreen> {
         },
         items: Service.values.map((Service service) {
           return DropdownMenuItem<Service>(
+            alignment: Alignment.center,
             value: service,
-            child: service == Service.user
-                ? Row(
-                    children: [
-                      Icon(getIconForService(service)),
-                      const SizedBox(width: 10),
-                      Text(service.toTitle()),
-                    ],
+            child: service != Service.user
+                ? Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Row(
+                      children: [
+                        Icon(
+                          getIconForService(service),
+                          size: 28,
+                        ),
+                        const SizedBox(width: 10),
+                        Text(
+                          service.toTitle(),
+                          style: const TextStyle(fontSize: 16),
+                        ),
+                      ],
+                    ),
                   )
-                : const SizedBox(),
+                : const SizedBox(
+                    // height: 0,
+                    ),
           );
         }).toList(),
       ),
