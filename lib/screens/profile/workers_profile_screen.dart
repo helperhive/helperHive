@@ -56,21 +56,62 @@ class WorkersProfileScreen extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text(
-                              servicePerson.name,
-                              style: const TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 18),
+                            Row(
+                              children: [
+                                const Icon(
+                                  Icons.person,
+                                  size: 20,
+                                ),
+                                const SizedBox(
+                                  width: 4,
+                                ),
+                                Text(
+                                  servicePerson.name,
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 18),
+                                ),
+                              ],
                             ),
-                            Text(
-                              servicePerson.service.toString(),
-                              style: const TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.w700),
+                            Row(
+                              children: [
+                                const Icon(
+                                  Icons.miscellaneous_services,
+                                  size: 20,
+                                ),
+                                const SizedBox(
+                                  width: 4,
+                                ),
+                                Text(
+                                  servicePerson.service.toString(),
+                                  style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                              ],
                             ),
                             const SizedBox(height: 4),
                             Row(
                               children: [
+                                const Icon(
+                                  Icons.phone,
+                                  size: 20,
+                                ),
+                                const SizedBox(
+                                  width: 4,
+                                ),
+                                Text(
+                                  servicePerson.phoneNumber,
+                                  style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: [
                                 const Icon(Icons.location_on,
-                                    size: 16, color: Colors.red),
+                                    size: 20, color: Colors.red),
                                 const SizedBox(width: 4),
                                 Flexible(
                                   child: Text(
@@ -81,11 +122,6 @@ class WorkersProfileScreen extends StatelessWidget {
                                   ),
                                 ),
                               ],
-                            ),
-                            Text(
-                              servicePerson.phoneNumber,
-                              style: const TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.w600),
                             ),
                             Padding(
                               padding:
