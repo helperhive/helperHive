@@ -49,7 +49,7 @@ class DiscountCard extends StatelessWidget {
                     Text(
                       'Get $discount% on $service',
                       style: const TextStyle(
-                        fontSize: 24,
+                        fontSize: 22,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
@@ -58,6 +58,7 @@ class DiscountCard extends StatelessWidget {
                       'CODE: $code',
                       style: TextStyle(
                         fontSize: 16,
+                        letterSpacing: 1,
                         color: Colors.grey[700],
                       ),
                     ),
@@ -90,9 +91,9 @@ class DiscountCard extends StatelessWidget {
         ),
         Positioned(
             right: -1,
-            top: -20,
+            top: 0,
             child: SizedBox(
-              height: 170,
+              height: 160,
               width: 120,
               child: Image.asset(
                 imagePath,

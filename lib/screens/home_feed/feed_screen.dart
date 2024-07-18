@@ -36,7 +36,8 @@ class _FeedScreenState extends State<FeedScreen> {
               backgroundColor: Colors.white,
               appBar: _homeAppBar(userProvider),
               body: SingleChildScrollView(
-                padding: const EdgeInsets.all(8),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.start,

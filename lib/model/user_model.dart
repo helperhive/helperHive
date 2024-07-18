@@ -10,7 +10,7 @@ class UserModel {
   final String email;
   final String phoneNumber;
   final Service? service;
-  final String? location;
+  final String? location; //required for the user ? remaining
   final double? rating;
   final int? experience;
   final Map? workingHours;

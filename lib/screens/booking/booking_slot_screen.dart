@@ -24,7 +24,7 @@ class BookingSlotScreen extends StatelessWidget {
   final TextEditingController phoneNumberController = TextEditingController();
   final TextEditingController locationController = TextEditingController();
   final TextEditingController noteController = TextEditingController();
-  final isBooking = true;
+
   @override
   Widget build(BuildContext context) {
     UserProvider userProvider = Provider.of<UserProvider>(context);
