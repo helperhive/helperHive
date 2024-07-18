@@ -1,5 +1,6 @@
 import 'package:helperhive/backend/providers/booking_provider.dart';
 import 'package:helperhive/backend/providers/message_provider.dart';
+import 'package:helperhive/backend/providers/my_booking_provider.dart';
 import 'package:helperhive/backend/providers/service_person_provider.dart';
 import 'package:helperhive/backend/providers/user_provider.dart';
 import 'package:provider/provider.dart';
@@ -11,5 +12,6 @@ class AppProviders {
     ChangeNotifierProvider(create: (_) => UserProvider()),
     ChangeNotifierProvider(create: (_) => BookingProvider()),
     ChangeNotifierProvider(create: (_) => ServicePersonProvider()),
+    ChangeNotifierProvider(create: (_) => MyBookingProvider()),
   ];
 }

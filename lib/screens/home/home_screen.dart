@@ -4,7 +4,7 @@ import 'package:helperhive/backend/auth/auth_methods.dart';
 import 'package:helperhive/backend/providers/service_person_provider.dart';
 import 'package:helperhive/backend/providers/user_provider.dart';
 import 'package:helperhive/constants/color_them.dart';
-import 'package:helperhive/screens/booking/booking_details_screen.dart';
+import 'package:helperhive/screens/myBookings/my_booking_screen.dart';
 import 'package:helperhive/screens/chats/screens/chat_view.dart';
 import 'package:helperhive/screens/home_feed/feed_screen.dart';
 import 'package:helperhive/screens/profile/user_profile_screen.dart';
@@ -42,7 +42,7 @@ class _HomePageState extends State<HomePage> {
     return [
       const FeedScreen(),
       const ServiceSearchScreen(),
-      const BookingScreen(),
+      const MyBookingScreen(),
       // const Center(child: Text("chats")),
       const ChatView(),
       UserProfileScreen(

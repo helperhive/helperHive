@@ -15,9 +15,9 @@ import 'package:helperhive/screens/booking/widgets/text_filed.dart';
 
 import 'widgets/calender.dart';
 
-class BookingDateScreen extends StatelessWidget {
+class BookingSlotScreen extends StatelessWidget {
   final ServicePerson servicePerson;
-  BookingDateScreen({
+  BookingSlotScreen({
     super.key,
     required this.servicePerson,
   });

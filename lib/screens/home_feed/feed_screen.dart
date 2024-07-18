@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:helperhive/backend/providers/user_provider.dart';
 import 'package:helperhive/constants/color_them.dart';
 import 'package:helperhive/screens/all_services/all_categories_screen.dart';
-import 'package:helperhive/screens/booking/booking_details_screen.dart';
+import 'package:helperhive/screens/myBookings/my_booking_screen.dart';
 import 'package:helperhive/screens/home_feed/widgets/book_again_list.dart';
 import 'package:helperhive/screens/home_feed/widgets/categories_column.dart';
 import 'package:helperhive/screens/home_feed/widgets/discount_carousel.dart';
@@ -69,7 +69,7 @@ class _FeedScreenState extends State<FeedScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const BookingScreen(),
+                              builder: (context) => const MyBookingScreen(),
                             ),
                           );
                         }),

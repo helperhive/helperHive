@@ -15,7 +15,7 @@ class CategoryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String buttonText =
-        choice == 'Previous Bookings' && isSelected ? 'Already Booked' : choice;
+        choice == 'Previous ' && isSelected ? 'completed' : choice;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 4.0),

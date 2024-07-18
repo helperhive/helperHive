@@ -1,6 +1,6 @@
 import 'package:helperhive/screens/auth/screens/login.dart';
 import 'package:helperhive/screens/auth/screens/signup.dart';
-import 'package:helperhive/screens/booking/booking_details_screen.dart';
+import 'package:helperhive/screens/myBookings/my_booking_screen.dart';
 import 'package:helperhive/screens/home/home_screen.dart';
 import 'package:helperhive/screens/home/onboarding_screen.dart';
 import 'package:helperhive/screens/home/selection_screen.dart';
@@ -26,7 +26,7 @@ class AppRoutes {
     searchScreenRoute: (context) => const ServiceSearchScreen(),
     userProfileRoute: (context) => const UserProfileScreen(),
     // workersProfileRoute: (context) => const WorkersProfileScreen(),
-    bookingRoute: (context) => const BookingScreen(),
+    bookingRoute: (context) => const MyBookingScreen(),
     onBording: (context) => const OnboardingScreens(),
     selectionRoute: (context) => const SelectionScreen(),
   };

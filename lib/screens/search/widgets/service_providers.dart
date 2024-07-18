@@ -4,7 +4,7 @@ import 'package:helperhive/constants/color_them.dart';
 import 'package:helperhive/enums/service_enum.dart';
 import 'package:helperhive/model/service_card_model.dart';
 import 'package:helperhive/model/service_person.dart';
-import 'package:helperhive/screens/profile/workers_profile_screen.dart';
+import 'package:helperhive/screens/booking/workers_profile_screen.dart';
 import 'package:provider/provider.dart';
 
 class ServiceProviders extends StatefulWidget {
@@ -27,14 +27,14 @@ class ServiceProvidersState extends State<ServiceProviders> {
 
   @override
   Widget build(BuildContext context) {
-    List<ServicePersonData> filteredSpecialists = servicePersons
-        .where((specialist) =>
-            (widget.selectedCategory == 'All' ||
-                specialist.serviceName == widget.selectedCategory) &&
-            specialist.providerName
-                .toLowerCase()
-                .contains(widget.searchQuery.toLowerCase()))
-        .toList();
+    // List<ServicePersonData> filteredSpecialists = servicePersons
+    //     .where((specialist) =>
+    //         (widget.selectedCategory == 'All' ||
+    //             specialist.serviceName == widget.selectedCategory) &&
+    //         specialist.providerName
+    //             .toLowerCase()
+    //             .contains(widget.searchQuery.toLowerCase()))
+    //     .toList();
 
     return Consumer<ServicePersonProvider>(builder: (context, provider, _) {
       return Padding(
