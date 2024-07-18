@@ -5,7 +5,6 @@ import 'package:helperhive/screens/home/home_screen.dart';
 import 'package:helperhive/screens/home/onboarding_screen.dart';
 import 'package:helperhive/screens/home/selection_screen.dart';
 import 'package:helperhive/screens/profile/user_profile_screen.dart';
-import 'package:helperhive/screens/profile/workers_profile_screen.dart';
 import 'package:helperhive/screens/search/service_search_screen.dart';
 
 class AppRoutes {

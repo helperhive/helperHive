@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:helperhive/backend/firestore/firebase_firestore_methods.dart';
 import 'package:helperhive/enums/issue_type.dart';
 import 'package:helperhive/enums/service_enum.dart';
-import 'package:helperhive/model/service_booking.dart';
 import 'package:helperhive/model/service_person.dart';
 import 'package:helperhive/model/user_model.dart';
 import 'package:table_calendar/table_calendar.dart';

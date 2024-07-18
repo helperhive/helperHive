@@ -32,7 +32,7 @@ class DiscountCard extends StatelessWidget {
             ),
             elevation: 2,
             child: Container(
-              decoration: BoxDecoration(color: Colors.white, boxShadow: [
+              decoration: const BoxDecoration(color: Colors.white, boxShadow: [
                 BoxShadow(
                   offset: Offset(0, 4),
                   blurRadius: 5,

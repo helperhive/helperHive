@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:helperhive/model/service_card_model.dart';
-import 'package:helperhive/screens/search/widgets/service_providers.dart';
 
 class FilteredBookings extends StatelessWidget {
   final List<ServicePersonData> servicePersons =

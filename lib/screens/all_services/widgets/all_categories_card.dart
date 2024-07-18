@@ -110,7 +110,7 @@ class AllCategoriesCard extends StatelessWidget {
                     color: Colors.black.withOpacity(0.2),
                     spreadRadius: 1,
                     blurRadius: 2,
-                    offset: Offset(1, 2),
+                    offset: const Offset(1, 2),
                   ),
                 ]),
             padding: const EdgeInsets.all(16),
