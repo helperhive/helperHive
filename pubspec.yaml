@@ -96,6 +96,7 @@ flutter:
     - assets/auth/
     - assets/discount_arousel_images/
     - assets/service_icons/
+    - assets/success/
     # - assets/service_icons/cleaning.png
     # - assets/service_icons/washing.png
     # - assets/service_icons/repair.png
@@ -111,7 +112,7 @@ flutter:
     # - assets/service_icons/pest_control.png
     # - assets/service_icons/electical_app.png
 
-    
+
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

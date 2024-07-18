@@ -10,6 +10,7 @@ class ServiceBooking {
   final String bookingDate;
   final String location;
   final String timeSlot;
+  final String phoneNumber;
   final IssueType? issueType;
   final String? alternateTimeSlot;
   final String? note;
@@ -19,6 +20,7 @@ class ServiceBooking {
       required this.service,
       required this.bookingDate,
       required this.location,
+      required this.phoneNumber,
       this.issueType,
       this.alternateTimeSlot,
       this.note,
@@ -32,7 +34,8 @@ class ServiceBooking {
       'bookingDate': bookingDate,
       'location': location,
       'timeSlot': timeSlot,
-      'issueType': issueType,
+      'phoneNumber': phoneNumber,
+      'issueType': issueType.toString(),
       'note': note ?? '',
       'alternateTimeSlot': alternateTimeSlot ?? '',
     };
@@ -45,6 +48,7 @@ class ServiceBooking {
       uid: map['uid'] as String,
       service: stringToService(map['service']),
       bookingDate: map['bookingDate'],
+      phoneNumber: map['phoneNumber'],
       location: map['location'] as String,
       timeSlot: map['timeSlot'],
       issueType: stringToIssue(map['issueType']),

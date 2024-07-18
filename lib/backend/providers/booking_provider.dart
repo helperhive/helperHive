@@ -40,10 +40,21 @@ class BookingProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  IssueType? _issueType;
+  IssueType? get issueType => _issueType;
+  void selectIssue(IssueType? newValue) {
+    if (newValue == _issueType) {
+      _issueType = null;
+    } else {
+      _issueType = newValue;
+    }
+    notifyListeners();
+  }
+
   TimeOfDay _slotTime = const TimeOfDay(hour: 5, minute: 0);
 
   TimeOfDay get slotTime => _slotTime;
-  TimeOfDay _alterSlotTime = const TimeOfDay(hour: 7, minute: 0);
+  TimeOfDay _alterSlotTime = const TimeOfDay(hour: 0, minute: 0);
 
   TimeOfDay get alternateSlotTime => _alterSlotTime;
   Future<void> slotTimeSelect(BuildContext context) async {
@@ -63,7 +74,7 @@ class BookingProvider extends ChangeNotifier {
       initialTime: time,
     );
 
-    return newTime ?? const TimeOfDay(hour: 7, minute: 0);
+    return newTime ?? const TimeOfDay(hour: 5, minute: 0);
   }
 
   BookingMethods bookingMethods = BookingMethods();
@@ -75,13 +86,14 @@ class BookingProvider extends ChangeNotifier {
     required String location,
     required String timeSlot,
     required String bookingDate,
-    IssueType? issueType,
+    required String phoneNumber,
+    // IssueType? issueType,
     String? alternateTimeSlot,
     String? note,
   }) async {
     String res = '';
     _isBooking = true;
-    // print(isBooking);
+    notifyListeners();
     try {
       await completeWorkerBooking(
           name: user.name,
@@ -90,6 +102,7 @@ class BookingProvider extends ChangeNotifier {
           service: servicePerson.service,
           timeSlot: timeSlot,
           bookingDate: bookingDate,
+          phoneNumber: phoneNumber,
           alternateTimeSlot: alternateTimeSlot,
           note: note,
           issueType: issueType);
@@ -99,17 +112,19 @@ class BookingProvider extends ChangeNotifier {
           location: location,
           service: servicePerson.service,
           timeSlot: timeSlot,
+          phoneNumber: servicePerson.phoneNumber,
           bookingDate: bookingDate,
           alternateTimeSlot: alternateTimeSlot,
           note: note,
           issueType: issueType);
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 1));
       _isBooking = false;
       // print(isBooking);
       res = 'success';
-      _alterSlotTime = const TimeOfDay(hour: 7, minute: 0);
+      _alterSlotTime = const TimeOfDay(hour: 0, minute: 0);
       _selectedDate = DateTime.now();
       _slotTime = const TimeOfDay(hour: 5, minute: 0);
+      _issueType = null;
     } catch (e) {
       res = e.toString();
       throw Exception(e.toString());
@@ -125,6 +140,7 @@ class BookingProvider extends ChangeNotifier {
     required Service service,
     required String timeSlot,
     required String bookingDate,
+    required String phoneNumber,
     IssueType? issueType,
     String? alternateTimeSlot,
     String? note,
@@ -136,6 +152,7 @@ class BookingProvider extends ChangeNotifier {
         service: service,
         timeSlot: timeSlot,
         bookingDate: bookingDate,
+        phoneNumber: phoneNumber,
         alternateTimeSlot: alternateTimeSlot,
         issueType: issueType,
         note: note);
@@ -148,6 +165,7 @@ class BookingProvider extends ChangeNotifier {
     required Service service,
     required String timeSlot,
     required String bookingDate,
+    required String phoneNumber,
     IssueType? issueType,
     String? alternateTimeSlot,
     String? note,
@@ -159,6 +177,7 @@ class BookingProvider extends ChangeNotifier {
         service: service,
         timeSlot: timeSlot,
         bookingDate: bookingDate,
+        phoneNumber: phoneNumber,
         alternateTimeSlot: alternateTimeSlot,
         note: note,
         issueType: issueType);

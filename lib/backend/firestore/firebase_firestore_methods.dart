@@ -15,6 +15,7 @@ class BookingMethods {
     required Service service,
     required String timeSlot,
     required String bookingDate,
+    required String phoneNumber,
     IssueType? issueType,
     String? alternateTimeSlot,
     String? note,
@@ -27,6 +28,7 @@ class BookingMethods {
           bookingDate: bookingDate,
           location: location,
           timeSlot: timeSlot,
+          phoneNumber: phoneNumber,
           alternateTimeSlot: alternateTimeSlot,
           note: note,
           issueType: issueType);
@@ -47,6 +49,7 @@ class BookingMethods {
     required Service service,
     required String timeSlot,
     required String bookingDate,
+    required String phoneNumber,
     IssueType? issueType,
     String? alternateTimeSlot,
     String? note,
@@ -59,6 +62,7 @@ class BookingMethods {
           bookingDate: bookingDate,
           location: location,
           timeSlot: timeSlot,
+          phoneNumber: phoneNumber,
           alternateTimeSlot: alternateTimeSlot,
           note: note,
           issueType: issueType);

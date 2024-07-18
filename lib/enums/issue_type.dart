@@ -9,7 +9,7 @@ enum IssueType {
   String toString() {
     return switch (this) {
       IssueType.easy => "Easy",
-      IssueType.moderate => "Moderste",
+      IssueType.moderate => "Moderate",
       IssueType.complex => "Complex",
     };
   }
@@ -25,5 +25,18 @@ Color getIssueColor(IssueType issue) {
       return Colors.red;
     default:
       throw Exception('Unexpected service: $issue');
+  }
+}
+
+IconData getIssueIcon(IssueType issue) {
+  switch (issue) {
+    case IssueType.easy:
+      return Icons.check_circle_outline;
+    case IssueType.moderate:
+      return Icons.warning;
+    case IssueType.complex:
+      return Icons.error;
+    default:
+      throw Exception('Unexpected issue type: $issue');
   }
 }
