@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:helperhive/app/app_routes.dart';
+import 'package:helperhive/backend/auth/auth_methods.dart';
 import 'package:helperhive/backend/providers/user_provider.dart';
 import 'package:helperhive/constants/color_them.dart';
 import 'package:helperhive/screens/all_services/all_categories_screen.dart';
@@ -23,6 +25,7 @@ class FeedScreen extends StatefulWidget {
 }
 
 class _FeedScreenState extends State<FeedScreen> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   void onSearch(String value) {}
   @override
   Widget build(BuildContext context) {
@@ -33,6 +36,7 @@ class _FeedScreenState extends State<FeedScreen> {
               child: CircularProgressIndicator(),
             )
           : Scaffold(
+              key: _scaffoldKey,
               backgroundColor: Colors.white,
               appBar: _homeAppBar(userProvider),
               body: SingleChildScrollView(
@@ -102,49 +106,90 @@ class _FeedScreenState extends State<FeedScreen> {
                   ],
                 ),
               ),
+              drawer: showDrawer(context),
             );
     });
+  }
+
+  Drawer showDrawer(BuildContext context) {
+    return Drawer(
+      child: Column(
+        children: [
+          const UserAccountsDrawerHeader(
+            accountName: Text("Vishnu Vardhan Kothapalli"),
+            accountEmail: Text("vishnu@example.com"),
+            currentAccountPicture: CircleAvatar(
+              backgroundImage:
+                  NetworkImage("https://example.com/profile_pic.jpg"),
+            ),
+          ),
+          ListTile(
+            title: const Text("Saved posts"),
+            onTap: () {},
+          ),
+          ListTile(
+            title: const Text("Groups"),
+            onTap: () {},
+          ),
+          ListTile(
+            title: const Text("Games"),
+            onTap: () {},
+          ),
+          ListTile(
+            title: const Text("Settings"),
+            onTap: () {},
+          ),
+          ListTile(
+            title: const Text("Sign Out"),
+            onTap: () {
+              AuthService().signOutUser();
+              Navigator.of(context).pushReplacementNamed(AppRoutes.loginRoute);
+            },
+          ),
+        ],
+      ),
+    );
   }
 
   AppBar _homeAppBar(UserProvider provider) {
     return AppBar(
       backgroundColor: backgroundColor,
       toolbarHeight: 65,
-      title: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          ListTile(
-            minVerticalPadding: 0,
-            contentPadding: const EdgeInsets.all(0),
-            leading: provider.user.profileUrl != ''
-                ? CircleAvatar(
-                    // backgroundImage: AssetImage('assets/logos/helperHive.png'),
-                    backgroundImage: NetworkImage(provider.user.profileUrl),
-                  )
-                : CircleAvatar(
-                    // backgroundImage: AssetImage('assets/logos/helperHive.png'),
-                    child: Text(provider.user.name[0]),
-                  ),
-            title: Text(
-              provider.user.name,
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
-            ),
-            subtitle: const Row(
-              children: [
-                Icon(
-                  Icons.location_on,
-                  color: Colors.red,
+      automaticallyImplyLeading: false,
+      title: GestureDetector(
+        onTap: () {
+          _scaffoldKey.currentState?.openDrawer();
+        },
+        child: ListTile(
+          minVerticalPadding: 0,
+          contentPadding: const EdgeInsets.all(0),
+          leading: provider.user.profileUrl != ''
+              ? CircleAvatar(
+                  // backgroundImage: AssetImage('assets/logos/helperHive.png'),
+                  backgroundImage: NetworkImage(provider.user.profileUrl),
+                )
+              : CircleAvatar(
+                  // backgroundImage: AssetImage('assets/logos/helperHive.png'),
+                  child: Text(provider.user.name[0]),
                 ),
-                Text(
-                  'Bhimavaram',
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-                ),
-                Icon(Icons.expand_more)
-              ],
-            ),
+          title: Text(
+            provider.user.name,
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
           ),
-        ],
+          subtitle: const Row(
+            children: [
+              Icon(
+                Icons.location_on,
+                color: Colors.red,
+              ),
+              Text(
+                'Bhimavaram',
+                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+              ),
+              Icon(Icons.expand_more)
+            ],
+          ),
+        ),
       ),
       actions: [
         IconButton(
