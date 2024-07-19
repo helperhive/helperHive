@@ -35,6 +35,7 @@ class _HomePageState extends State<HomePage> {
     ServicePersonProvider servicePersonProvider =
         Provider.of(context, listen: false);
     await userProvider.fetchUser();
+    userProvider.getBookingsStream();
     servicePersonProvider.fectchServiceProviders();
   }
 
@@ -111,7 +112,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      // resizeToAvoidBottomInset: false,
       body: Consumer<UserProvider>(builder: (context, userProvider, _) {
         return userProvider.isLoading
             ? const Center(

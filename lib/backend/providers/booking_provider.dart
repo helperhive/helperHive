@@ -20,7 +20,7 @@ class BookingProvider extends ChangeNotifier {
   bool isSelected = true;
   void isSelectedDateOk(DateTime selectedDay, DateTime focusedDay) {
     if (selectedDay
-        .isBefore(DateTime.now().subtract(const Duration(hours: 12)))) {
+        .isBefore(DateTime.now().subtract(const Duration(hours: 20)))) {
       isSelected = false;
     } else {
       isSelected = true;

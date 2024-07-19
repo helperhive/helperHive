@@ -27,7 +27,13 @@ class CategoryButton extends StatelessWidget {
             foregroundColor: isSelected ? Colors.white : Colors.black,
           ),
           onPressed: onPressed,
-          child: Text(buttonText),
+          child: Text(
+            buttonText,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
         ),
       ),
     );

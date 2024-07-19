@@ -11,7 +11,7 @@ class MyBookingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(12.0),
@@ -52,7 +52,7 @@ class MyBookingCard extends StatelessWidget {
                           "Service: ${serviceBooking.service.toString()}",
                           style: const TextStyle(
                             fontSize: 16,
-                            color: Colors.deepPurpleAccent,
+                            // color: Colors.deepPurpleAccent,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -64,7 +64,7 @@ class MyBookingCard extends StatelessWidget {
                           softWrap: true,
                           style: const TextStyle(
                             fontSize: 15.0,
-                            color: Colors.orange,
+                            // color: Colors.orange,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -94,6 +94,7 @@ class MyBookingCard extends StatelessWidget {
                         "Date:\n  ${serviceBooking.bookingDate}",
                         style: const TextStyle(
                           fontSize: 14.0,
+                          color: Colors.deepPurpleAccent,
                           fontWeight: FontWeight.w600,
                         ),
                       ),
@@ -102,6 +103,7 @@ class MyBookingCard extends StatelessWidget {
                         "Time:\n  ${serviceBooking.timeSlot}",
                         style: const TextStyle(
                           fontSize: 14.0,
+                          color: Colors.deepPurpleAccent,
                           fontWeight: FontWeight.w600,
                         ),
                       ),

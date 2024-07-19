@@ -74,7 +74,9 @@ class _FeedScreenState extends State<FeedScreen> {
                             ),
                           );
                         }),
-                    SwiperBuilder(),
+                    SwiperBuilder(
+                      userProvider: userProvider,
+                    ),
                     LabelRow(
                       labelName: 'Top Services',
                       onTap: () {
