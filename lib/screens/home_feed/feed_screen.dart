@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:helperhive/app/app_routes.dart';
+import 'package:helperhive/backend/auth/auth_methods.dart';
 import 'package:helperhive/backend/providers/user_provider.dart';
 import 'package:helperhive/constants/color_them.dart';
+import 'package:helperhive/model/user_model.dart';
 import 'package:helperhive/screens/all_services/all_categories_screen.dart';
 import 'package:helperhive/screens/myBookings/my_booking_screen.dart';
 import 'package:helperhive/screens/home_feed/widgets/book_again_list.dart';
@@ -23,6 +26,7 @@ class FeedScreen extends StatefulWidget {
 }
 
 class _FeedScreenState extends State<FeedScreen> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   void onSearch(String value) {}
   @override
   Widget build(BuildContext context) {
@@ -33,6 +37,7 @@ class _FeedScreenState extends State<FeedScreen> {
               child: CircularProgressIndicator(),
             )
           : Scaffold(
+              key: _scaffoldKey,
               backgroundColor: Colors.white,
               appBar: _homeAppBar(userProvider),
               body: SingleChildScrollView(
@@ -104,49 +109,96 @@ class _FeedScreenState extends State<FeedScreen> {
                   ],
                 ),
               ),
+              drawer: showDrawer(context, userProvider.user),
             );
     });
+  }
+
+  Drawer showDrawer(BuildContext context, UserModel user) {
+    return Drawer(
+      child: Column(
+        children: [
+          UserAccountsDrawerHeader(
+            onDetailsPressed: () =>
+                Navigator.of(context).pushNamed(AppRoutes.userProfileRoute),
+            accountName: Text(user.name),
+            accountEmail: Text(user.email),
+            currentAccountPicture: CircleAvatar(
+              backgroundImage: NetworkImage(user.profileUrl),
+            ),
+          ),
+          ListTile(
+            title: const Text("My Bookings"),
+            onTap: () {
+              Navigator.of(context).pushNamed(AppRoutes.myBookingRoute);
+            },
+          ),
+          ListTile(
+            title: const Text("Services"),
+            onTap: () {
+              Navigator.of(context).pushNamed(AppRoutes.searchScreenRoute);
+            },
+          ),
+          ListTile(
+            title: const Text("Edit Profile"),
+            onTap: () {},
+          ),
+          ListTile(
+            title: const Text("Settings"),
+            onTap: () {},
+          ),
+          ListTile(
+            title: const Text("Sign Out"),
+            onTap: () {
+              AuthService().signOutUser();
+              Navigator.of(context).pushReplacementNamed(AppRoutes.onBording);
+            },
+          ),
+        ],
+      ),
+    );
   }
 
   AppBar _homeAppBar(UserProvider provider) {
     return AppBar(
       backgroundColor: backgroundColor,
       toolbarHeight: 65,
-      title: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          ListTile(
-            minVerticalPadding: 0,
-            contentPadding: const EdgeInsets.all(0),
-            leading: provider.user.profileUrl != ''
-                ? CircleAvatar(
-                    // backgroundImage: AssetImage('assets/logos/helperHive.png'),
-                    backgroundImage: NetworkImage(provider.user.profileUrl),
-                  )
-                : CircleAvatar(
-                    // backgroundImage: AssetImage('assets/logos/helperHive.png'),
-                    child: Text(provider.user.name[0]),
-                  ),
-            title: Text(
-              provider.user.name,
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
-            ),
-            subtitle: const Row(
-              children: [
-                Icon(
-                  Icons.location_on,
-                  color: Colors.red,
+      automaticallyImplyLeading: false,
+      title: GestureDetector(
+        onTap: () {
+          _scaffoldKey.currentState?.openDrawer();
+        },
+        child: ListTile(
+          minVerticalPadding: 0,
+          contentPadding: const EdgeInsets.all(0),
+          leading: provider.user.profileUrl != ''
+              ? CircleAvatar(
+                  // backgroundImage: AssetImage('assets/logos/helperHive.png'),
+                  backgroundImage: NetworkImage(provider.user.profileUrl),
+                )
+              : CircleAvatar(
+                  // backgroundImage: AssetImage('assets/logos/helperHive.png'),
+                  child: Text(provider.user.name[0]),
                 ),
-                Text(
-                  'Bhimavaram',
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
-                ),
-                Icon(Icons.expand_more)
-              ],
-            ),
+          title: Text(
+            provider.user.name,
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
           ),
-        ],
+          subtitle: Row(
+            children: [
+              const Icon(
+                Icons.location_on,
+                color: Colors.red,
+              ),
+              Text(
+                provider.user.location ?? 'Location',
+                style:
+                    const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+              ),
+              const Icon(Icons.expand_more)
+            ],
+          ),
+        ),
       ),
       actions: [
         IconButton(
