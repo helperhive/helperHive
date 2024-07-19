@@ -66,7 +66,11 @@ class _ForgotPasswordState extends State<ForgotPassword> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Lottie.asset('assets/auth/forgot_password.json', height: 200),
+            Lottie.asset(
+              'assets/auth/forgot_password.json',
+              height: 200,
+              repeat: false,
+            ),
             const SizedBox(
               height: 40,
             ),

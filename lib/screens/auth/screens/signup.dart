@@ -143,6 +143,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     Lottie.asset(
                       'assets/auth/signup.json',
                       height: 120,
+                      repeat: false,
                     ),
                     const SizedBox(height: 20),
                     const Text(

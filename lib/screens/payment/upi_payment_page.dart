@@ -64,7 +64,8 @@ class _UPIPaymentPageState extends State<UPIPaymentPage> {
             ),
             const SizedBox(height: 40.0),
             SizedBox(
-              width: double.infinity, // Set the width to take up the entire width of the parent
+              width: double
+                  .infinity, // Set the width to take up the entire width of the parent
               child: ElevatedButton(
                 onPressed: _payWithUPI,
                 style: ElevatedButton.styleFrom(
@@ -96,6 +97,7 @@ class EmptyScreen extends StatelessWidget {
           'assets/animations/tick.json', // Your Lottie animation file
           width: 200,
           height: 200,
+          repeat: false,
         ),
       ),
     );

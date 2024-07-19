@@ -77,6 +77,7 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
                   Lottie.asset(
                     'assets/auth/login.json',
                     height: 200,
+                    repeat: false,
                   ), // Image
                   const SizedBox(height: 20),
                   const Text(

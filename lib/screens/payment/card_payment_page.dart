@@ -5,7 +5,8 @@ class CardPaymentPage extends StatelessWidget {
   final TextEditingController cardNumberController = TextEditingController();
   final TextEditingController expiryDateController = TextEditingController();
   final TextEditingController cvvController = TextEditingController();
-  final TextEditingController cardHolderNameController = TextEditingController();
+  final TextEditingController cardHolderNameController =
+      TextEditingController();
 
   CardPaymentPage({super.key});
 
@@ -34,7 +35,8 @@ class CardPaymentPage extends StatelessWidget {
               hintText: 'MM/YY',
               keyboardType: TextInputType.datetime,
               maxLength: 5,
-              validator: (value) => value!.isEmpty || !RegExp(r'^(0[1-9]|1[0-2])\/?([0-9]{2})$').hasMatch(value)
+              validator: (value) => value!.isEmpty ||
+                      !RegExp(r'^(0[1-9]|1[0-2])\/?([0-9]{2})$').hasMatch(value)
                   ? 'Enter a valid expiry date'
                   : null,
             ),
@@ -52,7 +54,8 @@ class CardPaymentPage extends StatelessWidget {
               controller: cardHolderNameController,
               labelText: 'Card Holder Name',
               keyboardType: TextInputType.text,
-              validator: (value) => value!.isEmpty ? 'Enter the card holder name' : null,
+              validator: (value) =>
+                  value!.isEmpty ? 'Enter the card holder name' : null,
             ),
             const SizedBox(height: 20),
             SizedBox(
@@ -62,7 +65,8 @@ class CardPaymentPage extends StatelessWidget {
                   if (_validateInputs(context)) {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const PaymentSuccessfull()),
+                      MaterialPageRoute(
+                          builder: (context) => const PaymentSuccessfull()),
                     );
                   }
                 },
@@ -124,18 +128,22 @@ class CardPaymentPage extends StatelessWidget {
     String cvv = cvvController.text;
     String cardHolderName = cardHolderNameController.text;
 
-    if (cardNumber.isEmpty || cardNumber.length != 16 ||
+    if (cardNumber.isEmpty ||
+        cardNumber.length != 16 ||
         !RegExp(r'^[0-9]{16}$').hasMatch(cardNumber)) {
       _showErrorDialog(context, 'Please enter a valid card number.');
       return false;
     }
 
-    if (expiryDate.isEmpty || !RegExp(r'^(0[1-9]|1[0-2])\/([0-9]{2})$').hasMatch(expiryDate)) {
+    if (expiryDate.isEmpty ||
+        !RegExp(r'^(0[1-9]|1[0-2])\/([0-9]{2})$').hasMatch(expiryDate)) {
       _showErrorDialog(context, 'Please enter a valid expiry date.');
       return false;
     }
 
-    if (cvv.isEmpty || cvv.length != 3 || !RegExp(r'^[0-9]{3}$').hasMatch(cvv)) {
+    if (cvv.isEmpty ||
+        cvv.length != 3 ||
+        !RegExp(r'^[0-9]{3}$').hasMatch(cvv)) {
       _showErrorDialog(context, 'Please enter a valid CVV.');
       return false;
     }
@@ -184,6 +192,7 @@ class PaymentSuccessfull extends StatelessWidget {
           width: 200,
           height: 200,
           fit: BoxFit.cover,
+          repeat: false,
         ),
       ),
     );

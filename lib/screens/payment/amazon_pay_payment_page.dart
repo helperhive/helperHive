@@ -103,6 +103,7 @@ class EmptyScreen extends StatelessWidget {
           'assets/animations/tick.json', // Your Lottie animation file
           width: 200,
           height: 200,
+          repeat: false,
         ),
       ),
     );
