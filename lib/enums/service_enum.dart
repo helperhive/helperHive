@@ -36,6 +36,25 @@ enum Service {
     };
   }
 
+  String toString2() {
+    return switch (this) {
+      Service.cleaning => "Cleaning",
+      Service.washing => "Washing",
+      Service.repair => "Repair",
+      Service.painting => "Painting",
+      Service.plumbing => "Plumbing",
+      Service.healthcare => "Healthcare",
+      Service.carpenter => "Carpenter",
+      Service.movers => "Movers",
+      Service.pestControl => "PestXpert",
+      Service.saloon => "Saloon",
+      Service.electrician => "Electrical",
+      Service.beautyAndSpa => "Spa",
+      Service.others => "Others",
+      Service.user => "User",
+    };
+  }
+
   String toTitle() {
     return switch (this) {
       Service.cleaning => "Cleaning Service",

@@ -1,34 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:helperhive/constants/color_them.dart';
+import 'package:helperhive/enums/service_enum.dart';
 import 'package:helperhive/screens/all_services/widgets/all_categories_card.dart';
-
-import '../search/service_search_screen.dart';
+import 'package:helperhive/screens/search/service_search_screen.dart';
 
 class AllCategoriesColumn extends StatelessWidget {
   const AllCategoriesColumn({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final Map<String, String> categoryIcons = {
-      'Cleaning': 'assets/service_icons/cleaning.png',
-      'Washing': 'assets/service_icons/washing.png',
-      'Repair': 'assets/service_icons/repair.png',
-      'Painting': 'assets/service_icons/painter.png',
-      'Plumbing': 'assets/service_icons/plumbing.png',
-      'Healthcare': 'assets/service_icons/healthcare.png',
-      'Carpenter': 'assets/service_icons/carpenter.png',
-      'Electrician': 'assets/service_icons/electrician.png',
-      'PestXpert': 'assets/service_icons/pest_control.png',
-      'Saloon': 'assets/service_icons/saloon.png',
-      'Movers': 'assets/service_icons/movers.png',
-      'Spa': 'assets/service_icons/beauty_and_spa.png',
-    };
-
     return Scaffold(
       appBar: AppBar(
         title: const Text(
           'All Categories',
-          style: TextStyle(fontSize: 20),
+          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
         ),
         backgroundColor: blueColor,
       ),
@@ -46,19 +31,19 @@ class AllCategoriesColumn extends StatelessWidget {
                   crossAxisSpacing: 10,
                   childAspectRatio: 1,
                 ),
-                itemCount: categoryIcons.length,
+                itemCount:
+                    Service.values.length - 2, // Excluding the 'user' service
                 itemBuilder: (context, index) {
-                  final String label = categoryIcons.keys.elementAt(index);
-                  final String iconPath = categoryIcons.values.elementAt(index);
+                  Service service = Service.values[index];
+                  String iconPath = getAssetForService(service);
 
                   return AllCategoriesCard(
                     iconPath: iconPath,
-                    label: label,
+                    label: service.toString2(),
                     onTap: () {
-                      // Navigate to CategoryFilterSearch with the selected category
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => ServiceSearchScreen(
-                                sevice: label,
+                                service: service,
                               )));
                     },
                   );

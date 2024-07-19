@@ -7,39 +7,38 @@ class DiscountCard extends StatelessWidget {
   final String code;
   final String discount;
   final String imagePath;
+  final Function()? onTap;
   const DiscountCard(
       {super.key,
       required this.service,
       required this.code,
       required this.discount,
-      required this.imagePath});
+      required this.imagePath,
+      this.onTap});
 
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    return Stack(
-      clipBehavior: Clip.none,
-      children: [
-        Container(
-          color: Colors.white,
-          height: 170,
-          width: width,
-          child: Card(
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 4.0),
+      child: Stack(
+        clipBehavior: Clip.none,
+        children: [
+          Container(
             color: Colors.white,
-            shadowColor: primaryColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(15.0),
-            ),
-            elevation: 2,
+            height: 170,
+            width: width,
             child: Container(
-              decoration: const BoxDecoration(color: Colors.white, boxShadow: [
-                BoxShadow(
-                  offset: Offset(0, 4),
-                  blurRadius: 5,
-                  spreadRadius: 1,
-                  color: Colors.black26,
-                )
-              ]),
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15),
+                  boxShadow: const [
+                    BoxShadow(
+                        color: Colors.black12,
+                        offset: Offset(0, 1),
+                        spreadRadius: 2,
+                        blurRadius: 2)
+                  ]),
               child: Padding(
                 padding: const EdgeInsets.all(15.0),
                 child: Column(
@@ -65,7 +64,7 @@ class DiscountCard extends StatelessWidget {
                     const SizedBox(height: 16),
                     const Spacer(),
                     ElevatedButton(
-                      onPressed: () {},
+                      onPressed: onTap,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: blueColor,
                         padding: const EdgeInsets.symmetric(
@@ -88,19 +87,19 @@ class DiscountCard extends StatelessWidget {
               ),
             ),
           ),
-        ),
-        Positioned(
-            right: -1,
-            top: 0,
-            child: SizedBox(
-              height: 160,
-              width: 120,
-              child: Image.asset(
-                imagePath,
-                fit: BoxFit.cover,
-              ),
-            )),
-      ],
+          Positioned(
+              right: -1,
+              top: 0,
+              child: SizedBox(
+                height: 160,
+                width: 120,
+                child: Image.asset(
+                  imagePath,
+                  fit: BoxFit.cover,
+                ),
+              )),
+        ],
+      ),
     );
   }
 }

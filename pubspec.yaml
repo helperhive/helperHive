@@ -97,6 +97,7 @@ flutter:
     - assets/discount_arousel_images/
     - assets/service_icons/
     - assets/success/
+    - assets/not_found/
     # - assets/service_icons/cleaning.png
     # - assets/service_icons/washing.png
     # - assets/service_icons/repair.png

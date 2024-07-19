@@ -1,79 +1,112 @@
 import 'package:flutter/material.dart';
+import 'package:helperhive/backend/providers/service_person_provider.dart';
 import 'package:helperhive/constants/color_them.dart';
-import 'package:helperhive/screens/search/widgets/service_providers.dart';
+import 'package:helperhive/enums/service_enum.dart';
+// import 'package:helperhive/screens/search/widgets/service_providers.dart';
 import 'package:helperhive/screens/search/widgets/category_filter_search.dart';
 import 'package:helperhive/widgets/search_bar_home.dart';
+import 'package:lottie/lottie.dart';
+import 'package:provider/provider.dart';
 
-//this search bar functionality as to be dynamic
-// require proper state management
-class ServiceSearchScreen extends StatefulWidget {
-  final String? sevice;
-  const ServiceSearchScreen({super.key, this.sevice});
+import 'widgets/service_person_card.dart';
 
-  @override
-  State<ServiceSearchScreen> createState() => ServiceSearchScreenState();
-}
-
-class ServiceSearchScreenState extends State<ServiceSearchScreen> {
-  String selectedCategory = 'All';
-  String searchQuery = '';
-  bool isHovering = false;
-
-  @override
-  void initState() {
-    selectedCategory = widget.sevice ?? 'All';
-    super.initState();
-  }
-
-  void selectCategory(String category) {
-    setState(() {
-      selectedCategory = category;
-    });
-  }
-
-  void updateSearchQuery(String query) {
-    setState(() {
-      searchQuery = query;
-    });
-  }
+class ServiceSearchScreen extends StatelessWidget {
+  final Service? service;
+  const ServiceSearchScreen({super.key, this.service});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.notifications_outlined,
-              color: primaryColor,
-              size: 32,
-            ),
-          )
-        ],
-        bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(50),
-            child: SearchBarHome(
-              onSearch: updateSearchQuery,
-            )),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 10),
-        child: Column(
-          children: [
-            CategoryFilter(
-              onSelectCategory: selectCategory,
-              selectedCategory: selectedCategory,
-            ),
-            Expanded(
-              child: ServiceProviders(
-                selectedCategory: selectedCategory,
-                searchQuery: searchQuery,
+    return Consumer<ServicePersonProvider>(builder: (context, provider, _) {
+      return Scaffold(
+        appBar: AppBar(
+          actions: [
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.notifications_outlined,
+                color: primaryColor,
+                size: 32,
               ),
-            ),
+            )
           ],
+          bottom: PreferredSize(
+              preferredSize: const Size.fromHeight(50),
+              child: SearchBarHome(
+                onSearch: provider.onSearch,
+              )),
         ),
-      ),
-    );
+        body: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 24),
+          child: provider.isLosding
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    CategoryFilter(
+                      servicePersonProvider: provider,
+                      selectedService: service,
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        child: provider.serviceProviders.isEmpty
+                            ? SingleChildScrollView(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    const SizedBox(
+                                      height: 20,
+                                    ),
+                                    Lottie.asset(
+                                      'assets/not_found/no_user_found.json',
+                                      height: 160,
+                                      repeat: false,
+                                    ),
+                                    const Text(
+                                      'Couldn\'t find matches.',
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w700,
+                                      ),
+                                    ),
+                                    const Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal: 16.0),
+                                      child: Text(
+                                        'Try searching for other providers or see recommendations',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w600,
+                                            color: Colors.grey),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            : ListView.separated(
+                                padding: const EdgeInsets.only(top: 16),
+                                separatorBuilder: (context, index) {
+                                  return const SizedBox(
+                                    height: 16,
+                                  );
+                                },
+                                itemCount: provider.serviceProviders.length,
+                                itemBuilder: (context, index) {
+                                  return ServicePersonCard(
+                                      servicePerson:
+                                          provider.serviceProviders[index]);
+                                },
+                              ),
+                      ),
+                    )
+                  ],
+                ),
+        ),
+      );
+    });
   }
 }

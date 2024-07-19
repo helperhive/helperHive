@@ -111,6 +111,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Consumer<UserProvider>(builder: (context, userProvider, _) {
         return userProvider.isLoading
             ? const Center(
