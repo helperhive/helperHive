@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:delightful_toast/toast/utils/enums.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:helperhive/backend/providers/user_provider.dart';
@@ -34,7 +35,7 @@ class BookingSlotScreen extends StatelessWidget {
         appBar: AppBar(
           title: const Text(
             'Booking Screen',
-            style: TextStyle(fontSize: Checkbox.width),
+            style: TextStyle(color: Colors.white, fontSize: Checkbox.width),
           ),
           backgroundColor: blueColor,
         ),
@@ -78,7 +79,29 @@ class BookingSlotScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 5),
                           GestureDetector(
-                              onTap: provider.setCalenderFormate,
+                              onTap: () async {
+                                DateTime? pickedDate = await showDatePicker(
+                                    context: context,
+                                    initialDate: DateTime.now(),
+                                    firstDate: DateTime(2000),
+                                    lastDate: DateTime(2101));
+
+                                if (pickedDate != null) {
+                                  provider.isSelectedDateOk(
+                                      pickedDate, pickedDate);
+                                  if (!provider.isSelected) {
+                                    toastMessage(
+                                        context: context,
+                                        message: 'Please select a valid date',
+                                        position: DelightSnackbarPosition.top,
+                                        messageColor: Colors.red,
+                                        leadingIcon: const Icon(
+                                          Icons.cancel,
+                                          color: Colors.red,
+                                        ));
+                                  }
+                                }
+                              },
                               child: Container(
                                 padding: const EdgeInsets.all(10),
                                 width: 162,

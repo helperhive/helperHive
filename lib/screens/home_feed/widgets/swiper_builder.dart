@@ -5,7 +5,7 @@ import 'package:helperhive/constants/color_them.dart';
 import 'package:helperhive/enums/issue_type.dart';
 import 'package:helperhive/enums/service_enum.dart';
 import 'package:helperhive/model/service_booking.dart';
-import 'package:helperhive/screens/myBookings/my_booking_screen.dart';
+import 'package:helperhive/screens/myBookings/screens/my_booking_screen.dart';
 import 'package:helperhive/screens/search/service_search_screen.dart';
 import 'package:lottie/lottie.dart';
 

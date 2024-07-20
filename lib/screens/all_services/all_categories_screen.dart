@@ -8,7 +8,7 @@ class AllCategoriesColumn extends StatefulWidget {
   const AllCategoriesColumn({super.key});
 
   @override
-  _AllCategoriesColumnState createState() => _AllCategoriesColumnState();
+  State<AllCategoriesColumn> createState() => _AllCategoriesColumnState();
 }
 
 class _AllCategoriesColumnState extends State<AllCategoriesColumn>
@@ -21,7 +21,7 @@ class _AllCategoriesColumnState extends State<AllCategoriesColumn>
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: const Duration(milliseconds: 1800),
+      duration: const Duration(milliseconds: 0),
       vsync: this,
     );
     _animation = CurvedAnimation(
@@ -43,7 +43,8 @@ class _AllCategoriesColumnState extends State<AllCategoriesColumn>
       appBar: AppBar(
         title: const Text(
           'All Categories',
-          style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+          style: TextStyle(
+              color: Colors.white, fontSize: 20, fontWeight: FontWeight.w600),
         ),
         backgroundColor: blueColor,
       ),
@@ -70,7 +71,7 @@ class _AllCategoriesColumnState extends State<AllCategoriesColumn>
                   final animationDelay =
                       (index / (Service.values.length - 2)) * 1.0;
                   final delayedAnimation = Tween<Offset>(
-                    begin: const Offset(0, -1),
+                    begin: const Offset(-1, -1),
                     end: const Offset(0, 0),
                   ).animate(
                     CurvedAnimation(

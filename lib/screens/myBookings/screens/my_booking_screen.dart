@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:helperhive/backend/providers/booking_provider.dart';
 import 'package:helperhive/backend/providers/my_booking_provider.dart';
 import 'package:helperhive/constants/color_them.dart';
 import 'package:helperhive/model/service_booking.dart';
@@ -10,7 +11,7 @@ import 'package:helperhive/widgets/search_bar_home.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
-import 'widgets/my_booking_card.dart';
+import '../widgets/my_booking_card.dart';
 
 class MyBookingScreen extends StatefulWidget {
   const MyBookingScreen({super.key});
@@ -39,37 +40,37 @@ class MyBookingScreenState extends State<MyBookingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.menu,
-                color: primaryColor,
-                size: 32,
+    return Consumer<BookingProvider>(builder: (context, provider, _) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.menu,
+                  color: primaryColor,
+                  size: 32,
+                ),
               ),
-            ),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.notifications_outlined,
-                color: primaryColor,
-                size: 32,
-              ),
-            )
-          ],
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.notifications_outlined,
+                  color: primaryColor,
+                  size: 32,
+                ),
+              )
+            ],
+          ),
+          bottom: PreferredSize(
+              preferredSize: const Size.fromHeight(50),
+              child: SearchBarHome(
+                onSearch: updateSearchQuery,
+              )),
         ),
-        bottom: PreferredSize(
-            preferredSize: const Size.fromHeight(50),
-            child: SearchBarHome(
-              onSearch: updateSearchQuery,
-            )),
-      ),
-      body: Consumer<MyBookingProvider>(builder: (context, provider, _) {
-        return SingleChildScrollView(
+        body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8),
             child: Column(
@@ -101,13 +102,16 @@ class MyBookingScreenState extends State<MyBookingScreen> {
                 if (selectedCategory == 'current')
                   MyBookingStream(firestore: _firestore, user: _user),
                 if (selectedCategory == 'Previous')
-                  PreviousBookingStream(firestore: _firestore, user: _user)
+                  PreviousBookingStream(firestore: _firestore, user: _user),
+                const SizedBox(
+                  height: 20,
+                ),
               ],
             ),
           ),
-        );
-      }),
-    );
+        ),
+      );
+    });
   }
 }
 
@@ -203,6 +207,7 @@ class MyBookingStream extends StatelessWidget {
         return ListView.separated(
           // padding: EdgeInsets.only(),
           shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
           itemBuilder: (context, index) {
             final booking = bookings[index];
             // Replace with your booking data fields
@@ -314,6 +319,8 @@ class PreviousBookingStream extends StatelessWidget {
         return ListView.separated(
           // padding: EdgeInsets.only(),
           shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+
           itemBuilder: (context, index) {
             final booking = bookings[index];
             // Replace with your booking data fields

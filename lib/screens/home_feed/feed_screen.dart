@@ -5,13 +5,14 @@ import 'package:helperhive/backend/providers/user_provider.dart';
 import 'package:helperhive/constants/color_them.dart';
 import 'package:helperhive/model/user_model.dart';
 import 'package:helperhive/screens/all_services/all_categories_screen.dart';
-import 'package:helperhive/screens/myBookings/my_booking_screen.dart';
+import 'package:helperhive/screens/myBookings/screens/my_booking_screen.dart';
 import 'package:helperhive/screens/home_feed/widgets/book_again_list.dart';
 import 'package:helperhive/screens/all_services/widgets/categories_column.dart';
 import 'package:helperhive/screens/home_feed/widgets/discount_carousel.dart';
 import 'package:helperhive/screens/home_feed/widgets/label_row.dart';
 import 'package:helperhive/screens/home_feed/widgets/swiper_builder.dart';
 import 'package:helperhive/screens/home_feed/widgets/top_services_list.dart';
+import 'package:helperhive/screens/profile/user_profile_screen.dart';
 import 'package:helperhive/screens/search/service_search_screen.dart';
 import 'package:helperhive/widgets/search_bar_home.dart';
 import 'package:provider/provider.dart';
@@ -119,36 +120,74 @@ class _FeedScreenState extends State<FeedScreen> {
       child: Column(
         children: [
           UserAccountsDrawerHeader(
-            onDetailsPressed: () =>
-                Navigator.of(context).pushNamed(AppRoutes.userProfileRoute),
-            accountName: Text(user.name),
-            accountEmail: Text(user.email),
-            currentAccountPicture: CircleAvatar(
-              backgroundImage: NetworkImage(user.profileUrl),
+            decoration: const BoxDecoration(color: Colors.lightBlue),
+            onDetailsPressed: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                    builder: (context) => const UserProfileScreen())),
+            accountName: Text(
+              user.name,
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
+            accountEmail: Text(
+              user.email,
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+            ),
+            currentAccountPicture: user.profileUrl != ''
+                ? CircleAvatar(
+                    backgroundImage: NetworkImage(user.profileUrl),
+                  )
+                : CircleAvatar(
+                    child: Text(
+                      user.name[0],
+                      style: const TextStyle(
+                          fontSize: 24, fontWeight: FontWeight.bold),
+                    ),
+                  ),
           ),
           ListTile(
-            title: const Text("My Bookings"),
+            leading: const Icon(Icons.calendar_month),
+            title: const Text(
+              "My Bookings",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+            ),
             onTap: () {
-              Navigator.of(context).pushNamed(AppRoutes.myBookingRoute);
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const MyBookingScreen()));
             },
           ),
           ListTile(
-            title: const Text("Services"),
+            leading: const Icon(Icons.miscellaneous_services),
+            title: const Text(
+              "Services",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+            ),
             onTap: () {
-              Navigator.of(context).pushNamed(AppRoutes.searchScreenRoute);
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const ServiceSearchScreen()));
             },
           ),
           ListTile(
-            title: const Text("Edit Profile"),
+            leading: const Icon(Icons.edit),
+            title: const Text(
+              "Edit Profile",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+            ),
             onTap: () {},
           ),
           ListTile(
-            title: const Text("Settings"),
+            leading: const Icon(Icons.settings),
+            title: const Text(
+              "Settings",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+            ),
             onTap: () {},
           ),
           ListTile(
-            title: const Text("Sign Out"),
+            leading: const Icon(Icons.logout_outlined),
+            title: const Text(
+              "Sign Out",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+            ),
             onTap: () {
               AuthService().signOutUser();
               Navigator.of(context).pushReplacementNamed(AppRoutes.onBording);

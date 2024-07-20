@@ -16,14 +16,14 @@ class WorkersProfileScreen extends StatelessWidget {
         appBar: AppBar(
           title: const Text(
             'Service Provider Profile',
-            // style: TextStyle(fontWeight: FontWeight.w500),
+            style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
           ),
           backgroundColor: blueColor,
           actions: [
             IconButton(
               icon: const Icon(
                 Icons.favorite,
-                // color:
+                color: Colors.white,
                 size: 32,
               ),
               onPressed: () {},
@@ -43,136 +43,153 @@ class WorkersProfileScreen extends StatelessWidget {
                       Column(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: CircleAvatar(
-                                radius: 40,
-                                backgroundImage:
-                                    NetworkImage(servicePerson.profileUrl)),
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 4.0, horizontal: 8),
+                            child: servicePerson.profileUrl == ''
+                                ? CircleAvatar(
+                                    radius: 42,
+                                    backgroundImage:
+                                        NetworkImage(servicePerson.profileUrl),
+                                  )
+                                : CircleAvatar(
+                                    radius: 42,
+                                    child: Text(
+                                      servicePerson.name[0],
+                                      style: const TextStyle(
+                                          fontSize: 32,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                  ),
                           ),
                         ],
                       ),
                       Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Row(
-                              children: [
-                                const Icon(
-                                  Icons.person,
-                                  size: 20,
-                                ),
-                                const SizedBox(
-                                  width: 4,
-                                ),
-                                Text(
-                                  servicePerson.name,
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                const Icon(
-                                  Icons.miscellaneous_services,
-                                  size: 20,
-                                ),
-                                const SizedBox(
-                                  width: 4,
-                                ),
-                                Text(
-                                  servicePerson.service.toString(),
-                                  style: const TextStyle(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Row(
+                                children: [
+                                  const Icon(
+                                    Icons.person,
+                                    size: 20,
+                                  ),
+                                  const SizedBox(
+                                    width: 4,
+                                  ),
+                                  Text(
+                                    servicePerson.name,
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        fontSize: 16),
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  const Icon(
+                                    Icons.miscellaneous_services,
+                                    size: 20,
+                                  ),
+                                  const SizedBox(
+                                    width: 4,
+                                  ),
+                                  Text(
+                                    servicePerson.service.toString(),
+                                    style: const TextStyle(
                                       fontSize: 16,
-                                      fontWeight: FontWeight.w700),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 4),
-                            Row(
-                              children: [
-                                const Icon(
-                                  Icons.phone,
-                                  size: 20,
-                                ),
-                                const SizedBox(
-                                  width: 4,
-                                ),
-                                Text(
-                                  servicePerson.phoneNumber,
-                                  style: const TextStyle(
+                                      // fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 4),
+                              Row(
+                                children: [
+                                  const Icon(
+                                    Icons.phone,
+                                    size: 20,
+                                  ),
+                                  const SizedBox(
+                                    width: 4,
+                                  ),
+                                  Text(
+                                    servicePerson.phoneNumber,
+                                    style: const TextStyle(
                                       fontSize: 16,
-                                      fontWeight: FontWeight.w600),
-                                ),
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                const Icon(Icons.location_on,
-                                    size: 20, color: Colors.red),
-                                const SizedBox(width: 4),
-                                Flexible(
-                                  child: Text(
-                                    servicePerson.location != ''
-                                        ? servicePerson.location
-                                        : 'Bhimavaram, Andhra Pradesh',
-                                    style: const TextStyle(fontSize: 16),
+                                      // fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              // Row(
+                              //   children: [
+                              //     const Icon(Icons.location_on,
+                              //         size: 20, color: Colors.red),
+                              //     const SizedBox(width: 4),
+                              //     Flexible(
+                              //       child: Text(
+                              //         servicePerson.location != ''
+                              //             ? servicePerson.location
+                              //             : '',
+                              //         style: const TextStyle(fontSize: 16),
+                              //       ),
+                              //     ),
+                              //   ],
+                              // ),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 10.0),
+                                child: Container(
+                                  width: 150,
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 8, vertical: 4),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(width: 0.5),
+                                    borderRadius: BorderRadius.circular(6),
+                                    color: Colors.white,
+                                    boxShadow: [
+                                      BoxShadow(
+                                          offset: const Offset(0, 1),
+                                          spreadRadius: 1,
+                                          blurRadius: 4,
+                                          color: Colors.grey.shade300)
+                                    ],
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      const Icon(Icons.star,
+                                          color: Colors.orange, size: 18),
+                                      const SizedBox(width: 2.0),
+                                      Text(
+                                        '${servicePerson.rating} |',
+                                        style: const TextStyle(
+                                            color: primaryColor),
+                                      ),
+                                      const SizedBox(
+                                        width: 8,
+                                      ),
+                                      const Icon(
+                                        Icons.work_outline,
+                                        size: 16,
+                                        color: Colors.orange,
+                                      ),
+                                      const SizedBox(width: 4.0),
+                                      Text(
+                                        '${servicePerson.experience} Years',
+                                        style: const TextStyle(
+                                            color: primaryColor),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              ],
-                            ),
-                            Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(vertical: 4.0),
-                              child: Container(
-                                width: 150,
-                                padding: const EdgeInsets.symmetric(
-                                    horizontal: 8, vertical: 4),
-                                decoration: BoxDecoration(
-                                  border: Border.all(width: 0.5),
-                                  borderRadius: BorderRadius.circular(6),
-                                  color: Colors.white,
-                                  boxShadow: [
-                                    BoxShadow(
-                                        offset: const Offset(0, 1),
-                                        spreadRadius: 1,
-                                        blurRadius: 4,
-                                        color: Colors.grey.shade300)
-                                  ],
-                                ),
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    const Icon(Icons.star,
-                                        color: Colors.orange, size: 18),
-                                    const SizedBox(width: 2.0),
-                                    Text(
-                                      '${servicePerson.rating} |',
-                                      style:
-                                          const TextStyle(color: primaryColor),
-                                    ),
-                                    const SizedBox(
-                                      width: 8,
-                                    ),
-                                    const Icon(
-                                      Icons.work_outline,
-                                      size: 16,
-                                      color: Colors.orange,
-                                    ),
-                                    const SizedBox(width: 4.0),
-                                    Text(
-                                      '${servicePerson.experience} Years',
-                                      style:
-                                          const TextStyle(color: primaryColor),
-                                    ),
-                                  ],
-                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       )
                     ],
@@ -265,7 +282,7 @@ class WorkersProfileScreen extends StatelessWidget {
                       ),
                 const SizedBox(height: 25),
                 SizedBox(
-                  width: double.infinity,
+                  width: 320,
                   height: 43,
                   child: ElevatedButton(
                     onPressed: () {
@@ -282,7 +299,7 @@ class WorkersProfileScreen extends StatelessWidget {
                         backgroundColor: blueColor,
                         foregroundColor: Colors.white,
                         minimumSize: const Size(double.infinity, 50)),
-                    child: const Text('Book Appointment'),
+                    child: const Text('Book Service'),
                   ),
                 ),
                 const SizedBox(height: 40),
