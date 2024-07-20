@@ -11,11 +11,18 @@ class ProfileMenuItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8),
+      margin: const EdgeInsets.symmetric(vertical: 12),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
-        color: Colors.grey[200],
-      ),
+          borderRadius: BorderRadius.circular(8),
+          color: Colors.grey[100],
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 6,
+              spreadRadius: 2,
+              offset: const Offset(0, 3),
+            ),
+          ]),
       child: InkWell(
         onTap: onTap,
         child: Padding(

@@ -1,152 +1,218 @@
 import 'package:flutter/material.dart';
+import 'package:helperhive/backend/providers/user_provider.dart';
 import 'package:helperhive/screens/payment/payment_screen.dart';
 import 'package:helperhive/screens/profile/edit_profile_screen.dart';
 import 'package:helperhive/screens/profile/widgets/change_password_screen.dart';
 import 'package:helperhive/screens/profile/widgets/help_screen.dart';
 import 'package:helperhive/screens/profile/widgets/notifications_screen.dart';
-import 'package:helperhive/screens/profile/widgets/settings_screen.dart';
+import 'package:helperhive/screens/profile/tabs/settings_screen.dart';
+import 'package:provider/provider.dart';
 
-class UserProfileScreen extends StatefulWidget {
+class UserProfileScreen extends StatelessWidget {
   final Function()? onTap;
   const UserProfileScreen({super.key, this.onTap});
 
   @override
-  UserProfileScreenState createState() => UserProfileScreenState();
-}
-
-class UserProfileScreenState extends State<UserProfileScreen> {
-  String name = 'Lokesh Surya Prakash';
-  String profession = 'Software Engineer';
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey[100],
-      body: SafeArea(
-        child: Column(
-          children: [
-            Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(20),
-              color: Colors.white,
-              child: Column(
-                children: [
-                  CircleAvatar(
-                    radius: 70,
-                    backgroundImage: AssetImage('assets/profile/profile.png'),
-                    backgroundColor: Colors.blueAccent,
-                  ),
-                  const SizedBox(height: 12),
-                  Text(
-                    name,
-                    style: const TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.blueAccent,
+    return Consumer<UserProvider>(builder: (context, provider, _) {
+      return Scaffold(
+        backgroundColor: Colors.white.withOpacity(0.6),
+        body: SafeArea(
+          child: Column(
+            children: [
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.all(20),
+                color: Colors.white.withOpacity(0.6),
+                child: Column(
+                  children: [
+                    provider.user.profileUrl == ''
+                        ? const CircleAvatar(
+                            radius: 60,
+                            backgroundImage:
+                                AssetImage('assets/profile/profile.png'),
+                            backgroundColor: Colors.blueAccent,
+                          )
+                        : CircleAvatar(
+                            radius: 60,
+                            backgroundImage:
+                                NetworkImage(provider.user.profileUrl),
+                            backgroundColor: Colors.blueAccent,
+                          ),
+                    const SizedBox(height: 12),
+                    Text(
+                      provider.user.name,
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blueAccent,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    profession,
-                    style: const TextStyle(
-                      fontSize: 18,
-                      color: Colors.blueGrey,
+                    const SizedBox(height: 4),
+                    Text(
+                      provider.user.service.toString(),
+                      style: const TextStyle(
+                        fontSize: 18,
+                        color: Colors.blueGrey,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
+              Expanded(
+                child: ListView(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  children: [
+                    ProfileMenuItem(
+                      icon: Icons.person,
+                      text: 'Edit Profile',
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const EditProfileScreen(),
+                          ),
+                        );
+                      },
+                    ),
+                    // ProfileMenuItem(
+                    //   icon: Icons.payment,
+                    //   text: 'Payment Methods',
+                    //   onTap: () {
+                    //     Navigator.push(
+                    //       context,
+                    //       MaterialPageRoute(
+                    //         builder: (context) => const PaymentScreen(),
+                    //       ),
+                    //     );
+                    //   },
+                    // ),
+                    ProfileMenuItem(
+                      icon: Icons.lock,
+                      text: 'Change Password',
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ChangePasswordScreen(),
+                          ),
+                        );
+                      },
+                    ),
+                    ProfileMenuItem(
+                      icon: Icons.settings,
+                      text: 'Settings',
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SettingsScreen(),
+                          ),
+                        );
+                      },
+                    ),
+                    ProfileMenuItem(
+                      icon: Icons.notifications,
+                      text: 'Notifications',
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const NotificationsScreen(),
+                          ),
+                        );
+                      },
+                    ),
+                    ProfileMenuItem(
+                      icon: Icons.help,
+                      text: 'Help',
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const HelpScreen(),
+                          ),
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 10),
+                    ProfileMenuItem(
+                      icon: Icons.logout,
+                      text: 'Logout',
+                      onTap: () => _showLogoutDialog(context),
+                      textColor: Colors.red, // Highlight Logout item
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      );
+    });
+  }
+
+  void _showLogoutDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
             ),
-            Expanded(
-              child: ListView(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                children: [
-                  ProfileMenuItem(
-                    icon: Icons.person,
-                    text: 'Edit Profile',
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const EditProfileScreen(),
-                        ),
-                      );
-                    },
-                  ),
-                  ProfileMenuItem(
-                    icon: Icons.payment,
-                    text: 'Payment Methods',
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const PaymentScreen(),
-                        ),
-                      );
-                    },
-                  ),
-                  ProfileMenuItem(
-                    icon: Icons.lock,
-                    text: 'Change Password',
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const ChangePasswordScreen(),
-                        ),
-                      );
-                    },
-                  ),
-                  ProfileMenuItem(
-                    icon: Icons.settings,
-                    text: 'Settings',
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const SettingsScreen(),
-                        ),
-                      );
-                    },
-                  ),
-                  ProfileMenuItem(
-                    icon: Icons.notifications,
-                    text: 'Notifications',
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const NotificationsScreen(),
-                        ),
-                      );
-                    },
-                  ),
-                  ProfileMenuItem(
-                    icon: Icons.help,
-                    text: 'Help',
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const HelpScreen(),
-                        ),
-                      );
-                    },
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  const Text(
+                    'Logout',
+                    style: TextStyle(
+                      fontSize: 24,
+                      color: Colors.blue,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                   const SizedBox(height: 20),
-                  ProfileMenuItem(
-                    icon: Icons.logout,
-                    text: 'Logout',
-                    onTap: widget.onTap ?? () {},
-                    textColor: Colors.red, // Highlight Logout item
+                  const Text(
+                    'Are you sure you want to logout?',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      TextButton(
+                        child: const Text('Cancel'),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            foregroundColor: Colors.white,
+                            backgroundColor: Colors.blue),
+                        child: const Text(
+                          'Logout',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        onPressed: () => onTap,
+                      ),
+                    ],
                   ),
                 ],
               ),
             ),
-          ],
-        ),
-      ),
-    );
+          );
+        });
   }
 }
 
@@ -157,6 +223,7 @@ class ProfileMenuItem extends StatelessWidget {
   final Color? textColor;
 
   const ProfileMenuItem({
+    super.key,
     required this.icon,
     required this.text,
     required this.onTap,
@@ -172,14 +239,13 @@ class ProfileMenuItem extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
         decoration: BoxDecoration(
           color: Colors.white,
-          border:
-              Border.all(color: Colors.black, width: 1), // Black border added
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withOpacity(0.1),
               blurRadius: 6,
-              offset: Offset(0, 3),
+              spreadRadius: 2,
+              offset: const Offset(0, 3),
             ),
           ],
         ),
@@ -197,7 +263,8 @@ class ProfileMenuItem extends StatelessWidget {
                 ),
               ),
             ),
-            Icon(Icons.arrow_forward_ios, color: Colors.blueAccent, size: 16),
+            const Icon(Icons.arrow_forward_ios,
+                color: Colors.blueAccent, size: 16),
           ],
         ),
       ),
