@@ -69,39 +69,41 @@ class MyBookingScreenState extends State<MyBookingScreen> {
             )),
       ),
       body: Consumer<MyBookingProvider>(builder: (context, provider, _) {
-        return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Row(
-                children: [
-                  Flexible(
-                    flex: 1,
-                    child: CategoryButton(
-                      choice: 'current',
-                      isSelected: selectedCategory == 'current',
-                      onPressed: () => selectCategory('current'),
+        return SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  children: [
+                    Flexible(
+                      flex: 1,
+                      child: CategoryButton(
+                        choice: 'current',
+                        isSelected: selectedCategory == 'current',
+                        onPressed: () => selectCategory('current'),
+                      ),
                     ),
-                  ),
-                  Flexible(
-                    flex: 1,
-                    child: CategoryButton(
-                      choice: 'Previous ',
-                      isSelected: selectedCategory == 'Previous',
-                      onPressed: () => selectCategory('Previous'),
+                    Flexible(
+                      flex: 1,
+                      child: CategoryButton(
+                        choice: 'Previous ',
+                        isSelected: selectedCategory == 'Previous',
+                        onPressed: () => selectCategory('Previous'),
+                      ),
                     ),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              if (selectedCategory == 'current')
-                MyBookingStream(firestore: _firestore, user: _user),
-              if (selectedCategory == 'Previous')
-                PreviousBookingStream(firestore: _firestore, user: _user)
-            ],
+                  ],
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                if (selectedCategory == 'current')
+                  MyBookingStream(firestore: _firestore, user: _user),
+                if (selectedCategory == 'Previous')
+                  PreviousBookingStream(firestore: _firestore, user: _user)
+              ],
+            ),
           ),
         );
       }),

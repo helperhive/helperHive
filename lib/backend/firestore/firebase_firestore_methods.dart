@@ -31,7 +31,7 @@ class BookingMethods {
           phoneNumber: phoneNumber,
           alternateTimeSlot: alternateTimeSlot,
           note: note,
-          issueType: issueType);
+          issueType: issueType ?? IssueType.notKnown);
       await firebaseFirestore
           .collection('workers')
           .doc(workerUid)
@@ -65,7 +65,7 @@ class BookingMethods {
           phoneNumber: phoneNumber,
           alternateTimeSlot: alternateTimeSlot,
           note: note,
-          issueType: issueType);
+          issueType: issueType ?? IssueType.notKnown);
       await firebaseFirestore
           .collection('users')
           .doc(user.uid)
