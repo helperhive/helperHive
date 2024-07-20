@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+// import 'package:helperhive/app/app_routes.dart';
+import 'package:helperhive/screens/payment/amazon_pay_payment_page.dart';
+import 'package:helperhive/screens/payment/card_payment_page.dart';
+import 'package:helperhive/screens/payment/gpay_payment_page.dart';
+import 'package:helperhive/screens/payment/paytm_payment_page.dart';
+import 'package:helperhive/screens/payment/upi_payment_page.dart';
 import 'package:helperhive/screens/payment/widgets/payment_method_card.dart';
 
 class PaymentScreen extends StatefulWidget {
@@ -20,7 +26,7 @@ class _PaymentScreenState extends State<PaymentScreen> {
           SizedBox(
             height: MediaQuery.of(context).size.height * 0.5,
             child: Center(
-              child: Image.asset('assets/logo.png'), // Your logo here
+              child: Image.asset('assets/payments/logo.png'), // Your logo here
             ),
           ),
           Expanded(
@@ -34,44 +40,63 @@ class _PaymentScreenState extends State<PaymentScreen> {
                 children: [
                   PaymentMethodCard(
                     title: 'Pay with Card',
-                    assetPath: 'assets/card.png',
+                    assetPath: 'assets/payments/card.png',
                     onTap: () {
-                      Navigator.pushNamed(context, '/card_payment');
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => CardPaymentPage()));
                     },
                   ),
                   PaymentMethodCard(
                     title: 'Pay with UPI',
-                    assetPath: 'assets/upi.png',
+                    assetPath: 'assets/payments/upi.png',
                     onTap: () {
-                      Navigator.pushNamed(context, '/upi_payment');
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const UPIPaymentPage()));
                     },
                   ),
                   PaymentMethodCard(
                     title: 'Pay with Amazon Pay',
-                    assetPath: 'assets/amazonpay.png',
+                    assetPath: 'assets/payments/amazonpay.png',
                     onTap: () {
-                      Navigator.pushNamed(context, '/amazon_pay_payment');
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const AmazonPayPaymentPage()));
                     },
                   ),
                   PaymentMethodCard(
                     title: 'Pay with Paytm',
-                    assetPath: 'assets/paytm.png',
+                    assetPath: 'assets/payments/paytm.png',
                     onTap: () {
-                      Navigator.pushNamed(context, '/paytm_payment');
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const UPIPaymentPage()));
                     },
                   ),
                   PaymentMethodCard(
                     title: 'Pay with PhonePe',
-                    assetPath: 'assets/phonepe.png',
+                    assetPath: 'assets/payments/phonepe.png',
                     onTap: () {
-                      Navigator.pushNamed(context, '/phonepe_payment');
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const PaytmPaymentPage()));
                     },
                   ),
                   PaymentMethodCard(
                     title: 'Pay with Google Pay',
-                    assetPath: 'assets/gpay.png',
+                    assetPath: 'assets/payments/gpay.png',
                     onTap: () {
-                      Navigator.pushNamed(context, '/gpay_payment');
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const GPayPaymentPage()));
                     },
                   ),
                 ],
