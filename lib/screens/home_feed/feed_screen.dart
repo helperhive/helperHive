@@ -3,14 +3,16 @@ import 'package:helperhive/app/app_routes.dart';
 import 'package:helperhive/backend/auth/auth_methods.dart';
 import 'package:helperhive/backend/providers/user_provider.dart';
 import 'package:helperhive/constants/color_them.dart';
+import 'package:helperhive/model/user_model.dart';
 import 'package:helperhive/screens/all_services/all_categories_screen.dart';
-import 'package:helperhive/screens/myBookings/my_booking_screen.dart';
+import 'package:helperhive/screens/myBookings/screens/my_booking_screen.dart';
 import 'package:helperhive/screens/home_feed/widgets/book_again_list.dart';
 import 'package:helperhive/screens/all_services/widgets/categories_column.dart';
 import 'package:helperhive/screens/home_feed/widgets/discount_carousel.dart';
 import 'package:helperhive/screens/home_feed/widgets/label_row.dart';
 import 'package:helperhive/screens/home_feed/widgets/swiper_builder.dart';
 import 'package:helperhive/screens/home_feed/widgets/top_services_list.dart';
+import 'package:helperhive/screens/profile/user_profile_screen.dart';
 import 'package:helperhive/screens/search/service_search_screen.dart';
 import 'package:helperhive/widgets/search_bar_home.dart';
 import 'package:provider/provider.dart';
@@ -78,7 +80,9 @@ class _FeedScreenState extends State<FeedScreen> {
                             ),
                           );
                         }),
-                    SwiperBuilder(),
+                    SwiperBuilder(
+                      userProvider: userProvider,
+                    ),
                     LabelRow(
                       labelName: 'Top Services',
                       onTap: () {
@@ -106,44 +110,87 @@ class _FeedScreenState extends State<FeedScreen> {
                   ],
                 ),
               ),
-              drawer: showDrawer(context),
+              drawer: showDrawer(context, userProvider.user),
             );
     });
   }
 
-  Drawer showDrawer(BuildContext context) {
+  Drawer showDrawer(BuildContext context, UserModel user) {
     return Drawer(
       child: Column(
         children: [
-          const UserAccountsDrawerHeader(
-            accountName: Text("Vishnu Vardhan Kothapalli"),
-            accountEmail: Text("vishnu@example.com"),
-            currentAccountPicture: CircleAvatar(
-              backgroundImage:
-                  NetworkImage("https://example.com/profile_pic.jpg"),
+          UserAccountsDrawerHeader(
+            decoration: const BoxDecoration(color: Colors.lightBlue),
+            onDetailsPressed: () => Navigator.of(context).push(
+                MaterialPageRoute(
+                    builder: (context) => const UserProfileScreen())),
+            accountName: Text(
+              user.name,
+              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
+            accountEmail: Text(
+              user.email,
+              style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+            ),
+            currentAccountPicture: user.profileUrl != ''
+                ? CircleAvatar(
+                    backgroundImage: NetworkImage(user.profileUrl),
+                  )
+                : CircleAvatar(
+                    child: Text(
+                      user.name[0],
+                      style: const TextStyle(
+                          fontSize: 24, fontWeight: FontWeight.bold),
+                    ),
+                  ),
           ),
           ListTile(
-            title: const Text("Saved posts"),
+            leading: const Icon(Icons.calendar_month),
+            title: const Text(
+              "My Bookings",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+            ),
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const MyBookingScreen()));
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.miscellaneous_services),
+            title: const Text(
+              "Services",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+            ),
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const ServiceSearchScreen()));
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.edit),
+            title: const Text(
+              "Edit Profile",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+            ),
             onTap: () {},
           ),
           ListTile(
-            title: const Text("Groups"),
+            leading: const Icon(Icons.settings),
+            title: const Text(
+              "Settings",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+            ),
             onTap: () {},
           ),
           ListTile(
-            title: const Text("Games"),
-            onTap: () {},
-          ),
-          ListTile(
-            title: const Text("Settings"),
-            onTap: () {},
-          ),
-          ListTile(
-            title: const Text("Sign Out"),
+            leading: const Icon(Icons.logout_outlined),
+            title: const Text(
+              "Sign Out",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+            ),
             onTap: () {
               AuthService().signOutUser();
-              Navigator.of(context).pushReplacementNamed(AppRoutes.loginRoute);
+              Navigator.of(context).pushReplacementNamed(AppRoutes.onBording);
             },
           ),
         ],
@@ -176,17 +223,18 @@ class _FeedScreenState extends State<FeedScreen> {
             provider.user.name,
             style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
           ),
-          subtitle: const Row(
+          subtitle: Row(
             children: [
-              Icon(
+              const Icon(
                 Icons.location_on,
                 color: Colors.red,
               ),
               Text(
-                'Bhimavaram',
-                style: TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
+                provider.user.location ?? 'Location',
+                style:
+                    const TextStyle(fontSize: 15, fontWeight: FontWeight.w500),
               ),
-              Icon(Icons.expand_more)
+              const Icon(Icons.expand_more)
             ],
           ),
         ),

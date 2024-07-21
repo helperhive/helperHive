@@ -4,7 +4,7 @@ import 'package:helperhive/backend/auth/auth_methods.dart';
 import 'package:helperhive/backend/providers/service_person_provider.dart';
 import 'package:helperhive/backend/providers/user_provider.dart';
 import 'package:helperhive/constants/color_them.dart';
-import 'package:helperhive/screens/myBookings/my_booking_screen.dart';
+import 'package:helperhive/screens/myBookings/screens/my_booking_screen.dart';
 import 'package:helperhive/screens/chats/screens/chat_view.dart';
 import 'package:helperhive/screens/home_feed/feed_screen.dart';
 import 'package:helperhive/screens/profile/user_profile_screen.dart';
@@ -35,6 +35,7 @@ class _HomePageState extends State<HomePage> {
     ServicePersonProvider servicePersonProvider =
         Provider.of(context, listen: false);
     await userProvider.fetchUser();
+    userProvider.getBookingsStream();
     servicePersonProvider.fectchServiceProviders();
   }
 
@@ -111,7 +112,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
+      // resizeToAvoidBottomInset: false,
       body: Consumer<UserProvider>(builder: (context, userProvider, _) {
         return userProvider.isLoading
             ? const Center(

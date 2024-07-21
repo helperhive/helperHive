@@ -55,6 +55,8 @@ class UserModel {
       workingHours: map['workingHours'] ?? {},
       description: map['description'] ?? '',
       profileUrl: map['profileUrl'] ?? '',
+      // ? 'https://as2.ftcdn.net/v2/jpg/02/15/84/43/1000_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg'
+      // : map['profileUrl'],
       // discount: map['discount'],
       price: map['price'] ?? 0,
       connections: map['connections'] ?? [],

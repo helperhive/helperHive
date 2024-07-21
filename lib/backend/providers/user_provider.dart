@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:helperhive/model/service_booking.dart';
 import 'package:helperhive/model/user_model.dart';
 
 class UserProvider extends ChangeNotifier {
@@ -22,5 +23,21 @@ class UserProvider extends ChangeNotifier {
     }
     _isLoading = false;
     notifyListeners();
+  }
+
+  List<ServiceBooking> _myBookings = [];
+  List<ServiceBooking> get myBookigs => _myBookings;
+  void getBookingsStream() {
+    print('my bookings');
+    _firestore
+        .collection('users')
+        .doc(uid)
+        .collection('myBookings')
+        .snapshots()
+        .listen((snaps) {
+      _myBookings =
+          snaps.docs.map((snap) => ServiceBooking.fromSnapshot(snap)).toList();
+      notifyListeners();
+    });
   }
 }

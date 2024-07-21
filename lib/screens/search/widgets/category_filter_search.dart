@@ -173,7 +173,9 @@ class _CategoryFilterState extends State<CategoryFilter> {
   }
 
   void _scrollToSelectedCategory(Service selectedCategory) {
-    final index = services.indexOf(selectedCategory);
+    final index = selectedCategory == Service.others
+        ? 0
+        : services.indexOf(selectedCategory);
     if (index >= 0) {
       _scrollController.animateTo(
         index * 120.0, // Adjust this value based on the width of each button
@@ -190,11 +192,11 @@ class _CategoryFilterState extends State<CategoryFilter> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (widget.selectedService != null) {
-        Future.microtask(() => widget.servicePersonProvider
-            .onSelectservice(widget.selectedService!));
-        _scrollToSelectedCategory(widget.selectedService!);
-      }
+      // if (widget.selectedService != null) {
+      Future.microtask(() => widget.servicePersonProvider
+          .onSelectservice(widget.selectedService ?? Service.others));
+      _scrollToSelectedCategory(widget.selectedService ?? Service.others);
+      // }
     });
   }
 

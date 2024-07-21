@@ -12,6 +12,5 @@ class AppProviders {
     ChangeNotifierProvider(create: (_) => UserProvider()),
     ChangeNotifierProvider(create: (_) => BookingProvider()),
     ChangeNotifierProvider(create: (_) => ServicePersonProvider()),
-    ChangeNotifierProvider(create: (_) => MyBookingProvider()),
   ];
 }

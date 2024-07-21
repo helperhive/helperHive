@@ -20,6 +20,7 @@ class AuthService {
       UserCredential result = await auth.createUserWithEmailAndPassword(
           email: email, password: password);
       User? user = result.user;
+
       UserModel userModel = UserModel(
           uid: user!.uid,
           email: email,
@@ -40,6 +41,7 @@ class AuthService {
           .doc(user.uid)
           .set(userModel.toMap());
       await firestore.collection('users').doc(user.uid).set(userModel.toMap());
+      await auth.currentUser!.updateDisplayName(name);
       res = 'success';
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
@@ -80,6 +82,7 @@ class AuthService {
           service: Service.user,
           connections: []);
       await firestore.collection('users').doc(user.uid).set(userModel.toMap());
+      await auth.currentUser!.updateDisplayName(name);
       res = 'success';
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
