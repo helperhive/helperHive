@@ -4,6 +4,7 @@ import 'package:helperhive/backend/auth/auth_methods.dart';
 import 'package:helperhive/backend/providers/service_person_provider.dart';
 import 'package:helperhive/backend/providers/user_provider.dart';
 import 'package:helperhive/constants/color_them.dart';
+import 'package:helperhive/enums/service_enum.dart';
 import 'package:helperhive/screens/myBookings/screens/my_booking_screen.dart';
 import 'package:helperhive/screens/chats/screens/chat_view.dart';
 import 'package:helperhive/screens/home_feed/feed_screen.dart';
@@ -42,7 +43,9 @@ class _HomePageState extends State<HomePage> {
   List<Widget> _buildScreens() {
     return [
       const FeedScreen(),
-      const ServiceSearchScreen(),
+      const ServiceSearchScreen(
+        service: Service.others,
+      ),
       const MyBookingScreen(),
       // const Center(child: Text("chats")),
       const ChatView(),

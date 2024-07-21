@@ -42,7 +42,7 @@ class _FeedScreenState extends State<FeedScreen> {
             )
           : Scaffold(
               key: _scaffoldKey,
-              backgroundColor: Colors.white,
+              backgroundColor: Colors.white70,
               appBar: _homeAppBar(userProvider),
               body: SingleChildScrollView(
                 padding:

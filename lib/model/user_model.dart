@@ -12,7 +12,7 @@ class UserModel {
   final Service? service;
   final String? location; //required for the user ? remaining
   final double? rating;
-  final int? experience;
+  final double? experience;
   final Map? workingHours;
   final String? description;
   final String profileUrl;
@@ -54,9 +54,9 @@ class UserModel {
       experience: map['experience'] ?? 0,
       workingHours: map['workingHours'] ?? {},
       description: map['description'] ?? '',
-      profileUrl: map['profileUrl'] ?? '',
-      // ? 'https://as2.ftcdn.net/v2/jpg/02/15/84/43/1000_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg'
-      // : map['profileUrl'],
+      profileUrl: map['profileUrl'] == ''
+          ? 'https://firebasestorage.googleapis.com/v0/b/helperhive-vishnu.appspot.com/o/profile.png?alt=media&token=873ed15e-cf9b-46e6-b03c-11499364f16f'
+          : map['profileUrl'],
       // discount: map['discount'],
       price: map['price'] ?? 0,
       connections: map['connections'] ?? [],

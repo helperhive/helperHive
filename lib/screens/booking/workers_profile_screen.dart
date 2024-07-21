@@ -15,11 +15,32 @@ class WorkersProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Service Provider Profile'),
+        title: Row(
+          children: [
+            CircleAvatar(
+              // radius: 16,
+              backgroundImage: NetworkImage(servicePerson.profileUrl),
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            Text(
+              servicePerson.name,
+              style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18),
+            ),
+          ],
+        ),
         backgroundColor: blueColor,
         actions: [
           IconButton(
-            icon: const Icon(Icons.favorite, size: 32),
+            icon: const Icon(
+              Icons.favorite,
+              size: 32,
+              color: Colors.white,
+            ),
             onPressed: () {},
           ),
         ],
@@ -31,15 +52,16 @@ class WorkersProfileScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                padding: const EdgeInsets.symmetric(vertical: 4.0),
                 child: Container(
-                  color: Colors
-                      .blue.shade50, // Background color for the profile box
                   padding: const EdgeInsets.all(16.0),
+                  decoration: BoxDecoration(
+                      color: Colors.blue.shade50,
+                      borderRadius: BorderRadius.circular(10)),
                   child: Column(
                     children: [
                       CircleAvatar(
-                        radius: 60,
+                        radius: 45,
                         backgroundImage: NetworkImage(servicePerson.profileUrl),
                       ),
                       const SizedBox(height: 16),
@@ -53,66 +75,11 @@ class WorkersProfileScreen extends StatelessWidget {
                               : 'Bhimavaram, Andhra Pradesh',
                         },
                       ),
-                      const SizedBox(height: 8),
-                      Container(
-                        width: double.infinity,
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 4),
-                        decoration: BoxDecoration(
-                          border: Border.all(width: 0.5),
-                          borderRadius: BorderRadius.circular(6),
-                          color: Colors.white,
-                          boxShadow: [
-                            BoxShadow(
-                              offset: const Offset(0, 1),
-                              spreadRadius: 1,
-                              blurRadius: 4,
-                              color: Colors.grey.shade300,
-                            ),
-                          ],
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                const Icon(Icons.star,
-                                    color: Colors.orange, size: 18),
-                                const SizedBox(width: 8),
-                                Text(
-                                  '${servicePerson.rating}',
-                                  style: const TextStyle(
-                                    color: primaryColor,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 8),
-                            Row(
-                              children: [
-                                const Icon(Icons.work_outline,
-                                    size: 18, color: Colors.orange),
-                                const SizedBox(width: 8),
-                                Text(
-                                  '${servicePerson.experience} Years',
-                                  style: const TextStyle(
-                                    color: primaryColor,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
                     ],
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 15),
               const Text(
                 'About',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
@@ -122,9 +89,9 @@ class WorkersProfileScreen extends StatelessWidget {
                 color: Colors
                     .blue.shade50, // Background color for the About section
                 padding: const EdgeInsets.all(16.0),
-                child: const ShowMoreText(
+                child: ShowMoreText(
                   text:
-                      'Vishnu, an electrician, is a skilled professional trained in installing, repairing, and maintaining electrical systems. He ensures safety and efficiency in residential, commercial, and industrial settings. With expertise in wiring, troubleshooting, and adherence to safety standards, Vishnu provides essential services while prioritizing customer satisfaction and continuous learning in the ever-evolving field of electrical work.',
+                      '${servicePerson.name}, an ${servicePerson.service.toString()}, is a skilled professional trained in installing, repairing, and maintaining electrical systems. He ensures safety and efficiency in residential, commercial, and industrial settings. With expertise in wiring, troubleshooting, and adherence to safety standards, Vishnu provides essential services while prioritizing customer satisfaction and continuous learning in the ever-evolving field of electrical work.',
                 ),
               ),
               const SizedBox(height: 16),
@@ -134,16 +101,43 @@ class WorkersProfileScreen extends StatelessWidget {
                   const LikeCard(
                       icon: Icons.person, value: '1000', label: 'Services'),
                   LikeCard(
+                      icon: Icons.work,
+                      value: servicePerson.experience.toDouble().toString(),
+                      label: 'Experience'),
+                  LikeCard(
                       icon: Icons.star,
                       value: servicePerson.rating.toString(),
                       label: 'Ratings'),
-                  const LikeCard(
-                      icon: Icons.favorite, value: '4.5', label: 'Favorites'),
                   const LikeCard(
                       icon: Icons.thumb_up, value: '4.5', label: 'Likes'),
                 ],
               ),
               const SizedBox(height: 16),
+              SizedBox(
+                width: double.infinity,
+                height: 43,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => BookingSlotScreen(
+                          servicePerson: servicePerson,
+                        ),
+                      ),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: blueColor,
+                    foregroundColor: Colors.white,
+                    minimumSize: const Size(double.infinity, 50),
+                  ),
+                  child: const Text(
+                    'Book Service',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                  ),
+                ),
+              ),
               servicePerson.workingHours.isNotEmpty
                   ? Container(
                       color: Colors.blue
@@ -168,76 +162,48 @@ class WorkersProfileScreen extends StatelessWidget {
                               startTime: entry.value['startTime'] ?? '',
                               endTime: entry.value['endTime'] ?? '',
                             );
-                          }).toList(),
+                          }),
                         ],
                       ),
                     )
                   : const SizedBox(),
-              const SizedBox(height: 25),
-              SizedBox(
-                width: double.infinity,
-                height: 43,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => BookingSlotScreen(
-                          servicePerson: servicePerson,
-                        ),
-                      ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: blueColor,
-                    foregroundColor: Colors.white,
-                    minimumSize: const Size(double.infinity, 50),
-                  ),
-                  child: const Text('Book Appointment'),
-                ),
-              ),
-              const SizedBox(height: 40),
+              const SizedBox(height: 15),
               const Text(
                 'Reviews',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
               ),
-              Container(
-                color: Colors
-                    .blue.shade50, // Background color for the Reviews section
-                padding: const EdgeInsets.all(16.0),
-                child: Column(
-                  children: [
-                    ReviewCard(
-                      review: Review(
-                        reviewerName: 'Excellent Work!',
-                        rating: 4.5,
-                        comment: 'Great service, highly recommended!',
-                      ),
+              Column(
+                children: [
+                  ReviewCard(
+                    review: Review(
+                      reviewerName: 'Excellent Work!',
+                      rating: 4.5,
+                      comment: 'Great service, highly recommended!',
                     ),
-                    ReviewCard(
-                      review: Review(
-                        reviewerName: 'Good !',
-                        rating: 4.0,
-                        comment: 'Very professional and punctual.',
-                      ),
+                  ),
+                  ReviewCard(
+                    review: Review(
+                      reviewerName: 'Good !',
+                      rating: 4.0,
+                      comment: 'Very professional and punctual.',
                     ),
-                    ReviewCard(
-                      review: Review(
-                        reviewerName: 'Excellent Work!',
-                        rating: 4.5,
-                        comment: 'Great service, highly recommended!',
-                      ),
+                  ),
+                  ReviewCard(
+                    review: Review(
+                      reviewerName: 'Excellent Work!',
+                      rating: 4.5,
+                      comment: 'Great service, highly recommended!',
                     ),
-                    ReviewCard(
-                      review: Review(
-                        reviewerName: 'Satisfactory!',
-                        rating: 4.5,
-                        comment:
-                            'Nice service, low budget, and friendly conversation!',
-                      ),
+                  ),
+                  ReviewCard(
+                    review: Review(
+                      reviewerName: 'Satisfactory!',
+                      rating: 4.5,
+                      comment:
+                          'Nice service, low budget, and friendly conversation!',
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -265,20 +231,28 @@ class ProfileDetailTable extends StatelessWidget {
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: 150, // Fixed width for labels
+              SizedBox(
+                width: 130,
                 child: Text(
-                  '${entry.key}:',
+                  entry.key,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
                   ),
                 ),
               ),
+              const Text(
+                ': ',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 16,
+                ),
+              ),
               Expanded(
                 child: Text(
                   entry.value,
-                  style: const TextStyle(fontSize: 16),
+                  style: const TextStyle(
+                      fontSize: 16, fontWeight: FontWeight.w500),
                   textAlign: TextAlign.start,
                 ),
               ),
@@ -309,7 +283,7 @@ class BookingHours extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+          SizedBox(
             width: 150, // Fixed width for days
             child: Text(
               day,
