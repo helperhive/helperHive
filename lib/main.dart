@@ -33,27 +33,27 @@ class MyApp extends StatelessWidget {
             textTheme: GoogleFonts.dmSansTextTheme(
           Theme.of(context).textTheme,
         )),
-        // home: const OnboardingScreens(),
-        home: StreamBuilder(
-            stream: FirebaseAuth.instance.authStateChanges(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                return const HomePage();
-              } else if (snapshot.hasError) {
-                return const Center(
-                  child: Text("error will loading the data"),
-                );
-              }
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child: CircularProgressIndicator(
-                    color: primaryColor,
-                  ),
-                );
-              }
+        home: const OnboardingScreens(),
+        // home: StreamBuilder(
+        //     stream: FirebaseAuth.instance.authStateChanges(),
+        //     builder: (context, snapshot) {
+        //       if (snapshot.hasData) {
+        //         return const HomePage();
+        //       } else if (snapshot.hasError) {
+        //         return const Center(
+        //           child: Text("error will loading the data"),
+        //         );
+        //       }
+        //       if (snapshot.connectionState == ConnectionState.waiting) {
+        //         return const Center(
+        //           child: CircularProgressIndicator(
+        //             color: primaryColor,
+        //           ),
+        //         );
+        //       }
 
-              return const OnboardingScreens();
-            }),
+        //       return const OnboardingScreens();
+        //     }),
       ),
     );
   }

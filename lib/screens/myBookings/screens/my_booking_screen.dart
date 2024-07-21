@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:helperhive/backend/providers/booking_provider.dart';
-import 'package:helperhive/backend/providers/my_booking_provider.dart';
 import 'package:helperhive/constants/color_them.dart';
 import 'package:helperhive/model/service_booking.dart';
 import 'package:helperhive/screens/booking/widgets/categorybutton.dart';

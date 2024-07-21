@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:helperhive/backend/providers/user_provider.dart';
-import 'package:helperhive/screens/payment/payment_screen.dart';
 import 'package:helperhive/screens/profile/edit_profile_screen.dart';
 import 'package:helperhive/screens/profile/widgets/change_password_screen.dart';
 import 'package:helperhive/screens/profile/widgets/help_screen.dart';
