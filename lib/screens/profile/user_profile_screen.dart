@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:helperhive/backend/providers/user_provider.dart';
-import 'package:helperhive/screens/payment/payment_screen.dart';
+import 'package:helperhive/enums/service_enum.dart';
+
 import 'package:helperhive/screens/profile/edit_profile_screen.dart';
-import 'package:helperhive/screens/profile/widgets/change_password_screen.dart';
-import 'package:helperhive/screens/profile/widgets/help_screen.dart';
-import 'package:helperhive/screens/profile/widgets/notifications_screen.dart';
+import 'package:helperhive/screens/profile/tabs/change_password_screen.dart';
+import 'package:helperhive/screens/profile/tabs/help_screen.dart';
+import 'package:helperhive/screens/profile/tabs/notifications_screen.dart';
 import 'package:helperhive/screens/profile/tabs/settings_screen.dart';
 import 'package:provider/provider.dart';
 
@@ -26,19 +27,34 @@ class UserProfileScreen extends StatelessWidget {
                 color: Colors.white.withOpacity(0.6),
                 child: Column(
                   children: [
-                    provider.user.profileUrl == ''
-                        ? const CircleAvatar(
-                            radius: 60,
-                            backgroundImage:
-                                AssetImage('assets/profile/profile.png'),
-                            backgroundColor: Colors.blueAccent,
-                          )
-                        : CircleAvatar(
-                            radius: 60,
-                            backgroundImage:
-                                NetworkImage(provider.user.profileUrl),
-                            backgroundColor: Colors.blueAccent,
+                    Stack(
+                      children: [
+                        provider.user.profileUrl == ''
+                            ? const CircleAvatar(
+                                radius: 60,
+                                backgroundImage:
+                                    AssetImage('assets/profile/profile.png'),
+                                backgroundColor: Colors.blueAccent,
+                              )
+                            : CircleAvatar(
+                                radius: 60,
+                                backgroundImage:
+                                    NetworkImage(provider.user.profileUrl),
+                                backgroundColor: Colors.blueAccent,
+                              ),
+                        Positioned(
+                          bottom: 0,
+                          right: 0,
+                          child: CircleAvatar(
+                            backgroundColor: Colors.white,
+                            child: IconButton(
+                              onPressed: () {},
+                              icon: const Icon(Icons.edit),
+                            ),
                           ),
+                        )
+                      ],
+                    ),
                     const SizedBox(height: 12),
                     Text(
                       provider.user.name,
@@ -50,7 +66,9 @@ class UserProfileScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      provider.user.service.toString(),
+                      provider.user.service == Service.user
+                          ? provider.user.phoneNumber
+                          : provider.user.service.toString(),
                       style: const TextStyle(
                         fontSize: 18,
                         color: Colors.blueGrey,
@@ -242,7 +260,7 @@ class ProfileMenuItem extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
+              color: Colors.grey.shade300,
               blurRadius: 6,
               spreadRadius: 2,
               offset: const Offset(0, 3),

@@ -4,7 +4,7 @@ class NotificationsScreen extends StatefulWidget {
   const NotificationsScreen({super.key});
 
   @override
-  _NotificationsScreenState createState() => _NotificationsScreenState();
+  State<NotificationsScreen> createState() => _NotificationsScreenState();
 }
 
 class _NotificationsScreenState extends State<NotificationsScreen> {
@@ -16,12 +16,12 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue, // Set the background color to blue
+        backgroundColor: Colors.blue, 
         title: const Text(
           'Notifications',
           style: TextStyle(
-            color: Colors.white, // Ensure the text color is visible against the blue background
-            fontSize: 20, // Adjust font size if needed
+            color: Colors.white, 
+            fontSize: 20, 
           ),
         ),
       ),
