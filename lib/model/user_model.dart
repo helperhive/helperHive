@@ -12,7 +12,7 @@ class UserModel {
   final Service? service;
   final String? location; //required for the user ? remaining
   final double? rating;
-  final int? experience;
+  final double? experience;
   final Map? workingHours;
   final String? description;
   final String profileUrl;
@@ -41,6 +41,7 @@ class UserModel {
 
   static UserModel fromSnapshot(DocumentSnapshot documentSnapshot) {
     var map = documentSnapshot.data() as Map<String, dynamic>;
+    print(map['profileUrl']);
     return UserModel(
       uid: map['uid'],
       name: map['name'],
@@ -49,7 +50,7 @@ class UserModel {
       service: map['service'] == null
           ? Service.user
           : stringToService(map['service']),
-      location: map['location'],
+      location: map['location'] == '' ? 'Bhimavarm' : map['location'],
       rating: map['rating'] ?? 0,
       experience: map['experience'] ?? 0,
       workingHours: map['workingHours'] ?? {},

@@ -113,12 +113,12 @@ class _FeedScreenState extends State<FeedScreen> {
                   ],
                 ),
               ),
-              drawer: showDrawer(context, userProvider.user),
+              drawer: showDrawer(context, userProvider),
             );
     });
   }
 
-  Drawer showDrawer(BuildContext context, UserModel user) {
+  Drawer showDrawer(BuildContext context, UserProvider provider) {
     return Drawer(
       child: Column(
         children: [
@@ -128,20 +128,20 @@ class _FeedScreenState extends State<FeedScreen> {
                 MaterialPageRoute(
                     builder: (context) => const UserProfileScreen())),
             accountName: Text(
-              user.name,
+              provider.user.name,
               style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             accountEmail: Text(
-              user.email,
+              provider.user.email,
               style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
             ),
-            currentAccountPicture: user.profileUrl != ''
+            currentAccountPicture: provider.user.profileUrl != ''
                 ? CircleAvatar(
-                    backgroundImage: NetworkImage(user.profileUrl),
+                    backgroundImage: NetworkImage(provider.user.profileUrl),
                   )
                 : CircleAvatar(
                     child: Text(
-                      user.name[0],
+                      provider.user.name[0],
                       style: const TextStyle(
                           fontSize: 24, fontWeight: FontWeight.bold),
                     ),
@@ -163,7 +163,9 @@ class _FeedScreenState extends State<FeedScreen> {
             icon: Icons.calendar_month,
             label: 'Edit Profile',
             onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const EditProfileScreen())),
+                builder: (context) => const EditProfileScreen(
+                    // userProvider: provider,
+                    ))),
           ),
           DrawerItem(
             icon: Icons.settings,

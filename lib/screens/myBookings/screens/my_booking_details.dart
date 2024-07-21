@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:helperhive/constants/color_them.dart';
 import 'package:helperhive/enums/issue_type.dart';
 import 'package:helperhive/model/service_booking.dart';
 
@@ -13,9 +14,12 @@ class MyBookingDetails extends StatelessWidget {
       appBar: AppBar(
         title: const Text(
           'Booking Details',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+          ),
         ),
-        backgroundColor: Colors.blue,
+        backgroundColor: blueColor,
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -94,7 +98,13 @@ class MyBookingDetails extends StatelessWidget {
                       // Implement payment functionality
                     },
                     icon: const Icon(Icons.payment),
-                    label: const Text('Make Payment'),
+                    label: const Text(
+                      'Make Payment',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                      ),
+                    ),
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.white,
                       backgroundColor: Colors.blue,
@@ -108,7 +118,13 @@ class MyBookingDetails extends StatelessWidget {
                       // Implement chat functionality
                     },
                     icon: const Icon(Icons.chat),
-                    label: const Text('Contact Service Person'),
+                    label: const Text(
+                      'Contact Service Person',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                      ),
+                    ),
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.white,
                       backgroundColor: Colors.blue,

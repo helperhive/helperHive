@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:helperhive/constants/color_them.dart';
 
 class TermsAndConditionsScreen extends StatelessWidget {
   const TermsAndConditionsScreen({super.key});
@@ -7,7 +8,14 @@ class TermsAndConditionsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Terms and Conditions'),
+        backgroundColor: blueColor,
+        title: const Text(
+          'Terms and Conditions',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+          ),
+        ),
       ),
       body: const Center(
         child: Text(

@@ -64,22 +64,22 @@ class _CustomTextFieldState extends State<CustomTextField> {
             labelStyle: const TextStyle(color: Colors.black54),
             contentPadding: const EdgeInsets.only(left: 5),
             focusedBorder: OutlineInputBorder(
-              borderSide: const BorderSide(width: 1.5, color: Colors.blue),
+              borderSide: const BorderSide(width: 1, color: Colors.blue),
               borderRadius: BorderRadius.circular(16),
             ),
             border: OutlineInputBorder(
               gapPadding: 6,
-              borderSide: const BorderSide(width: 1.5, color: Colors.black),
+              borderSide: const BorderSide(width: 1, color: Colors.black),
               borderRadius: BorderRadius.circular(16),
             ),
             disabledBorder: OutlineInputBorder(
               gapPadding: 6,
-              borderSide: const BorderSide(width: 1.5, color: Colors.black),
+              borderSide: const BorderSide(width: 1, color: Colors.black),
               borderRadius: BorderRadius.circular(16),
             ),
             enabledBorder: OutlineInputBorder(
               gapPadding: 6,
-              borderSide: const BorderSide(width: 1.5, color: Colors.black),
+              borderSide: const BorderSide(width: 1, color: Colors.black),
               borderRadius: BorderRadius.circular(16),
             ),
             prefixIcon: Icon(widget.leadingIcon),

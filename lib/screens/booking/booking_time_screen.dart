@@ -54,7 +54,10 @@ class _BookingTimeScreenState extends State<BookingTimeScreen> {
       appBar: AppBar(
         title: const Text(
           'Booking Time Duration',
-          style: TextStyle(fontSize: Checkbox.width),
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+          ),
         ),
         backgroundColor: blueColor,
       ),

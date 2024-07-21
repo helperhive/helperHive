@@ -35,7 +35,10 @@ class BookingSlotScreen extends StatelessWidget {
         appBar: AppBar(
           title: const Text(
             'Booking Screen',
-            style: TextStyle(color: Colors.white, fontSize: Checkbox.width),
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+            ),
           ),
           backgroundColor: blueColor,
         ),

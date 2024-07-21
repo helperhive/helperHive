@@ -24,18 +24,19 @@ class SwiperBuilder extends StatelessWidget {
         itemWidth: width * 0.95,
         itemHeight: 170,
         loop: true,
-        itemCount:
-            userProvider.myBookigs.isEmpty ? 5 : userProvider.myBookigs.length,
+        itemCount: userProvider.myBookings.isEmpty
+            ? 5
+            : userProvider.myBookings.length,
         axisDirection: AxisDirection.right,
         duration: 1200,
         scrollDirection: Axis.horizontal,
         layout: SwiperLayout.TINDER,
         viewportFraction: 0.8,
         itemBuilder: (context, index) {
-          if (userProvider.myBookigs.isEmpty) {
+          if (userProvider.myBookings.isEmpty) {
             return const NoBookingCard();
           }
-          return MyBookingCard(serviceBooking: userProvider.myBookigs[index]);
+          return MyBookingCard(serviceBooking: userProvider.myBookings[index]);
         },
       ),
     ));

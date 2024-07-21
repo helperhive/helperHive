@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-//at to done the payment screen 
+
+//at to done the payment screen
 class PaymentScreen extends StatelessWidget {
   const PaymentScreen({super.key});
 
@@ -7,7 +8,14 @@ class PaymentScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-      title: const Text('Payment'),
+      backgroundColor: Colors.blue,
+      title: const Text(
+        'Payment',
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 20,
+        ),
+      ),
     ));
   }
 }

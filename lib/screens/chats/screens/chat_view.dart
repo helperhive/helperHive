@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:helperhive/backend/providers/message_provider.dart';
+import 'package:helperhive/constants/color_them.dart';
 import 'package:helperhive/constants/hover_button.dart';
 import 'package:helperhive/model/user_model.dart';
 import 'package:helperhive/screens/chats/screens/messages_view.dart';
@@ -14,10 +15,14 @@ class ChatView extends StatelessWidget {
     return Consumer<MessageProvider>(builder: (context, value, _) {
       return Scaffold(
         appBar: AppBar(
+          backgroundColor: blueColor,
           centerTitle: false,
           title: const Text(
             'Chats',
-            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+            ),
           ),
           actions: [
             IconButton(

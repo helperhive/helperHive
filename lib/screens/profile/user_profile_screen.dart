@@ -48,7 +48,17 @@ class UserProfileScreen extends StatelessWidget {
                           child: CircleAvatar(
                             backgroundColor: Colors.white,
                             child: IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        const EditProfileScreen(
+                                            // userProvider: provider,
+                                            ),
+                                  ),
+                                );
+                              },
                               icon: const Icon(Icons.edit),
                             ),
                           ),
@@ -89,23 +99,13 @@ class UserProfileScreen extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => const EditProfileScreen(),
+                            builder: (context) => const EditProfileScreen(
+                                // userProvider: provider,
+                                ),
                           ),
                         );
                       },
                     ),
-                    // ProfileMenuItem(
-                    //   icon: Icons.payment,
-                    //   text: 'Payment Methods',
-                    //   onTap: () {
-                    //     Navigator.push(
-                    //       context,
-                    //       MaterialPageRoute(
-                    //         builder: (context) => const PaymentScreen(),
-                    //       ),
-                    //     );
-                    //   },
-                    // ),
                     ProfileMenuItem(
                       icon: Icons.lock,
                       text: 'Change Password',

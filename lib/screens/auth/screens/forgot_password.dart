@@ -1,6 +1,7 @@
 import 'package:delightful_toast/toast/utils/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:helperhive/backend/auth/auth_methods.dart';
+import 'package:helperhive/constants/color_them.dart';
 import 'package:helperhive/constants/toast.dart';
 import 'package:helperhive/screens/auth/widgets/auth_button.dart';
 import 'package:helperhive/screens/auth/widgets/input_field.dart';
@@ -56,9 +57,13 @@ class _ForgotPasswordState extends State<ForgotPassword> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: blueColor,
         title: const Text(
           'Reset Password',
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+          ),
         ),
       ),
       body: Padding(

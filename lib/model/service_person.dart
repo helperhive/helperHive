@@ -9,7 +9,7 @@ class ServicePerson {
   final Service service;
   final String location;
   final double rating;
-  final int experience;
+  final double experience;
   final Map workingHours;
   final String description;
   final String profileUrl;
