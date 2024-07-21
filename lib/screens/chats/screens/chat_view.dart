@@ -83,7 +83,6 @@ class UserItem extends StatelessWidget {
                   user.profileUrl != '' ? NetworkImage(user.profileUrl) : null,
               child: user.profileUrl == '' ? Text(user.name[0]) : null,
             ),
-   
           ],
         ),
         title: Text(

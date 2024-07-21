@@ -19,16 +19,37 @@ class ServiceSearchScreen extends StatelessWidget {
     return Consumer<ServicePersonProvider>(builder: (context, provider, _) {
       return Scaffold(
         appBar: AppBar(
-          actions: [
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.notifications_outlined,
-                color: primaryColor,
-                size: 32,
-              ),
-            )
-          ],
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              // IconButton(
+              //   onPressed: () {},
+              //   icon: const Icon(
+              //     Icons.menu,
+              //     color: primaryColor,
+              //     size: 32,
+              //   ),
+              // ),
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.notifications_outlined,
+                  color: primaryColor,
+                  size: 32,
+                ),
+              )
+            ],
+          ),
+          // actions: [
+          //   IconButton(
+          //     onPressed: () {},
+          //     icon: const Icon(
+          //       Icons.notifications_outlined,
+          //       color: primaryColor,
+          //       size: 32,
+          //     ),
+          //   )
+          // ],
           bottom: PreferredSize(
               preferredSize: const Size.fromHeight(50),
               child: SearchBarHome(

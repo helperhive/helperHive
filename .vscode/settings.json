@@ -1,4 +1,8 @@
 {
+<<<<<<< HEAD
     "cmake.sourceDirectory": "G:/helperHive/linux",
+=======
+
+>>>>>>> 99a0ac66dcda6286b8903107d02d1bfcbb5ed4f0
     "java.configuration.updateBuildConfiguration": "interactive"
 }

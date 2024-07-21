@@ -5,6 +5,7 @@ import 'package:helperhive/backend/providers/user_provider.dart';
 import 'package:helperhive/constants/color_them.dart';
 import 'package:helperhive/model/user_model.dart';
 import 'package:helperhive/screens/all_services/all_categories_screen.dart';
+import 'package:helperhive/screens/home_feed/widgets/drawer_item.dart';
 import 'package:helperhive/screens/myBookings/screens/my_booking_screen.dart';
 import 'package:helperhive/screens/home_feed/widgets/book_again_list.dart';
 import 'package:helperhive/screens/all_services/widgets/categories_column.dart';
@@ -12,6 +13,8 @@ import 'package:helperhive/screens/home_feed/widgets/discount_carousel.dart';
 import 'package:helperhive/screens/home_feed/widgets/label_row.dart';
 import 'package:helperhive/screens/home_feed/widgets/swiper_builder.dart';
 import 'package:helperhive/screens/home_feed/widgets/top_services_list.dart';
+import 'package:helperhive/screens/profile/edit_profile_screen.dart';
+import 'package:helperhive/screens/profile/tabs/settings_screen.dart';
 import 'package:helperhive/screens/profile/user_profile_screen.dart';
 import 'package:helperhive/screens/search/service_search_screen.dart';
 import 'package:helperhive/widgets/search_bar_home.dart';
@@ -39,7 +42,7 @@ class _FeedScreenState extends State<FeedScreen> {
             )
           : Scaffold(
               key: _scaffoldKey,
-              backgroundColor: Colors.white,
+              backgroundColor: Colors.white70,
               appBar: _homeAppBar(userProvider),
               body: SingleChildScrollView(
                 padding:
@@ -144,54 +147,35 @@ class _FeedScreenState extends State<FeedScreen> {
                     ),
                   ),
           ),
-          ListTile(
-            leading: const Icon(Icons.calendar_month),
-            title: const Text(
-              "My Bookings",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-            ),
-            onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const MyBookingScreen()));
-            },
+          DrawerItem(
+            icon: Icons.calendar_month,
+            label: 'My Bookings',
+            onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => const MyBookingScreen())),
           ),
-          ListTile(
-            leading: const Icon(Icons.miscellaneous_services),
-            title: const Text(
-              "Services",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-            ),
-            onTap: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const ServiceSearchScreen()));
-            },
+          DrawerItem(
+            icon: Icons.miscellaneous_services,
+            label: 'Services',
+            onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => const ServiceSearchScreen())),
           ),
-          ListTile(
-            leading: const Icon(Icons.edit),
-            title: const Text(
-              "Edit Profile",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-            ),
-            onTap: () {},
+          DrawerItem(
+            icon: Icons.calendar_month,
+            label: 'Edit Profile',
+            onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => const EditProfileScreen())),
           ),
-          ListTile(
-            leading: const Icon(Icons.settings),
-            title: const Text(
-              "Settings",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-            ),
-            onTap: () {},
+          DrawerItem(
+            icon: Icons.settings,
+            label: 'Services',
+            onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => const SettingsScreen())),
           ),
-          ListTile(
-            leading: const Icon(Icons.logout_outlined),
-            title: const Text(
-              "Sign Out",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-            ),
-            onTap: () {
-              AuthService().signOutUser();
-              Navigator.of(context).pushReplacementNamed(AppRoutes.onBording);
-            },
+          DrawerItem(
+            icon: Icons.logout_outlined,
+            label: 'Logout',
+            labelColor: Colors.red,
+            onTap: () => _showLogoutDialog(context),
           ),
         ],
       ),
@@ -212,11 +196,9 @@ class _FeedScreenState extends State<FeedScreen> {
           contentPadding: const EdgeInsets.all(0),
           leading: provider.user.profileUrl != ''
               ? CircleAvatar(
-                  // backgroundImage: AssetImage('assets/logos/helperHive.png'),
                   backgroundImage: NetworkImage(provider.user.profileUrl),
                 )
               : CircleAvatar(
-                  // backgroundImage: AssetImage('assets/logos/helperHive.png'),
                   child: Text(provider.user.name[0]),
                 ),
           title: Text(
@@ -270,5 +252,71 @@ class _FeedScreenState extends State<FeedScreen> {
         ),
       ),
     );
+  }
+
+  void _showLogoutDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  const Text(
+                    'Logout',
+                    style: TextStyle(
+                      fontSize: 24,
+                      color: Colors.blue,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  const Text(
+                    'Are you sure you want to logout?',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      TextButton(
+                        child: const Text('Cancel'),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            foregroundColor: Colors.white,
+                            backgroundColor: Colors.blue),
+                        child: const Text(
+                          'Logout',
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        onPressed: () {
+                          AuthService().signOutUser();
+                          Navigator.of(context)
+                              .pushReplacementNamed(AppRoutes.loginRoute);
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          );
+        });
   }
 }

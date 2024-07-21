@@ -53,7 +53,7 @@ class ServiceBooking {
       timeSlot: map['timeSlot'],
       issueType: stringToIssue(map['issueType']),
       alternateTimeSlot: map['alternateTimeSlot'],
-      note: map['nate'] ?? '',
+      note: map['note'] ?? '',
     );
   }
 

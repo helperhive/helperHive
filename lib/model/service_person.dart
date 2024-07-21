@@ -43,14 +43,16 @@ class ServicePerson {
       name: map['name'],
       email: map['email'],
       phoneNumber: map['phoneNumber'] ?? '',
-      service: stringToService(map['service']),
+      service: map['service'] == null
+          ? Service.others
+          : stringToService(map['service']),
       location: map['location'] ?? '',
       rating: map['rating'] ?? 0,
       experience: map['experience'] ?? 0,
       workingHours: map['workingHours'] ?? {},
       description: map['description'] ?? '',
       profileUrl: map['profileUrl'] == ''
-          ? 'https://as2.ftcdn.net/v2/jpg/02/15/84/43/1000_F_215844325_ttX9YiIIyeaR7Ne6EaLLjMAmy4GvPC69.jpg'
+          ? 'https://firebasestorage.googleapis.com/v0/b/helperhive-vishnu.appspot.com/o/profile.png?alt=media&token=873ed15e-cf9b-46e6-b03c-11499364f16f'
           : map['profileUrl'],
 
       price: map['price'] ?? 0,
