@@ -12,7 +12,7 @@ class UserModel {
   final Service? service;
   final String? location; //required for the user ? remaining
   final double? rating;
-  final double? experience;
+  final int? experience;
   final Map? workingHours;
   final String? description;
   final String profileUrl;

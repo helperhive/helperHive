@@ -215,6 +215,7 @@ class UserProfileScreen extends StatelessWidget {
                         style: ElevatedButton.styleFrom(
                             foregroundColor: Colors.white,
                             backgroundColor: Colors.blue),
+                        onPressed: onTap,
                         child: const Text(
                           'Logout',
                           style: TextStyle(
@@ -222,7 +223,6 @@ class UserProfileScreen extends StatelessWidget {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        onPressed: () => onTap,
                       ),
                     ],
                   ),
