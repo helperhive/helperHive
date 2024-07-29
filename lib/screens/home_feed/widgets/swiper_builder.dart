@@ -36,7 +36,10 @@ class SwiperBuilder extends StatelessWidget {
           if (userProvider.myBookings.isEmpty) {
             return const NoBookingCard();
           }
-          return MyBookingCard(serviceBooking: userProvider.myBookings[index]);
+          return MyBookingCard(
+            serviceBooking: userProvider.myBookings[index],
+            userProvider: userProvider,
+          );
         },
       ),
     ));
@@ -111,10 +114,12 @@ class NoBookingCard extends StatelessWidget {
 
 class MyBookingCard extends StatelessWidget {
   final ServiceBooking serviceBooking;
+  final UserProvider userProvider;
 
   const MyBookingCard({
     super.key,
     required this.serviceBooking,
+    required this.userProvider,
   });
 
   @override
@@ -125,6 +130,7 @@ class MyBookingCard extends StatelessWidget {
         MaterialPageRoute(
           builder: (context) => MyBookingDetails(
             booking: serviceBooking,
+            senderId: userProvider.user.uid,
           ),
         ),
       ),

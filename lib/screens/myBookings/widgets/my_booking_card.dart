@@ -6,14 +6,19 @@ import 'package:helperhive/screens/myBookings/screens/my_booking_details.dart';
 // import 'package:helperhive/model/service_person.dart';
 
 class MyBookingCard extends StatelessWidget {
+  final String currentUserID;
   final ServiceBooking serviceBooking;
-  const MyBookingCard({super.key, required this.serviceBooking});
+  const MyBookingCard(
+      {super.key, required this.serviceBooking, required this.currentUserID});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => MyBookingDetails(booking: serviceBooking))),
+          builder: (context) => MyBookingDetails(
+                booking: serviceBooking,
+                senderId: currentUserID,
+              ))),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
         decoration: BoxDecoration(

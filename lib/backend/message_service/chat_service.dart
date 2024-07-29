@@ -28,11 +28,11 @@ class ChatService {
       await _firestore.collection('users').doc(senderId).update({
         'connections': FieldValue.arrayUnion([receiverId]),
       });
-      await _firestore.collection('users').doc(receiverId).update({
+      await _firestore.collection('workers').doc(receiverId).update({
         'connections': FieldValue.arrayUnion([senderId]),
       });
     } catch (e) {
-      print(e.toString());
+      throw Exception(e.toString());
     }
   }
 }

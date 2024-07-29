@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:helperhive/backend/constants/chat_id_generate.dart';
+import 'package:helperhive/backend/message_service/chat_service.dart';
 import 'package:helperhive/model/message.dart';
 import 'package:helperhive/model/user_model.dart';
 
@@ -15,8 +16,16 @@ class MessageProvider extends ChangeNotifier {
   List<UserModel> _allUsers = [];
   List<UserModel> get users => _connections;
   UserModel? user;
+  bool _isLoading = false;
+  bool get isLoading => _isLoading;
+
+  void busy(bool val) {
+    _isLoading = val;
+    notifyListeners();
+  }
 
   void fetchMessages({required String senderId, required String receiverId}) {
+    // busy(true);
     String chatId = ChatIdGenerate.generateChatId(senderId, receiverId);
     FirebaseFirestore.instance
         .collection('chats')
@@ -29,6 +38,7 @@ class MessageProvider extends ChangeNotifier {
         .listen((messages) {
       _messages =
           messages.docs.map((doc) => Message.fromJson(doc.data())).toList();
+      // busy(false);
       notifyListeners();
 
       scrollDown();
@@ -116,5 +126,22 @@ class MessageProvider extends ChangeNotifier {
         .where((user) => user.name.toLowerCase().contains(search.toLowerCase()))
         .toList();
     notifyListeners();
+  }
+
+  Future<void> checkChat({
+    required String senderId,
+    required String receiverId,
+  }) async {
+    try {
+      busy(true);
+      bool isExist = await ChatService.checkChatExist(senderId, receiverId);
+      if (!isExist) {
+        await ChatService.createNewChat(senderId, receiverId);
+      }
+      busy(false);
+      notifyListeners();
+    } catch (e) {
+      throw Exception(e.toString());
+    }
   }
 }

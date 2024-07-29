@@ -213,7 +213,10 @@ class MyBookingStream extends StatelessWidget {
             // Replace with your booking data fields
             final bookingData = ServiceBooking.fromSnapshot(booking);
 
-            return MyBookingCard(serviceBooking: bookingData);
+            return MyBookingCard(
+              serviceBooking: bookingData,
+              currentUserID: user.uid,
+            );
           },
           separatorBuilder: (context, index) {
             return const SizedBox(
@@ -326,7 +329,10 @@ class PreviousBookingStream extends StatelessWidget {
             // Replace with your booking data fields
             final bookingData = ServiceBooking.fromSnapshot(booking);
 
-            return MyBookingCard(serviceBooking: bookingData);
+            return MyBookingCard(
+              serviceBooking: bookingData,
+              currentUserID: user.uid,
+            );
           },
           separatorBuilder: (context, index) {
             return const SizedBox(

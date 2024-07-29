@@ -29,35 +29,46 @@ class _ChatTextFieldState extends State<ChatTextField> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: CustomTextFormField(
-            controller: msgController,
-            hintText: "Add Message..",
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            children: [
+              Expanded(
+                child: CustomTextFormField(
+                  controller: msgController,
+                  hintText: "Add Message..",
+                ),
+              ),
+              const SizedBox(width: 8),
+              CircleAvatar(
+                backgroundColor: Colors.lightBlueAccent,
+                radius: 20,
+                child: IconButton(
+                  icon: const Icon(Icons.send, color: Colors.white),
+                  onPressed: () => _sendText(context),
+                  // onPressed: () {},
+                ),
+              ),
+              const SizedBox(width: 5),
+              CircleAvatar(
+                backgroundColor: Colors.lightBlueAccent,
+                radius: 20,
+                child: IconButton(
+                  icon: const Icon(Icons.camera_alt, color: Colors.white),
+                  onPressed: _sendImage,
+                  // onPressed: () {},
+                ),
+              ),
+            ],
           ),
-        ),
-        const SizedBox(width: 8),
-        CircleAvatar(
-          backgroundColor: Colors.lightBlueAccent,
-          radius: 20,
-          child: IconButton(
-            icon: const Icon(Icons.send, color: Colors.white),
-            onPressed: () => _sendText(context),
-            // onPressed: () {},
-          ),
-        ),
-        const SizedBox(width: 5),
-        CircleAvatar(
-          backgroundColor: Colors.lightBlueAccent,
-          radius: 20,
-          child: IconButton(
-            icon: const Icon(Icons.camera_alt, color: Colors.white),
-            onPressed: _sendImage,
-            // onPressed: () {},
-          ),
-        ),
-      ],
+          const SizedBox(
+            height: 10,
+          )
+        ],
+      ),
     );
   }
 

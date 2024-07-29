@@ -9,13 +9,11 @@ import '../widgets/chat_field.dart';
 import '../widgets/message_bubble.dart';
 
 class MessagesView extends StatefulWidget {
-  final Function(bool)? onBack;
-  final UserModel selectedUser;
+  final String uid;
   // final String userId;
   const MessagesView({
     super.key,
-    required this.selectedUser,
-    this.onBack,
+    required this.uid,
   });
 
   @override
@@ -28,17 +26,17 @@ class _MessagesViewState extends State<MessagesView>
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    fetchMessages(widget.selectedUser.uid);
+    fetchMessages(widget.uid);
   }
 
-  @override
-  void didUpdateWidget(MessagesView oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (oldWidget.selectedUser != widget.selectedUser) {
-      WidgetsBinding.instance.addObserver(this);
-      fetchMessages(widget.selectedUser.uid);
-    }
-  }
+  // @override
+  // void didUpdateWidget(MessagesView oldWidget) {
+  //   super.didUpdateWidget(oldWidget);
+  //   if (oldWidget.selectedUser != widget.selectedUser) {
+  //     WidgetsBinding.instance.addObserver(this);
+  //     fetchMessages(widget.selectedUser.uid);
+  //   }
+  // }
 
   void fetchMessages(String userId) {
     Provider.of<MessageProvider>(context, listen: false)
@@ -65,7 +63,7 @@ class _MessagesViewState extends State<MessagesView>
           children: [
             Expanded(
               child: ChatMessages(
-                receiverId: widget.selectedUser.uid,
+                receiverId: widget.uid,
               ),
             ),
             // const Spacer(),
@@ -74,7 +72,7 @@ class _MessagesViewState extends State<MessagesView>
         ),
       ),
       bottomNavigationBar: ChatTextField(
-        receiverId: widget.selectedUser.uid,
+        receiverId: widget.uid,
       ),
     );
   }
