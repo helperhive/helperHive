@@ -15,14 +15,12 @@ class ChatView extends StatelessWidget {
     return Consumer<MessageProvider>(builder: (context, value, _) {
       return Scaffold(
         appBar: AppBar(
-          backgroundColor: blueColor,
+          // backgroundColor: blueColor,
           centerTitle: false,
           title: const Text(
             'Chats',
             style: TextStyle(
-              color: Colors.white,
-              fontSize: 20,
-            ),
+                color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
           ),
           actions: [
             IconButton(

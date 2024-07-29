@@ -41,7 +41,7 @@ class UserModel {
 
   static UserModel fromSnapshot(DocumentSnapshot documentSnapshot) {
     var map = documentSnapshot.data() as Map<String, dynamic>;
-    print(map['profileUrl']);
+
     return UserModel(
       uid: map['uid'],
       name: map['name'],
@@ -51,8 +51,8 @@ class UserModel {
           ? Service.user
           : stringToService(map['service']),
       location: map['location'] == '' ? 'Bhimavarm' : map['location'],
-      rating: map['rating'] ?? 0,
-      experience: map['experience'] ?? 0,
+      rating: map['rating'] ?? 0.0,
+      experience: map['experience'] == 0 ? 0.00 : map['experience'] ?? 0.0,
       workingHours: map['workingHours'] ?? {},
       description: map['description'] ?? '',
       profileUrl: map['profileUrl'] == ''

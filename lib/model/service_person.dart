@@ -38,27 +38,25 @@ class ServicePerson {
 
   static ServicePerson fromSnapshot(DocumentSnapshot documentSnapshot) {
     var map = documentSnapshot.data() as Map<String, dynamic>;
+
     return ServicePerson(
-      uid: map['uid'],
-      name: map['name'],
-      email: map['email'],
+      uid: map['uid'] ?? '',
+      name: map['name'] ?? '',
+      email: map['email'] ?? '',
       phoneNumber: map['phoneNumber'] ?? '',
       service: map['service'] == null
           ? Service.others
           : stringToService(map['service']),
       location: map['location'] ?? '',
-      rating: map['rating'] ?? 0,
-      experience: map['experience'] ?? 0,
+      rating: (map['rating'] ?? 0).toDouble(),
+      experience: (map['experience'] ?? 0).toDouble(),
       workingHours: map['workingHours'] ?? {},
       description: map['description'] ?? '',
       profileUrl: map['profileUrl'] == ''
           ? 'https://firebasestorage.googleapis.com/v0/b/helperhive-vishnu.appspot.com/o/profile.png?alt=media&token=873ed15e-cf9b-46e6-b03c-11499364f16f'
           : map['profileUrl'],
-
-      price: map['price'] ?? 0,
+      price: (map['price'] ?? 0).toDouble(),
       connections: map['connections'] ?? [],
-
-      // lastSeen: map['lastSeen'],
     );
   }
 

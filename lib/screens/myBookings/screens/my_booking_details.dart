@@ -139,6 +139,15 @@ class MyBookingDetails extends StatelessWidget {
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton(
+        foregroundColor: Colors.white,
+        backgroundColor: Colors.blue,
+        onPressed: () {},
+        child: const Icon(
+          Icons.chat,
+          size: 30,
+        ),
+      ),
     );
   }
 
