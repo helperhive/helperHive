@@ -17,7 +17,7 @@ class UserProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<UserProvider>(builder: (context, provider, _) {
       return Scaffold(
-        backgroundColor: Colors.white.withOpacity(0.6),
+        
         body: SafeArea(
           child: Column(
             children: [
