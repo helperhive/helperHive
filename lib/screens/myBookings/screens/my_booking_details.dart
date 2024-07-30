@@ -5,20 +5,35 @@ import 'package:helperhive/constants/color_them.dart';
 import 'package:helperhive/enums/issue_type.dart';
 import 'package:helperhive/model/service_booking.dart';
 import 'package:helperhive/screens/chats/screens/messages_view.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 
 class MyBookingDetails extends StatelessWidget {
+  final Function(bool)? onBack;
   final String senderId;
   final ServiceBooking booking;
 
   const MyBookingDetails(
-      {super.key, required this.booking, required this.senderId});
+      {super.key, this.onBack, required this.booking, required this.senderId});
 
   @override
   Widget build(BuildContext context) {
     return Consumer<MessageProvider>(builder: (context, provider, _) {
       return Scaffold(
         appBar: AppBar(
+          leading: GestureDetector(
+            onTap: () {
+              if (onBack != null) {
+                onBack!(false);
+              }
+              // Go back to the previous screen
+              Navigator.of(context).pop();
+            },
+            child: const Icon(
+              Icons.arrow_back,
+              color: Colors.black,
+            ),
+          ),
           title: const Text(
             'Booking Details',
             style: TextStyle(
@@ -154,10 +169,14 @@ class MyBookingDetails extends StatelessWidget {
           onPressed: () async {
             await provider.checkChat(
                 senderId: senderId, receiverId: booking.uid);
-            Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => MessagesView(
-                      uid: booking.uid,
-                    )));
+            Navigator.of(context).push(
+              PageTransition(
+                type: PageTransitionType.bottomToTop,
+                child: MessagesView(
+                  uid: booking.uid,
+                ),
+              ),
+            );
           },
           child: const Icon(
             Icons.chat,

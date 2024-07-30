@@ -89,6 +89,7 @@ class UserProvider extends ChangeNotifier {
 
   Future<void> fetchUser() async {
     _isLoading = true;
+
     try {
       var snap = await _firestore.collection('users').doc(uid).get();
       _user = UserModel.fromSnapshot(snap);

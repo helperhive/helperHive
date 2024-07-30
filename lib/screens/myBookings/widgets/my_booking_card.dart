@@ -8,17 +8,29 @@ import 'package:helperhive/screens/myBookings/screens/my_booking_details.dart';
 class MyBookingCard extends StatelessWidget {
   final String currentUserID;
   final ServiceBooking serviceBooking;
+  final Function(bool)? navigate;
   const MyBookingCard(
-      {super.key, required this.serviceBooking, required this.currentUserID});
+      {super.key,
+      this.navigate,
+      required this.serviceBooking,
+      required this.currentUserID});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+      onTap: () {
+        navigate?.call(true); // Call navigate with true when card is tapped
+        Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => MyBookingDetails(
-                booking: serviceBooking,
-                senderId: currentUserID,
-              ))),
+            booking: serviceBooking,
+            senderId: currentUserID,
+            onBack: (p0) {
+              print(p0);
+              navigate?.call(p0); // Handle the onBack callback
+            },
+          ),
+        ));
+      },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 12),
         decoration: BoxDecoration(

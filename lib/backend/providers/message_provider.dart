@@ -9,9 +9,9 @@ import 'package:helperhive/model/user_model.dart';
 class MessageProvider extends ChangeNotifier {
   //need to change this functions according to new schema
 
-  List<Message>? _messages;
+  List<Message> _messages = [];
   ScrollController scrollController = ScrollController();
-  List<Message> get messages => _messages!;
+  List<Message> get messages => _messages;
   List<UserModel> _connections = [];
   List<UserModel> _allUsers = [];
   List<UserModel> get users => _connections;

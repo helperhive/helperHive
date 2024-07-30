@@ -57,6 +57,7 @@ dependencies:
   timeago: ^3.7.0
   jiffy: ^6.3.1
   path: ^1.9.0
+  page_transition: ^2.1.0
 
 dev_dependencies:
   flutter_test:

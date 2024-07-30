@@ -22,7 +22,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   late PersistentTabController _controller;
-
+  bool showNav = false;
   @override
   void initState() {
     super.initState();
@@ -46,7 +46,13 @@ class _HomePageState extends State<HomePage> {
       const ServiceSearchScreen(
         service: Service.others,
       ),
-      const MyBookingScreen(),
+      MyBookingScreen(
+        navigate: (bool val) {
+          setState(() {
+            showNav = val;
+          });
+        },
+      ),
       // const Center(child: Text("chats")),
       const ChatView(),
       UserProfileScreen(
@@ -156,6 +162,7 @@ class _HomePageState extends State<HomePage> {
                   duration: Duration(milliseconds: 200),
                 ),
                 navBarStyle: NavBarStyle.style1,
+                hideNavigationBar: showNav,
               );
       }),
     );

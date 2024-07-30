@@ -14,7 +14,8 @@ import 'package:provider/provider.dart';
 import '../widgets/my_booking_card.dart';
 
 class MyBookingScreen extends StatefulWidget {
-  const MyBookingScreen({super.key});
+  final Function(bool)? navigate;
+  const MyBookingScreen({super.key, this.navigate});
 
   @override
   MyBookingScreenState createState() => MyBookingScreenState();
@@ -100,7 +101,11 @@ class MyBookingScreenState extends State<MyBookingScreen> {
                   height: 16,
                 ),
                 if (selectedCategory == 'current')
-                  MyBookingStream(firestore: _firestore, user: _user),
+                  MyBookingStream(
+                    firestore: _firestore,
+                    user: _user,
+                    navigate: widget.navigate,
+                  ),
                 if (selectedCategory == 'Previous')
                   PreviousBookingStream(firestore: _firestore, user: _user),
                 const SizedBox(
@@ -116,11 +121,12 @@ class MyBookingScreenState extends State<MyBookingScreen> {
 }
 
 class MyBookingStream extends StatelessWidget {
+  final Function(bool)? navigate;
   final FirebaseFirestore firestore;
   final User user;
 
   const MyBookingStream(
-      {super.key, required this.firestore, required this.user});
+      {super.key, this.navigate, required this.firestore, required this.user});
 
   @override
   Widget build(BuildContext context) {
@@ -216,6 +222,9 @@ class MyBookingStream extends StatelessWidget {
             return MyBookingCard(
               serviceBooking: bookingData,
               currentUserID: user.uid,
+              navigate: (bool val) {
+                navigate!(val);
+              },
             );
           },
           separatorBuilder: (context, index) {
