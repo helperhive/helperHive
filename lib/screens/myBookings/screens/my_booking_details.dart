@@ -172,6 +172,8 @@ class MyBookingDetails extends StatelessWidget {
             Navigator.of(context).push(
               PageTransition(
                 type: PageTransitionType.bottomToTop,
+                curve: Curves.easeInOut,
+                duration: const Duration(milliseconds: 350),
                 child: MessagesView(
                   uid: booking.uid,
                 ),

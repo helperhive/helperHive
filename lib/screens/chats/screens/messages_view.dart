@@ -1,8 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:helperhive/backend/providers/message_provider.dart';
+import 'package:helperhive/constants/color_them.dart';
 import 'package:helperhive/model/message.dart';
-import 'package:helperhive/model/user_model.dart';
+
 import 'package:provider/provider.dart';
 
 import '../widgets/chat_field.dart';
@@ -82,7 +83,7 @@ class _MessagesViewState extends State<MessagesView>
       automaticallyImplyLeading: true,
       elevation: 0,
       foregroundColor: Colors.black,
-      backgroundColor: Colors.transparent,
+      backgroundColor: blueColor,
       title: Consumer<MessageProvider>(builder: (context, value, child) {
         return value.user != null
             ? Row(
@@ -97,9 +98,10 @@ class _MessagesViewState extends State<MessagesView>
                         : null,
                   ),
                   const SizedBox(
-                    width: 10,
+                    width: 20,
                   ),
                   Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         value.user!.name,
@@ -111,7 +113,7 @@ class _MessagesViewState extends State<MessagesView>
                       Text(
                         value.user!.service.toString(),
                         style: const TextStyle(
-                          color: Colors.blue,
+                          color: Colors.white,
                           fontSize: 14,
                         ),
                       )
