@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:helperhive/backend/providers/message_provider.dart';
 import 'package:helperhive/constants/color_them.dart';

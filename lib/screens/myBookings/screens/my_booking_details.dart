@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:helperhive/backend/message_service/chat_service.dart';
 import 'package:helperhive/backend/providers/message_provider.dart';
 import 'package:helperhive/constants/color_them.dart';
 import 'package:helperhive/enums/issue_type.dart';

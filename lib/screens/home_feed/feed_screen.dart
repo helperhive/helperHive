@@ -3,7 +3,6 @@ import 'package:helperhive/app/app_routes.dart';
 import 'package:helperhive/backend/auth/auth_methods.dart';
 import 'package:helperhive/backend/providers/user_provider.dart';
 import 'package:helperhive/constants/color_them.dart';
-import 'package:helperhive/model/user_model.dart';
 import 'package:helperhive/screens/all_services/all_categories_screen.dart';
 import 'package:helperhive/screens/home_feed/widgets/drawer_item.dart';
 import 'package:helperhive/screens/myBookings/screens/my_booking_screen.dart';

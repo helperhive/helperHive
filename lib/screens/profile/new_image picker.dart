@@ -8,6 +8,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart' as path;
 
 class ImagePickerScreen extends StatefulWidget {
+  const ImagePickerScreen({super.key});
+
   @override
   _ImagePickerScreenState createState() => _ImagePickerScreenState();
 }
@@ -63,13 +65,13 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Image Picker'),
+        title: const Text('Image Picker'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Stack(
               alignment: Alignment.bottomRight,
               children: [
@@ -85,13 +87,13 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
                     radius: MediaQuery.of(context).size.height * 0.125,
                     backgroundImage: _image != null
                         ? FileImage(_image!)
-                        : AssetImage('assets/naruto.png') as ImageProvider,
+                        : const AssetImage('assets/naruto.png') as ImageProvider,
                   ),
                 ),
                 Container(
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Color.fromARGB(255, 154, 239, 204),
+                    color: const Color.fromARGB(255, 154, 239, 204),
                     border: Border.all(
                       color: Colors
                           .blue,
@@ -99,7 +101,7 @@ class _ImagePickerScreenState extends State<ImagePickerScreen> {
                     ),
                   ),
                   child: IconButton(
-                    icon: Icon(Icons.edit, color: Colors.blue),
+                    icon: const Icon(Icons.edit, color: Colors.blue),
                     iconSize: 30.0,
                     onPressed: _pickImage,
                   ),
