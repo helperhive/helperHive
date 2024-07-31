@@ -19,7 +19,7 @@ class MessageBubble extends StatelessWidget {
         alignment: !isMe ? Alignment.topLeft : Alignment.topRight,
         child: Container(
           decoration: BoxDecoration(
-            color: !isMe ? Colors.blue : Colors.grey,
+            color: !isMe ? Colors.blue : Colors.blue.shade50,
             borderRadius: !isMe
                 ? const BorderRadius.only(
                     topRight: Radius.circular(20),
@@ -59,15 +59,17 @@ class MessageBubble extends StatelessWidget {
                     )
                   : Text(
                       message.content,
-                      style: const TextStyle(color: Colors.white, fontSize: 16),
+                      style: TextStyle(
+                          color: isMe ? Colors.black : Colors.white,
+                          fontSize: 16),
                     ),
               const SizedBox(height: 5),
               Text(
                 textAlign: isMe ? TextAlign.right : TextAlign.left,
                 DateTimeManager.formatDateTime(message.sentTime),
                 // timeago.format(message.sentTime),
-                style: const TextStyle(
-                  color: Colors.white,
+                style: TextStyle(
+                  color: isMe ? Colors.black : Colors.white,
                   fontSize: 10,
                 ),
               ),
@@ -83,7 +85,7 @@ class MessageBubble extends StatelessWidget {
         return AlertDialog(
           content: Container(
             width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height * 0.6,
+            height: MediaQuery.of(context).size.height * 0.5,
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: NetworkImage(imageUrl),

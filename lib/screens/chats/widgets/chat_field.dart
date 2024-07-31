@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:helperhive/backend/message_service/firebase_msg_service.dart';
 import 'package:helperhive/constants/image_picker.dart';
+import 'package:helperhive/constants/toast.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ChatTextField extends StatefulWidget {
@@ -39,7 +40,7 @@ class _ChatTextFieldState extends State<ChatTextField> {
               Expanded(
                 child: CustomTextFormField(
                   controller: msgController,
-                  hintText: "Add Message..",
+                  hintText: "Send Message....",
                 ),
               ),
               const SizedBox(width: 8),
@@ -58,7 +59,7 @@ class _ChatTextFieldState extends State<ChatTextField> {
                 radius: 20,
                 child: IconButton(
                   icon: const Icon(Icons.camera_alt, color: Colors.white),
-                  onPressed: _sendImage,
+                  onPressed: () => _showImageSourceDialog(context),
                   // onPressed: () {},
                 ),
               ),
@@ -82,14 +83,80 @@ class _ChatTextFieldState extends State<ChatTextField> {
     FocusScope.of(context).unfocus();
   }
 
-  Future<void> _sendImage() async {
+  Future<void> _sendImage(ImageSource source) async {
     // late Uint8List file;
-    final pickimage = await pickImage(ImageSource.gallery);
+    final pickimage = await pickImage(source);
     setState(() => file = pickimage);
     if (file != null) {
       await FirebaseFirestoreServiceMessages.addImageMessage(
           receiverId: widget.receiverId, file: file!);
     }
+  }
+
+  Future<void> _showImageSourceDialog(BuildContext context) async {
+    return showDialog<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Choose From'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                GestureDetector(
+                  child: const Row(
+                    children: [
+                      Icon(
+                        Icons.photo_library,
+                        size: 28,
+                      ),
+                      SizedBox(width: 10),
+                      Text(
+                        'Gallery',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w500),
+                      ),
+                    ],
+                  ),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    _sendImage(ImageSource.gallery);
+                  },
+                ),
+                const SizedBox(height: 20),
+                GestureDetector(
+                  child: const Row(
+                    children: [
+                      Icon(
+                        Icons.camera_alt,
+                        size: 28,
+                      ),
+                      SizedBox(width: 10),
+                      Text(
+                        'Camera',
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.w500),
+                      ),
+                    ],
+                  ),
+                  onTap: () {
+                    Navigator.of(context).pop();
+                    _sendImage(ImageSource.camera);
+                  },
+                ),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }
 
@@ -122,22 +189,22 @@ class CustomTextFormField extends StatelessWidget {
         obscureText: obscureText ?? false,
         onChanged: onChanged,
         decoration: InputDecoration(
-          labelText: labelText,
-          hintText: hintText,
-          prefixIcon: prefixIcon != null ? Icon(prefixIcon) : null,
-          suffixIcon: suffixIcon != null
-              ? IconButton(
-                  onPressed: onPressedSuffixIcon,
-                  icon: Icon(suffixIcon),
-                )
-              : null,
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(30),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(30),
-            borderSide: const BorderSide(color: Colors.blue),
-          ),
-        ),
+            labelText: labelText,
+            hintText: hintText,
+            prefixIcon: prefixIcon != null ? Icon(prefixIcon) : null,
+            suffixIcon: suffixIcon != null
+                ? IconButton(
+                    onPressed: onPressedSuffixIcon,
+                    icon: Icon(suffixIcon),
+                  )
+                : null,
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(20),
+              borderSide: const BorderSide(color: Colors.blue),
+            ),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 8)),
       );
 }

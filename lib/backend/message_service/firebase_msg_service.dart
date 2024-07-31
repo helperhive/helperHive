@@ -28,8 +28,9 @@ class FirebaseFirestoreServiceMessages {
     required String receiverId,
     required Uint8List file,
   }) async {
+    String chatId = ChatIdGenerate.generateChatId(currentUid, receiverId);
     final image = await StorageMethods.uploadImageToStorage(
-        file: file, childName: 'image/chat/${DateTime.now()}', chatId: '');
+        file: file, childName: 'image/chat/${DateTime.now()}', chatId: chatId);
 
     final message = Message(
       content: image,
