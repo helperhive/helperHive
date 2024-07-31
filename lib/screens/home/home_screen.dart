@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:helperhive/app/app_routes.dart';
 import 'package:helperhive/backend/auth/auth_methods.dart';
+import 'package:helperhive/backend/providers/message_provider.dart';
 import 'package:helperhive/backend/providers/service_person_provider.dart';
 import 'package:helperhive/backend/providers/user_provider.dart';
 import 'package:helperhive/constants/color_them.dart';
@@ -54,7 +55,13 @@ class _HomePageState extends State<HomePage> {
         },
       ),
       // const Center(child: Text("chats")),
-      const ChatView(),
+      ChatView(
+        navigate: (bool val) {
+          setState(() {
+            showNav = val;
+          });
+        },
+      ),
       UserProfileScreen(
         onTap: () {
           AuthService().signOutUser();

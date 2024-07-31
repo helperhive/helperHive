@@ -1,18 +1,26 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:helperhive/backend/providers/message_provider.dart';
-import 'package:helperhive/constants/color_them.dart';
+
 import 'package:helperhive/constants/hover_button.dart';
-import 'package:helperhive/model/user_model.dart';
+import 'package:helperhive/model/service_person.dart';
+
 import 'package:helperhive/screens/chats/screens/messages_view.dart';
 import 'package:helperhive/widgets/search_bar_home.dart';
 import 'package:provider/provider.dart';
 
-class ChatView extends StatelessWidget {
-  const ChatView({super.key});
+class ChatView extends StatefulWidget {
+  final Function(bool)? navigate;
+  const ChatView({super.key, this.navigate});
 
   @override
+  State<ChatView> createState() => _ChatViewState();
+}
+
+class _ChatViewState extends State<ChatView> {
+  @override
   Widget build(BuildContext context) {
-    return Consumer<MessageProvider>(builder: (context, value, _) {
+    return Consumer<MessageProvider>(builder: (context, provider, _) {
       return Scaffold(
         appBar: AppBar(
           // backgroundColor: blueColor,
@@ -37,42 +45,75 @@ class ChatView extends StatelessWidget {
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(52),
             child: SearchBarHome(
-              onSearch: value.onSearch,
+              onSearch: provider.onSearch,
               searchText: 'Search',
             ),
           ),
         ),
-        body: ListView.builder(
-            itemCount: value.users.length,
-            itemBuilder: (context, index) {
-              UserModel user = value.users[index];
-              return UserItem(
-                  user: user,
-                  onChatSelected: (UserModel selectedUser) {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => MessagesView(uid: user.uid)));
-                  });
-            }),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
+          child: StreamBuilder<List<ServicePerson>>(
+            stream: provider.getConnections(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                return Center(child: Text('Error: ${snapshot.error}'));
+              } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                return const Center(child: Text('No connections found'));
+              } else {
+                final users = snapshot.data!;
+                return ListView.builder(
+                  itemCount: users.length,
+                  itemBuilder: (context, index) {
+                    ServicePerson user = users[index];
+                    return UserItem(
+                      user: user,
+                      // navigate: (bool val) {
+                      //   widget.navigate!(val);
+                      // },
+                      onChatSelected: () {
+                        widget.navigate?.call(true);
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => MessagesView(
+                              uid: user.uid,
+                              onBack: (bool val) {
+                                widget.navigate!.call(false);
+                              },
+                            ),
+                          ),
+                        );
+                      },
+                    );
+                  },
+                );
+              }
+            },
+          ),
+        ),
       );
     });
   }
 }
 
 class UserItem extends StatelessWidget {
-  final Function(UserModel) onChatSelected;
+  final Function() onChatSelected;
+  // final Function(bool)? navigate;
   const UserItem({
     super.key,
     required this.user,
     required this.onChatSelected,
+    // this.navigate,
   });
-  final UserModel user;
+  final ServicePerson user;
 
   @override
   Widget build(BuildContext context) {
     return HoverButton(
       onPressed: () {
-        onChatSelected(user);
-
+        onChatSelected();
+        // navigate?.call(true);
         // print(widget.user.name);
       },
       child: ListTile(

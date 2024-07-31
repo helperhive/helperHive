@@ -12,9 +12,11 @@ import '../widgets/message_bubble.dart';
 class MessagesView extends StatefulWidget {
   final String uid;
   // final String userId;
+  final Function(bool)? onBack;
   const MessagesView({
     super.key,
     required this.uid,
+    this.onBack,
   });
 
   @override
@@ -33,18 +35,14 @@ class _MessagesViewState extends State<MessagesView>
   // @override
   // void didUpdateWidget(MessagesView oldWidget) {
   //   super.didUpdateWidget(oldWidget);
-  //   if (oldWidget.selectedUser != widget.selectedUser) {
+  //   if (oldWidget.uid != widget.uid) {
   //     WidgetsBinding.instance.addObserver(this);
-  //     fetchMessages(widget.selectedUser.uid);
+  //     fetchMessages(widget.uid);
   //   }
   // }
 
   void fetchMessages(String userId) {
-    Provider.of<MessageProvider>(context, listen: false)
-      ..getUserById(userId)
-      ..fetchMessages(
-          senderId: FirebaseAuth.instance.currentUser!.uid, receiverId: userId);
-    // print("message card: ${widget.selectedUser.name}");
+    Provider.of<MessageProvider>(context, listen: false).getUserById(userId);
   }
 
   @override
@@ -57,7 +55,7 @@ class _MessagesViewState extends State<MessagesView>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: messageCardAppBar(),
+      appBar: messageCardAppBar(widget.onBack),
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -78,23 +76,37 @@ class _MessagesViewState extends State<MessagesView>
     );
   }
 
-  AppBar messageCardAppBar() {
+  AppBar messageCardAppBar(Function(bool)? onBack) {
     return AppBar(
+      leading: GestureDetector(
+        onTap: () {
+          if (onBack != null) {
+            onBack(false);
+          }
+          // onBack?.call(false);
+          // Go back to the previous screen
+          Navigator.of(context).pop();
+        },
+        child: const Icon(
+          Icons.arrow_back,
+          color: Colors.black,
+        ),
+      ),
       automaticallyImplyLeading: true,
       elevation: 0,
       foregroundColor: Colors.black,
       backgroundColor: blueColor,
-      title: Consumer<MessageProvider>(builder: (context, value, child) {
-        return value.user != null
+      title: Consumer<MessageProvider>(builder: (context, provider, child) {
+        return provider.user != null
             ? Row(
                 children: [
                   CircleAvatar(
                     radius: 20,
-                    foregroundImage: value.user!.profileUrl != ''
-                        ? NetworkImage(value.user!.profileUrl)
+                    foregroundImage: provider.user!.profileUrl != ''
+                        ? NetworkImage(provider.user!.profileUrl)
                         : null,
-                    child: value.user!.profileUrl == ''
-                        ? Text(value.user!.name[0])
+                    child: provider.user!.profileUrl == ''
+                        ? Text(provider.user!.name[0])
                         : null,
                   ),
                   const SizedBox(
@@ -104,14 +116,14 @@ class _MessagesViewState extends State<MessagesView>
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        value.user!.name,
+                        provider.user!.name,
                         style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                             color: Colors.black),
                       ),
                       Text(
-                        value.user!.service.toString(),
+                        provider.user!.service.toString(),
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 14,
@@ -127,42 +139,48 @@ class _MessagesViewState extends State<MessagesView>
   }
 }
 
-class ChatMessages extends StatefulWidget {
+class ChatMessages extends StatelessWidget {
   final String receiverId;
   const ChatMessages({super.key, required this.receiverId});
 
   @override
-  State<ChatMessages> createState() => _ChatMessagesState();
-}
-
-class _ChatMessagesState extends State<ChatMessages> {
-  @override
   Widget build(BuildContext context) {
-    return Consumer<MessageProvider>(builder: (context, value, child) {
-      return value.messages.isEmpty
-          ? const EmptyWidget(icon: Icons.waving_hand, text: 'Say Hello!')
-          : ListView.builder(
-              controller: value.scrollController,
-              itemCount: value.messages.length,
+    return Consumer<MessageProvider>(builder: (context, provider, child) {
+      return StreamBuilder<List<Message>>(
+        stream: provider.fetchMessages(receiverId: receiverId),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+            return const EmptyWidget(
+                icon: Icons.waving_hand, text: 'Say Hello!');
+          } else {
+            final messages = snapshot.data!;
+            return ListView.builder(
+              controller: provider.scrollController,
+              itemCount: messages.length,
               itemBuilder: (context, index) {
-                final isTextMessaage =
-                    value.messages[index].messageType == MessageType.text;
-                final isMe =
-                    widget.receiverId != value.messages[index].senderId;
-                // final isMe = value.messages[index].senderId ==
-                //     FirebaseAuth.instance.currentUser!.uid;
-                return isTextMessaage
+                final isTextMessage =
+                    messages[index].messageType == MessageType.text;
+                final isMe = receiverId != messages[index].senderId;
+                return isTextMessage
                     ? MessageBubble(
-                        message: value.messages[index],
+                        message: messages[index],
                         isMe: isMe,
                         isImage: false,
                       )
                     : MessageBubble(
-                        message: value.messages[index],
+                        message: messages[index],
                         isMe: isMe,
                         isImage: true,
                       );
-              });
+              },
+            );
+          }
+        },
+      );
     });
   }
 }

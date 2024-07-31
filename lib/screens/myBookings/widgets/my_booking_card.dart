@@ -25,7 +25,6 @@ class MyBookingCard extends StatelessWidget {
             booking: serviceBooking,
             senderId: currentUserID,
             onBack: (p0) {
-              print(p0);
               navigate?.call(p0); // Handle the onBack callback
             },
           ),

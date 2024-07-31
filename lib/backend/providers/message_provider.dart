@@ -1,19 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:helperhive/backend/constants/chat_id_generate.dart';
 import 'package:helperhive/backend/message_service/chat_service.dart';
 import 'package:helperhive/model/message.dart';
+import 'package:helperhive/model/service_person.dart';
 import 'package:helperhive/model/user_model.dart';
 
 class MessageProvider extends ChangeNotifier {
   //need to change this functions according to new schema
-
-  List<Message> _messages = [];
+  final senderId = FirebaseAuth.instance.currentUser!.uid;
+  final List<Message> _messages = [];
   ScrollController scrollController = ScrollController();
   List<Message> get messages => _messages;
   List<UserModel> _connections = [];
-  List<UserModel> _allUsers = [];
+  final List<UserModel> _allUsers = [];
   List<UserModel> get users => _connections;
   UserModel? user;
   bool _isLoading = false;
@@ -24,26 +26,17 @@ class MessageProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void fetchMessages({required String senderId, required String receiverId}) {
-    // busy(true);
+  Stream<List<Message>> fetchMessages({required String receiverId}) {
     String chatId = ChatIdGenerate.generateChatId(senderId, receiverId);
-    FirebaseFirestore.instance
+    return FirebaseFirestore.instance
         .collection('chats')
         .doc(chatId)
         .collection('messages')
-        // .doc(receiverId)
-        // .collection('messages')
         .orderBy('sentTime', descending: false)
         .snapshots(includeMetadataChanges: true)
-        .listen((messages) {
-      _messages =
-          messages.docs.map((doc) => Message.fromJson(doc.data())).toList();
-      // busy(false);
-      notifyListeners();
-
-      scrollDown();
+        .map((snapshot) {
+      return snapshot.docs.map((doc) => Message.fromJson(doc.data())).toList();
     });
-    // return messages;
   }
 
   void scrollDown() => WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -55,20 +48,16 @@ class MessageProvider extends ChangeNotifier {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   // List<Message> messages = [];
-
-  List<UserModel> getConnections(String senderId, String receiverId) {
-    // print("get all users method");
-    _firestore
-        .collection('users')
+  Stream<List<ServicePerson>> getConnections() {
+    return _firestore
+        .collection('workers')
         .where('connections', arrayContains: senderId)
         .snapshots(includeMetadataChanges: true)
-        .listen((users) {
-      _connections =
-          users.docs.map((doc) => UserModel.fromSnapshot(doc)).toList();
-      _allUsers = _connections;
-      notifyListeners();
+        .map((snapshot) {
+      return snapshot.docs
+          .map((doc) => ServicePerson.fromSnapshot(doc))
+          .toList();
     });
-    return users;
   }
 
   UserModel? getUserById(String userId) {
