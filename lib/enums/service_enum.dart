@@ -73,6 +73,25 @@ enum Service {
       Service.user => 'User',
     };
   }
+
+  String toService() {
+    return switch (this) {
+      Service.cleaning => "cleaner",
+      Service.washing => "washer",
+      Service.repair => "repair technician",
+      Service.painting => "painter",
+      Service.plumbing => "plumber",
+      Service.healthcare => "healthcare provider",
+      Service.carpenter => "carpenter",
+      Service.movers => "mover",
+      Service.pestControl => "pest control specialist",
+      Service.saloon => "salon worker",
+      Service.electrician => "electrician",
+      Service.beautyAndSpa => "beauty and spa specialist",
+      Service.others => "service provider",
+      Service.user => "user",
+    };
+  }
 }
 
 IconData getIconForService(Service service) {

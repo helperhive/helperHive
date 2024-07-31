@@ -42,11 +42,12 @@ class MyBookingDetails extends StatelessWidget {
           ),
           backgroundColor: blueColor,
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
                   decoration: BoxDecoration(
@@ -110,56 +111,34 @@ class MyBookingDetails extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: 20),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    ElevatedButton.icon(
-                      onPressed: () {
-                        // Implement payment functionality
-                      },
-                      icon: const Icon(Icons.payment),
-                      label: const Text(
-                        'Make Payment',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                        ),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        backgroundColor: Colors.blue,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                    ),
-                    ElevatedButton.icon(
-                      onPressed: () async {
-                        await provider.checkChat(
-                            senderId: senderId, receiverId: booking.uid);
-                      },
-                      icon: const Icon(Icons.chat),
-                      label: const Text(
-                        'Contact Service Person',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 16,
-                        ),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        foregroundColor: Colors.white,
-                        backgroundColor: Colors.blue,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
               ],
             ),
+          ),
+        ),
+        bottomNavigationBar: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 12),
+          child: ElevatedButton.icon(
+            onPressed: () {
+              // Implement payment functionality
+            },
+            icon: const Icon(
+              Icons.payment,
+              size: 24,
+            ),
+            label: const Text(
+              'Make Payment',
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold),
+            ),
+            style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.blue,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                padding: const EdgeInsets.all(8)),
           ),
         ),
         floatingActionButton: FloatingActionButton(

@@ -134,7 +134,7 @@ class UserItem extends StatelessWidget {
         ),
         subtitle: Text(
           // 'Last seen: ${timeago.format()}',
-          user.service.toString(),
+          user.service.toService(),
           maxLines: 2,
           style: const TextStyle(
               color: Colors.black87,

@@ -122,7 +122,7 @@ class _MessagesViewState extends State<MessagesView>
                             color: Colors.black),
                       ),
                       Text(
-                        provider.user!.service.toString(),
+                        provider.user!.service!.toService(),
                         style: const TextStyle(
                           color: Colors.white,
                           fontSize: 14,
