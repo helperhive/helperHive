@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:helperhive/app/app_routes.dart';
 import 'package:helperhive/backend/auth/auth_methods.dart';
+import 'package:helperhive/backend/notification_service/notification_services.dart';
 import 'package:helperhive/backend/providers/service_person_provider.dart';
 import 'package:helperhive/backend/providers/user_provider.dart';
 import 'package:helperhive/constants/color_them.dart';
@@ -23,11 +24,19 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late PersistentTabController _controller;
   bool showNav = false;
+
+  NotificationServices notificationServices = NotificationServices();
   @override
   void initState() {
     super.initState();
 
     _controller = PersistentTabController(initialIndex: 0);
+    notificationServices.requestNotificationPermission();
+    notificationServices.firebaseInit();
+    notificationServices.isRefreshToken();
+    notificationServices.getDeviceToken().then((value) {
+      print("Device token  $value");
+    });
     userData();
   }
 
