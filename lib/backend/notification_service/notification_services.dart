@@ -23,7 +23,6 @@ class NotificationServices {
   }
 
   void firebaseInit() {
-    print("firebase init");
     FirebaseMessaging.onMessage.listen((message) {
       print(message.notification!.title.toString());
       print(message.notification!.body.toString());

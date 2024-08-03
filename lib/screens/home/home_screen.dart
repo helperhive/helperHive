@@ -32,8 +32,9 @@ class _HomePageState extends State<HomePage> {
 
     _controller = PersistentTabController(initialIndex: 0);
     notificationServices.requestNotificationPermission();
+
     notificationServices.firebaseInit();
-    notificationServices.isRefreshToken();
+
     notificationServices.getDeviceToken().then((value) {
       print("Device token  $value");
     });
