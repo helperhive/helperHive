@@ -1,9 +1,11 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:helperhive/screens/chats/screens/chat_view.dart';
 
 class NotificationServices {
   final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
@@ -55,17 +57,21 @@ class NotificationServices {
 
     await _localNotificationsPlugin.initialize(
       initializationSettings,
-      onDidReceiveNotificationResponse: (payLoad) {},
+      onDidReceiveNotificationResponse: (payLoad) {
+        handleMessage(context, message);
+      },
     );
   }
 
-  void firebaseInit() {
+  void firebaseInit(BuildContext context) {
     FirebaseMessaging.onMessage.listen((message) {
       if (kDebugMode) {
         print(message.notification!.title.toString());
         print(message.notification!.body.toString());
       }
-
+      if (Platform.isAndroid) {
+        initLocalNotification(context, message);
+      }
       showNotification(message);
     });
   }
@@ -104,5 +110,27 @@ class NotificationServices {
         notificationDetails,
       );
     });
+  }
+
+  Future<void> setupInteractMessage(BuildContext context) async {
+    //when is app is not in the background
+    RemoteMessage? initMsg = await firebaseMessaging.getInitialMessage();
+
+    if (initMsg != null) {
+      handleMessage(context, initMsg);
+    }
+
+    //when app is in the background
+
+    FirebaseMessaging.onMessageOpenedApp.listen((event) {
+      handleMessage(context, event);
+    });
+  }
+
+  void handleMessage(BuildContext context, RemoteMessage message) {
+    if (message.data['type'] == 'msg') {
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => const ChatView()));
+    }
   }
 }
