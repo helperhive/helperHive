@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
 
@@ -5,7 +6,9 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:helperhive/app/cloud_message_json.dart';
 import 'package:helperhive/screens/chats/screens/chat_view.dart';
+import 'package:http/http.dart' as http;
 
 class NotificationServices {
   final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
@@ -34,6 +37,7 @@ class NotificationServices {
 //Device token access
   Future<String> getDeviceToken() async {
     String? token = await firebaseMessaging.getToken();
+    // deviceToken = token;
     return token!;
   }
 
@@ -131,6 +135,45 @@ class NotificationServices {
     if (message.data['type'] == 'msg') {
       Navigator.of(context)
           .push(MaterialPageRoute(builder: (context) => const ChatView()));
+    }
+  }
+
+  void sendDeviceNotification(String deviceToken, String body) async {
+    String accessToken = await FirebaseCloudMessaging.getAccessToken();
+    // late String deviceToken;
+    String fcmEndpoint =
+        'https://fcm.googleapis.com/v1/projects/helperhive-vishnu/messages:send';
+
+    // getDeviceToken().then((value) async {
+    //   print(value);
+    //   deviceToken = value;
+    // });
+
+    final Map<String, dynamic> message = {
+      'message': {
+        'token': deviceToken,
+        'notification': {
+          'title': "Notification from HelperHive",
+          'body': body,
+        },
+        'data': {'bookingId': 'BookingId'}
+      }
+    };
+
+    final http.Response response = await http.post(
+      Uri.parse(fcmEndpoint),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+        'Authorization': 'Bearer $accessToken',
+      },
+      body: jsonEncode(message),
+    );
+
+    if (response.statusCode == 200) {
+      print('success');
+    } else {
+      print(response.body);
+      print("unsucessful");
     }
   }
 }

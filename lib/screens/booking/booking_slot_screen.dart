@@ -2,6 +2,7 @@
 import 'package:delightful_toast/toast/utils/enums.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:helperhive/backend/notification_service/notification_services.dart';
 import 'package:helperhive/backend/providers/user_provider.dart';
 import 'package:helperhive/constants/toast.dart';
 import 'package:helperhive/enums/issue_type.dart';
@@ -441,6 +442,8 @@ class BookingSlotScreen extends StatelessWidget {
     if (res == 'success') {
       // toastMessage(context: context, message: 'Slot Booking Confirmed');
       showCustomBookingConfirmedDialog(context);
+      NotificationServices().sendDeviceNotification(servicePerson.deviceToken,
+          'New booking at ${provider.slotTime.format(context)} on ${DateTimeManager.convertDate(provider.selectedDate)},. Check your app.');
       noteController.clear();
     } else {
       toastMessage(context: context, message: res.toString());

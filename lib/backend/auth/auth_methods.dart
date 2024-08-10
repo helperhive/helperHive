@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:helperhive/backend/notification_service/notification_services.dart';
 import 'package:helperhive/enums/service_enum.dart';
 import 'package:helperhive/model/user_model.dart';
 
@@ -13,6 +14,7 @@ class AuthService {
     required String password,
     required String name,
     required String phoneNumber,
+    required String deviceToken,
     Service? service,
   }) async {
     String res = '';
@@ -35,6 +37,7 @@ class AuthService {
           profileUrl: '',
           // discount: 0.0,
           price: 0.0,
+          deviceToken: deviceToken,
           connections: []);
       await firestore
           .collection('workers')
@@ -56,6 +59,7 @@ class AuthService {
     } catch (e) {
       res = e.toString();
     }
+
     return res;
   }
 
@@ -66,6 +70,7 @@ class AuthService {
     required String name,
     required String phoneNumber,
     required String location,
+    required String deviceToken,
   }) async {
     String res = '';
     try {
@@ -80,6 +85,7 @@ class AuthService {
           location: location,
           profileUrl: '',
           service: Service.user,
+          deviceToken: deviceToken,
           connections: []);
       await firestore.collection('users').doc(user.uid).set(userModel.toMap());
       await auth.currentUser!.updateDisplayName(name);
@@ -126,6 +132,7 @@ class AuthService {
             profileUrl: '',
             // discount: 0.0,
             price: 0.0,
+            deviceToken: '',
             connections: []);
         await firestore
             .collection('workers')
@@ -161,6 +168,7 @@ class AuthService {
             phoneNumber: user.phoneNumber!,
             profileUrl: '',
             service: Service.user,
+            deviceToken: '',
             connections: []);
         await firestore
             .collection('users')
@@ -182,7 +190,13 @@ class AuthService {
       String email, String password) async {
     String res = '';
     try {
-      await auth.signInWithEmailAndPassword(email: email, password: password);
+      UserCredential credential = await auth.signInWithEmailAndPassword(
+          email: email, password: password);
+      NotificationServices().getDeviceToken().then((value) {
+        firestore.collection('users').doc(credential.user!.uid).update({
+          'deviceToken': value,
+        });
+      });
       res = 'success';
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {

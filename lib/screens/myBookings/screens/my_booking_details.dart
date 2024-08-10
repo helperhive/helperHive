@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:helperhive/backend/notification_service/notification_services.dart';
 import 'package:helperhive/backend/providers/message_provider.dart';
 import 'package:helperhive/constants/color_them.dart';
 import 'package:helperhive/enums/issue_type.dart';
@@ -18,6 +19,7 @@ class MyBookingDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<MessageProvider>(builder: (context, provider, _) {
+      provider.getUserById(booking.uid);
       return Scaffold(
         appBar: AppBar(
           leading: GestureDetector(
@@ -120,6 +122,11 @@ class MyBookingDetails extends StatelessWidget {
           child: ElevatedButton.icon(
             onPressed: () {
               // Implement payment functionality
+
+              if (provider.user != null) {
+                NotificationServices().sendDeviceNotification(
+                    provider.user!.deviceToken, 'New Booking');
+              }
             },
             icon: const Icon(
               Icons.payment,

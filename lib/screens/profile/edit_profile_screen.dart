@@ -145,18 +145,18 @@ class EditProfileScreen extends StatelessWidget {
               ),
               onPressed: () async {
                 String res = await provider.updateDetails(
-                  name: nameController.text,
-                  email: emailController.text,
-                  phoneNumber: phoneNumberController.text,
-                  profile: provider.profileUrl ?? provider.user.profileUrl,
-                  location: locationController.text,
-                  description: descriptionController.text,
-                  experience: double.tryParse(experienceController.text),
-                  connections: provider.user.connections,
-                  service: provider.user.service,
-                  price: provider.user.price,
-                  rating: provider.user.rating,
-                );
+                    name: nameController.text,
+                    email: emailController.text,
+                    phoneNumber: phoneNumberController.text,
+                    profile: provider.profileUrl ?? provider.user.profileUrl,
+                    location: locationController.text,
+                    description: descriptionController.text,
+                    experience: double.tryParse(experienceController.text),
+                    connections: provider.user.connections,
+                    service: provider.user.service,
+                    price: provider.user.price,
+                    rating: provider.user.rating,
+                    deviceToken: provider.user.deviceToken);
                 if (res == 'update') {
                   showToast(context, 'Profile Updated Successfully');
                 } else {

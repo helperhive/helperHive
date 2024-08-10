@@ -19,6 +19,7 @@ class UserModel {
   // final double discount;
   final double? price;
   final List connections;
+  final String deviceToken;
   // final DateTime lastSeen;
 
   UserModel({
@@ -37,6 +38,7 @@ class UserModel {
     this.price,
     required this.connections,
     // required this.lastSeen,
+    required this.deviceToken,
   });
 
   static UserModel fromSnapshot(DocumentSnapshot documentSnapshot) {
@@ -56,12 +58,12 @@ class UserModel {
       workingHours: map['workingHours'] ?? {},
       description: map['description'] ?? '',
       profileUrl: map['profileUrl'] == ''
-          ? 'https://firebasestorage.googleapis.com/v0/b/helperhive-vishnu.appspot.com/o/profile.png?alt=media&token=873ed15e-cf9b-46e6-b03c-11499364f16f'
+          ? 'https://firebasestorage.googleapis.com/v0/b/helperhive-vishnu.appspot.com/o/profile.png?alt=media&token=b456745a-ec34-4eeb-9e7f-66e5686ef2f4'
           : map['profileUrl'],
       // discount: map['discount'],
       price: map['price'] ?? 0,
       connections: map['connections'] ?? [],
-
+      deviceToken: map['deviceToken'] ?? '',
       // lastSeen: map['lastSeen'],
     );
   }
@@ -85,7 +87,8 @@ class UserModel {
       'profileUrl': profileUrl,
       // 'discount': discount,
       'price': price,
-      'connections': connections
+      'connections': connections,
+      'deviceToken': deviceToken
       // 'lastSeen': lastSeen
     };
   }

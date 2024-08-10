@@ -46,12 +46,12 @@ class SignUpScreenState extends State<SignUpScreen> {
 
       try {
         await authService.signUpWithEmailAndPasswordforWorkers(
-          email: emailController.text.trim(),
-          password: passwordController.text.trim(),
-          name: nameController.text.trim(),
-          phoneNumber: phoneNumberController.text.trim(),
-          service: selectedService!,
-        );
+            email: emailController.text.trim(),
+            password: passwordController.text.trim(),
+            name: nameController.text.trim(),
+            phoneNumber: phoneNumberController.text.trim(),
+            service: selectedService!,
+            deviceToken: '');
         Navigator.of(context).pushNamed(AppRoutes.homeRoute);
       } catch (e) {
         ScaffoldMessenger.of(context).showSnackBar(

@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:googleapis/transcoder/v1.dart';
 import 'package:helperhive/backend/providers/message_provider.dart';
+import 'package:helperhive/constants/color_them.dart';
 
 import 'package:helperhive/constants/hover_button.dart';
 import 'package:helperhive/model/service_person.dart';
 
 import 'package:helperhive/screens/chats/screens/messages_view.dart';
+import 'package:helperhive/screens/search/service_search_screen.dart';
 import 'package:helperhive/widgets/search_bar_home.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 class ChatView extends StatefulWidget {
@@ -59,7 +63,59 @@ class _ChatViewState extends State<ChatView> {
               } else if (snapshot.hasError) {
                 return Center(child: Text('Error: ${snapshot.error}'));
               } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                return const Center(child: Text('No connections found'));
+                return Center(
+                    child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Lottie.asset(
+                      height: 320,
+                      width: 320,
+                      'assets/not_found/no_chats.json',
+                      repeat: false,
+                    ),
+                    const Text(
+                      'No chats available.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    const Text(
+                      textAlign: TextAlign.center,
+                      ' Book a service and connect with users.',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.grey,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                    const SizedBox(height: 30),
+                    ElevatedButton(
+                      onPressed: () {
+                        // Navigate to booking screen
+
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const ServiceSearchScreen()),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: blueColor,
+                        foregroundColor: Colors.white,
+                      ),
+                      child: const Text(
+                        'Book a Service Now',
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ));
               } else {
                 final users = snapshot.data!;
                 return ListView.builder(

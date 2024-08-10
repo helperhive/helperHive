@@ -156,6 +156,7 @@ class UserProvider extends ChangeNotifier {
     Service? service,
     double? price,
     double? rating,
+    required String deviceToken,
   }) async {
     String res = '';
     final updatedUser = UserModel(
@@ -171,6 +172,7 @@ class UserProvider extends ChangeNotifier {
       service: service,
       price: price,
       rating: rating,
+      deviceToken: deviceToken,
     );
 
     try {

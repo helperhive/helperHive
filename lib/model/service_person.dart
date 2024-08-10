@@ -17,24 +17,26 @@ class ServicePerson {
   final double? price;
   final List connections;
   // final DateTime lastSeen;
+  final String deviceToken;
 
-  ServicePerson({
-    required this.uid,
-    required this.name,
-    required this.email,
-    required this.phoneNumber,
-    required this.service,
-    required this.location,
-    required this.rating,
-    required this.experience,
-    required this.workingHours,
-    required this.description,
-    required this.profileUrl,
-    // required this.discount,
-    this.price,
-    required this.connections,
-    // required this.lastSeen,
-  });
+  ServicePerson(
+      {required this.uid,
+      required this.name,
+      required this.email,
+      required this.phoneNumber,
+      required this.service,
+      required this.location,
+      required this.rating,
+      required this.experience,
+      required this.workingHours,
+      required this.description,
+      required this.profileUrl,
+      // required this.discount,
+      this.price,
+      required this.connections,
+      required this.deviceToken
+      // required this.lastSeen,
+      });
 
   static ServicePerson fromSnapshot(DocumentSnapshot documentSnapshot) {
     var map = documentSnapshot.data() as Map<String, dynamic>;
@@ -53,10 +55,11 @@ class ServicePerson {
       workingHours: map['workingHours'] ?? {},
       description: map['description'] ?? '',
       profileUrl: map['profileUrl'] == ''
-          ? 'https://firebasestorage.googleapis.com/v0/b/helperhive-vishnu.appspot.com/o/profile.png?alt=media&token=873ed15e-cf9b-46e6-b03c-11499364f16f'
+          ? 'https://firebasestorage.googleapis.com/v0/b/helperhive-vishnu.appspot.com/o/profile.png?alt=media&token=b456745a-ec34-4eeb-9e7f-66e5686ef2f4'
           : map['profileUrl'],
       price: (map['price'] ?? 0).toDouble(),
       connections: map['connections'] ?? [],
+      deviceToken: map['deviceToken'] ?? '',
     );
   }
 
@@ -79,8 +82,9 @@ class ServicePerson {
       'profileUrl': profileUrl,
       // 'discount': discount,
       'price': price,
-      'connections': connections
+      'connections': connections,
       // 'lastSeen': lastSeen
+      'deviceToken': deviceToken
     };
   }
 }

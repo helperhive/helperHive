@@ -61,6 +61,7 @@ class MessageProvider extends ChangeNotifier {
   }
 
   UserModel? getUserById(String userId) {
+    busy(true);
     _firestore
         .collection('users')
         .doc(userId)
@@ -69,6 +70,7 @@ class MessageProvider extends ChangeNotifier {
       this.user = UserModel.fromSnapshot(user);
       notifyListeners();
     });
+    busy(false);
     return user;
   }
 

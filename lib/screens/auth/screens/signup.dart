@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:helperhive/app/app_routes.dart';
 import 'package:helperhive/backend/auth/auth_methods.dart';
+import 'package:helperhive/backend/notification_service/notification_services.dart';
 import 'package:helperhive/constants/toast.dart';
 import 'package:helperhive/enums/service_enum.dart';
 import 'package:helperhive/screens/auth/screens/login.dart';
@@ -48,26 +49,30 @@ class _SignupScreenState extends State<SignupScreen> {
       });
       String res = '';
       try {
+        String deviceToken = await NotificationServices().getDeviceToken();
+
         if (widget.isUser) {
           // User signup
           res = await authService.signUpWithEmailAndPasswordforUsers(
-            email: emailController.text.trim(),
-            password: passwordController.text.trim(),
-            name: nameController.text.trim(),
-            phoneNumber: phoneNumberController.text.trim(),
-            location: locationController.text.trim(),
-          );
+              email: emailController.text.trim(),
+              password: passwordController.text.trim(),
+              name: nameController.text.trim(),
+              phoneNumber: phoneNumberController.text.trim(),
+              location: locationController.text.trim(),
+              deviceToken: deviceToken);
         } else {
           // Worker signup
           res = await authService.signUpWithEmailAndPasswordforWorkers(
-            email: emailController.text.trim(),
-            password: passwordController.text.trim(),
-            name: nameController.text.trim(),
-            phoneNumber: phoneNumberController.text.trim(),
-            service: _selectedService!,
-          );
+              email: emailController.text.trim(),
+              password: passwordController.text.trim(),
+              name: nameController.text.trim(),
+              phoneNumber: phoneNumberController.text.trim(),
+              service: _selectedService!,
+              deviceToken: deviceToken);
         }
+        print("response $res");
         message(res);
+
         setState(() {
           isLoading = false;
         });
