@@ -8,7 +8,13 @@ import 'package:image_picker/image_picker.dart';
 class ChatTextField extends StatefulWidget {
   // final User_Details user;
   final String receiverId;
-  const ChatTextField({super.key, required this.receiverId});
+  final String deviceToken;
+  final String name;
+  const ChatTextField(
+      {super.key,
+      required this.receiverId,
+      required this.deviceToken,
+      required this.name});
 
   @override
   State<ChatTextField> createState() => _ChatTextFieldState();
@@ -76,7 +82,10 @@ class _ChatTextFieldState extends State<ChatTextField> {
   Future<void> _sendText(BuildContext context) async {
     if (msgController.text.isNotEmpty) {
       await FirebaseFirestoreServiceMessages.addTextMessage(
-          content: msgController.text, receiverId: widget.receiverId);
+          name: widget.name,
+          deviceToken: widget.deviceToken,
+          content: msgController.text,
+          receiverId: widget.receiverId);
       msgController.clear();
       FocusScope.of(context).unfocus();
     }
@@ -89,7 +98,10 @@ class _ChatTextFieldState extends State<ChatTextField> {
     setState(() => file = pickimage);
     if (file != null) {
       await FirebaseFirestoreServiceMessages.addImageMessage(
-          receiverId: widget.receiverId, file: file!);
+          name: widget.name,
+          deviceToken: widget.deviceToken,
+          receiverId: widget.receiverId,
+          file: file!);
     }
   }
 

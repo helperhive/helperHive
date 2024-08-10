@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:googleapis/transcoder/v1.dart';
 import 'package:helperhive/backend/providers/message_provider.dart';
+import 'package:helperhive/backend/providers/user_provider.dart';
 import 'package:helperhive/constants/color_them.dart';
 
 import 'package:helperhive/constants/hover_button.dart';
+import 'package:helperhive/enums/service_enum.dart';
 import 'package:helperhive/model/service_person.dart';
+import 'package:helperhive/model/user_model.dart';
 
 import 'package:helperhive/screens/chats/screens/messages_view.dart';
 import 'package:helperhive/screens/search/service_search_screen.dart';
@@ -24,6 +27,7 @@ class _ChatViewState extends State<ChatView> {
   @override
   Widget build(BuildContext context) {
     return Consumer<MessageProvider>(builder: (context, provider, _) {
+      UserModel user = Provider.of<UserProvider>(context, listen: false).user;
       return Scaffold(
         appBar: AppBar(
           // backgroundColor: blueColor,
@@ -56,7 +60,7 @@ class _ChatViewState extends State<ChatView> {
         body: Padding(
           padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16),
           child: StreamBuilder<List<ServicePerson>>(
-            stream: provider.getConnections(),
+            stream: provider.getConnections(user.service ?? Service.user),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(child: CircularProgressIndicator());

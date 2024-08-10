@@ -24,6 +24,7 @@ class MessagesView extends StatefulWidget {
 
 class _MessagesViewState extends State<MessagesView>
     with WidgetsBindingObserver {
+  bool isLoading = false;
   @override
   void initState() {
     super.initState();
@@ -41,7 +42,13 @@ class _MessagesViewState extends State<MessagesView>
   // }
 
   void fetchMessages(String userId) {
+    setState(() {
+      isLoading = true;
+    });
     Provider.of<MessageProvider>(context, listen: false).getUserById(userId);
+    setState(() {
+      isLoading = false;
+    });
   }
 
   @override
@@ -52,27 +59,35 @@ class _MessagesViewState extends State<MessagesView>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: messageCardAppBar(widget.onBack),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            Expanded(
-              child: ChatMessages(
+    return isLoading
+        ? const Center(
+            child: CircularProgressIndicator(),
+          )
+        : Consumer<MessageProvider>(builder: (context, provider, _) {
+            return Scaffold(
+              backgroundColor: Colors.white,
+              appBar: messageCardAppBar(widget.onBack),
+              body: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: ChatMessages(
+                        receiverId: widget.uid,
+                      ),
+                    ),
+                    // const Spacer(),
+                    // ChatTextField(),
+                  ],
+                ),
+              ),
+              bottomNavigationBar: ChatTextField(
+                deviceToken: provider.user!.deviceToken,
+                name: provider.user!.name,
                 receiverId: widget.uid,
               ),
-            ),
-            // const Spacer(),
-            // ChatTextField(),
-          ],
-        ),
-      ),
-      bottomNavigationBar: ChatTextField(
-        receiverId: widget.uid,
-      ),
-    );
+            );
+          });
   }
 
   AppBar messageCardAppBar(Function(bool)? onBack) {

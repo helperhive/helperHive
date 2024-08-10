@@ -442,8 +442,11 @@ class BookingSlotScreen extends StatelessWidget {
     if (res == 'success') {
       // toastMessage(context: context, message: 'Slot Booking Confirmed');
       showCustomBookingConfirmedDialog(context);
-      NotificationServices().sendDeviceNotification(servicePerson.deviceToken,
-          'New booking at ${provider.slotTime.format(context)} on ${DateTimeManager.convertDate(provider.selectedDate)},. Check your app.');
+      print(servicePerson.deviceToken);
+      NotificationServices().sendDeviceNotification(
+          deviceToken: servicePerson.deviceToken,
+          body:
+              'New booking at ${provider.slotTime.format(context)} on ${DateTimeManager.convertDate(provider.selectedDate)},. Check your app.');
       noteController.clear();
     } else {
       toastMessage(context: context, message: res.toString());

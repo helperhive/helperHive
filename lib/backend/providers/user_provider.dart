@@ -72,6 +72,7 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:helperhive/backend/notification_service/notification_services.dart';
 import 'package:helperhive/backend/storage/firebase_storage.dart';
 import 'package:helperhive/constants/image_picker.dart';
 import 'package:helperhive/enums/service_enum.dart';
@@ -93,6 +94,13 @@ class UserProvider extends ChangeNotifier {
     try {
       var snap = await _firestore.collection('users').doc(uid).get();
       _user = UserModel.fromSnapshot(snap);
+      if (user.service != Service.user) {
+        NotificationServices().getDeviceToken().then((value) {
+          _firestore.collection('workers').doc(user.uid).update({
+            'deviceToken': value,
+          });
+        });
+      }
     } catch (e) {
       print(e.toString());
     }

@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:helperhive/backend/constants/chat_id_generate.dart';
 import 'package:helperhive/backend/message_service/chat_service.dart';
+import 'package:helperhive/enums/service_enum.dart';
 import 'package:helperhive/model/message.dart';
 import 'package:helperhive/model/service_person.dart';
 import 'package:helperhive/model/user_model.dart';
@@ -48,20 +49,31 @@ class MessageProvider extends ChangeNotifier {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   // List<Message> messages = [];
-  Stream<List<ServicePerson>> getConnections() {
-    return _firestore
-        .collection('workers')
-        .where('connections', arrayContains: senderId)
-        .snapshots(includeMetadataChanges: true)
-        .map((snapshot) {
-      return snapshot.docs
-          .map((doc) => ServicePerson.fromSnapshot(doc))
-          .toList();
-    });
+  Stream<List<ServicePerson>> getConnections(Service service) {
+    if (service == Service.user) {
+      return _firestore
+          .collection('workers')
+          .where('connections', arrayContains: senderId)
+          .snapshots(includeMetadataChanges: true)
+          .map((snapshot) {
+        return snapshot.docs
+            .map((doc) => ServicePerson.fromSnapshot(doc))
+            .toList();
+      });
+    } else {
+      return _firestore
+          .collection('users')
+          .where('connections', arrayContains: senderId)
+          .snapshots(includeMetadataChanges: true)
+          .map((snapshot) {
+        return snapshot.docs
+            .map((doc) => ServicePerson.fromSnapshot(doc))
+            .toList();
+      });
+    }
   }
 
   UserModel? getUserById(String userId) {
-    busy(true);
     _firestore
         .collection('users')
         .doc(userId)
@@ -70,7 +82,7 @@ class MessageProvider extends ChangeNotifier {
       this.user = UserModel.fromSnapshot(user);
       notifyListeners();
     });
-    busy(false);
+
     return user;
   }
 
@@ -124,12 +136,12 @@ class MessageProvider extends ChangeNotifier {
     required String receiverId,
   }) async {
     try {
-      busy(true);
+      // busy(true);
       bool isExist = await ChatService.checkChatExist(senderId, receiverId);
       if (!isExist) {
         await ChatService.createNewChat(senderId, receiverId);
       }
-      busy(false);
+      // busy(false);
       notifyListeners();
     } catch (e) {
       throw Exception(e.toString());

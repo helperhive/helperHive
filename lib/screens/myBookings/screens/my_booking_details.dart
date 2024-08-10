@@ -125,7 +125,8 @@ class MyBookingDetails extends StatelessWidget {
 
               if (provider.user != null) {
                 NotificationServices().sendDeviceNotification(
-                    provider.user!.deviceToken, 'New Booking');
+                    deviceToken: provider.user!.deviceToken,
+                    body: 'New Booking');
               }
             },
             icon: const Icon(

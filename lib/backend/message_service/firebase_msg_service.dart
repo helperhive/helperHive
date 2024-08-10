@@ -3,15 +3,19 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:helperhive/backend/constants/chat_id_generate.dart';
+import 'package:helperhive/backend/notification_service/notification_services.dart';
 import 'package:helperhive/backend/storage/firebase_storage.dart';
 import 'package:helperhive/model/message.dart';
 
 class FirebaseFirestoreServiceMessages {
   static final firestore = FirebaseFirestore.instance;
   static final currentUid = FirebaseAuth.instance.currentUser!.uid;
+  static final notificationService = NotificationServices();
   static Future<void> addTextMessage({
     required String content,
     required String receiverId,
+    required String deviceToken,
+    required String name,
   }) async {
     final message = Message(
       content: content,
@@ -22,11 +26,16 @@ class FirebaseFirestoreServiceMessages {
     );
     await _addMessageToChat(
         receiverId: receiverId, message: message, senderId: currentUid);
+    print('messsage notification');
+    notificationService.sendDeviceNotification(
+        deviceToken: deviceToken, body: content, title: '$name sent a chat');
   }
 
   static Future<void> addImageMessage({
     required String receiverId,
     required Uint8List file,
+    required String deviceToken,
+    required String name,
   }) async {
     String chatId = ChatIdGenerate.generateChatId(currentUid, receiverId);
     final image = await StorageMethods.uploadImageToStorage(
@@ -41,6 +50,9 @@ class FirebaseFirestoreServiceMessages {
     );
     await _addMessageToChat(
         receiverId: receiverId, message: message, senderId: currentUid);
+
+    notificationService.sendDeviceNotification(
+        deviceToken: deviceToken, body: 'image', title: '$name sent a image');
   }
 
   static Future<void> _addMessageToChat({

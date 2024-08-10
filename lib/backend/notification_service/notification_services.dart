@@ -138,7 +138,10 @@ class NotificationServices {
     }
   }
 
-  void sendDeviceNotification(String deviceToken, String body) async {
+  void sendDeviceNotification(
+      {required String deviceToken,
+      required String body,
+      String? title}) async {
     String accessToken = await FirebaseCloudMessaging.getAccessToken();
     String fcmEndpoint =
         'https://fcm.googleapis.com/v1/projects/helperhive-vishnu/messages:send';
@@ -147,7 +150,7 @@ class NotificationServices {
       'message': {
         'token': deviceToken,
         'notification': {
-          'title': "Notification from HelperHive",
+          'title': title ?? "Notification from HelperHive",
           'body': body,
         },
         'data': {'bookingId': 'BookingId'}
