@@ -140,14 +140,8 @@ class NotificationServices {
 
   void sendDeviceNotification(String deviceToken, String body) async {
     String accessToken = await FirebaseCloudMessaging.getAccessToken();
-    // late String deviceToken;
     String fcmEndpoint =
         'https://fcm.googleapis.com/v1/projects/helperhive-vishnu/messages:send';
-
-    // getDeviceToken().then((value) async {
-    //   print(value);
-    //   deviceToken = value;
-    // });
 
     final Map<String, dynamic> message = {
       'message': {
