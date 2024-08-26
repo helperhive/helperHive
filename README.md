@@ -17,6 +17,6 @@ Using our intuitive app 📱, users can quickly browse through a directory of se
 
 **Here are some ideas to get you started:**
 
-- 🙋‍♀️ A short introduction - HelperHive connects you with trusted service professionals for all your home maintenance needs, making life easier and your home always in top shape
+- 🙋‍♀️ A short introduction - HelperHive connects you with trusted service professionals for all your home maintenance needs, making life easier.
 
 
