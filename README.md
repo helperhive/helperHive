@@ -7,6 +7,8 @@ We are dedicated to bridging the gap between service providers and individuals s
 Using our intuitive app 📱, users can quickly browse through a directory of service providers categorized by their expertise. They can view profiles 👤, read reviews from previous customers ⭐, and directly contact the professionals they need 📞. Our goal is to simplify the process of finding reliable service personnel while ensuring transparency and trustworthiness.
 
 
+
+
 ## Tech Stack
 <div align="center"> 
 <a href="https://flutter.dev/" target="_blank"><img style="margin: 10px" src="https://profilinator.rishav.dev/skills-assets/flutterio-icon.svg" alt="Flutter" height="60" /></a> 
