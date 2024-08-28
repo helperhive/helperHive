@@ -17,119 +17,152 @@ class MyBookingDetails extends StatelessWidget {
           style: TextStyle(
             color: Colors.white,
             fontSize: 20,
+            fontWeight: FontWeight.bold,
           ),
         ),
         backgroundColor: blueColor,
+        elevation: 0,
       ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(15.0),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.5),
-                        spreadRadius: 3,
-                        blurRadius: 7,
-                        offset: const Offset(0, 3),
-                      ),
-                    ]),
                 padding: const EdgeInsets.all(16.0),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15.0),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.2),
+                      spreadRadius: 5,
+                      blurRadius: 10,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
+                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Service Person: ${booking.name}',
-                      style: const TextStyle(
-                          fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                    const SizedBox(height: 10),
                     Row(
                       children: [
-                        const Icon(Icons.phone, color: Colors.blue),
-                        const SizedBox(width: 5),
-                        Text(
-                          booking.phoneNumber,
-                          style: const TextStyle(fontSize: 16),
+                        CircleAvatar(
+                          radius: 30,
+                          backgroundColor: blueColor,
+                          child: Text(
+                            booking.name.substring(0, 1),
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 15),
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                booking.name,
+                                style: const TextStyle(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const SizedBox(height: 5),
+                              Row(
+                                children: [
+                                  const Icon(Icons.phone, color: blueColor),
+                                  const SizedBox(width: 5),
+                                  Text(
+                                    booking.phoneNumber,
+                                    style: const TextStyle(fontSize: 16),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
-                    const Divider(
-                      height: 25,
-                    ),
+                    const Divider(height: 25, thickness: 1),
                     const Text(
                       'Booking Details',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                     const SizedBox(height: 10),
                     detailRow('Service', booking.service.toString()),
                     detailRow('Booking Date', booking.bookingDate),
                     detailRow('Location', booking.location),
                     detailRow('Time Slot', booking.timeSlot),
-                    booking.issueType != null
-                        ? detailRow('Issue Type', booking.issueType.toString(),
-                            dataColor: getIssueColor(booking.issueType!))
-                        : Container(),
-                    booking.alternateTimeSlot != null &&
-                            booking.alternateTimeSlot!.isNotEmpty
-                        ? detailRow(
-                            'Alternate Time Slot', booking.alternateTimeSlot!)
-                        : Container(),
-                    booking.note != null && booking.note!.isNotEmpty
-                        ? detailRow('Note', booking.note!)
-                        : Container(),
+                    if (booking.issueType != null)
+                      detailRow(
+                        'Issue Type',
+                        booking.issueType.toString(),
+                        dataColor: getIssueColor(booking.issueType!),
+                      ),
+                    if (booking.alternateTimeSlot != null &&
+                        booking.alternateTimeSlot!.isNotEmpty)
+                      detailRow('Alternate Time Slot', booking.alternateTimeSlot!),
+                    if (booking.note != null && booking.note!.isNotEmpty)
+                      detailRow('Note', booking.note!),
                     const SizedBox(height: 20),
                   ],
                 ),
               ),
               const SizedBox(height: 20),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
+              Row(
                 children: [
-                  ElevatedButton.icon(
-                    onPressed: () {
-                      // Implement payment functionality
-                    },
-                    icon: const Icon(Icons.payment),
-                    label: const Text(
-                      'Make Payment',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
+                  Expanded(
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        // Implement payment functionality
+                      },
+                      icon: const Icon(Icons.payment),
+                      label: const Text(
+                        'Make Payment',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                        ),
                       ),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      backgroundColor: Colors.blue,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        backgroundColor: Colors.green,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 15),
                       ),
                     ),
                   ),
-                  ElevatedButton.icon(
-                    onPressed: () {
-                      // Implement chat functionality
-                    },
-                    icon: const Icon(Icons.chat),
-                    label: const Text(
-                      'Contact Service Person',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        // Implement chat functionality
+                      },
+                      icon: const Icon(Icons.chat),
+                      label: const Text(
+                        'Contact',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                        ),
                       ),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.white,
-                      backgroundColor: Colors.blue,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
+                      style: ElevatedButton.styleFrom(
+                        foregroundColor: Colors.white,
+                        backgroundColor: blueColor,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        padding: const EdgeInsets.symmetric(vertical: 15),
                       ),
                     ),
                   ),
@@ -144,19 +177,25 @@ class MyBookingDetails extends StatelessWidget {
 
   Widget detailRow(String label, String value, {Color? dataColor}) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 5),
+      padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
         children: [
-          const Icon(Icons.arrow_right, color: Colors.blue),
+          const Icon(Icons.arrow_right, color: blueColor),
           const SizedBox(width: 10),
           Text(
             '$label: ',
-            style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           Expanded(
             child: Text(
               value,
-              style: TextStyle(color: dataColor ?? Colors.black, fontSize: 16),
+              style: TextStyle(
+                color: dataColor ?? Colors.black,
+                fontSize: 16,
+              ),
             ),
           ),
         ],
