@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 // import 'package:helperhive/app/app_routes.dart';
-import 'package:helperhive/screens/payment/amazon_pay_payment_page.dart';
-import 'package:helperhive/screens/payment/card_payment_page.dart';
-import 'package:helperhive/screens/payment/gpay_payment_page.dart';
-import 'package:helperhive/screens/payment/paytm_payment_page.dart';
-import 'package:helperhive/screens/payment/upi_payment_page.dart';
+import 'package:helperhive/screens/payment/widgets/screens/amazon_pay_payment_page.dart';
+import 'package:helperhive/screens/payment/widgets/screens/card_payment_page.dart';
+import 'package:helperhive/screens/payment/widgets/screens/gpay_payment_page.dart';
+import 'package:helperhive/screens/payment/widgets/screens/paytm_payment_page.dart';
+import 'package:helperhive/screens/payment/widgets/screens/upi_payment_page.dart';
 import 'package:helperhive/screens/payment/widgets/payment_method_card.dart';
 
 class PaymentScreen extends StatefulWidget {

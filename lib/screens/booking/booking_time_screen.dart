@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:helperhive/constants/color_them.dart';
-
-import '../payment/payment_screen.dart';
+import 'package:helperhive/screens/payment/widgets/screens/payment_screen.dart';
 
 class BookingTimeScreen extends StatefulWidget {
   const BookingTimeScreen({super.key});
