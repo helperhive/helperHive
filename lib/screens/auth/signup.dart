@@ -8,7 +8,7 @@ import 'package:helperhive/backend/auth/auth_methods.dart';
 import 'package:helperhive/backend/notification_service/notification_services.dart';
 import 'package:helperhive/constants/toast.dart';
 import 'package:helperhive/enums/service_enum.dart';
-import 'package:helperhive/screens/auth/screens/login.dart';
+import 'package:helperhive/screens/auth/login.dart';
 import 'package:helperhive/screens/auth/widgets/auth_button.dart';
 import 'package:helperhive/screens/auth/widgets/input_field.dart';
 import 'package:helperhive/widgets/divider_text.dart';
@@ -194,12 +194,12 @@ class _SignupScreenState extends State<SignupScreen> {
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Password is required';
-                        } else if (value.length < 8) {
-                          return 'Password must be at least 8 characters';
-                        } else if (!RegExp(r'[A-Z]').hasMatch(value)) {
-                          return 'Password must contain at least one uppercase letter';
-                        } else if (!RegExp(r'\d').hasMatch(value)) {
-                          return 'Password must contain at least one number';
+                          // } else if (value.length < 8) {
+                          //   return 'Password must be at least 8 characters';
+                          // } else if (!RegExp(r'[A-Z]').hasMatch(value)) {
+                          //   return 'Password must contain at least one uppercase letter';
+                          // } else if (!RegExp(r'\d').hasMatch(value)) {
+                          //   return 'Password must contain at least one number';
                         }
                         return null;
                       },

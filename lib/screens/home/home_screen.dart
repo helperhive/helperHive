@@ -11,8 +11,8 @@ import 'package:helperhive/screens/chats/screens/chat_view.dart';
 import 'package:helperhive/screens/home_feed/feed_screen.dart';
 import 'package:helperhive/screens/profile/user_profile_screen.dart';
 import 'package:helperhive/screens/search/service_search_screen.dart';
-import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 import 'package:provider/provider.dart';
+import "package:persistent_bottom_nav_bar_v2/persistent_bottom_nav_bar_v2.dart";
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -80,56 +80,97 @@ class _HomePageState extends State<HomePage> {
     ];
   }
 
-  List<PersistentBottomNavBarItem> _navBarsItems() {
+  List<PersistentTabConfig> _navBarsItems() {
+    final screens = _buildScreens();
     return [
-      PersistentBottomNavBarItem(
-        contentPadding: 2,
-        iconSize: 30,
-        textStyle: const TextStyle(fontSize: 18),
-        inactiveIcon: const Icon(Icons.home_outlined),
-        icon: const Icon(Icons.home),
-        title: "Home",
-        activeColorPrimary: blueColor,
-        inactiveColorPrimary: Colors.grey,
+      PersistentTabConfig(
+        screen: screens[0],
+        item: ItemConfig(
+          icon: const Icon(Icons.home),
+          inactiveIcon: const Icon(Icons.home_outlined),
+          title: "Home",
+          activeForegroundColor: blueColor,
+          inactiveForegroundColor: Colors.grey[400]!,
+          inactiveBackgroundColor: Colors.transparent,
+          textStyle: const TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+            color: Colors.white,
+          ),
+          iconSize: 28,
+          activeColorSecondary: Colors.blue[100],
+        ),
       ),
-      PersistentBottomNavBarItem(
-        contentPadding: 2,
-        iconSize: 30,
-        textStyle: const TextStyle(fontSize: 18),
-        icon: const Icon(Icons.search),
-        title: "Search",
-        activeColorPrimary: blueColor,
-        inactiveColorPrimary: Colors.grey,
+      PersistentTabConfig(
+        screen: screens[1],
+        item: ItemConfig(
+          icon: const Icon(Icons.search),
+          title: "Search",
+          activeForegroundColor: blueColor,
+          inactiveForegroundColor: Colors.grey[400]!,
+          inactiveBackgroundColor: Colors.transparent,
+          textStyle: const TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+            color: Colors.white,
+          ),
+          iconSize: 28,
+          activeColorSecondary: Colors.blue[100],
+        ),
       ),
-      PersistentBottomNavBarItem(
-        contentPadding: 2,
-        iconSize: 30,
-        textStyle: const TextStyle(fontSize: 18),
-        inactiveIcon: const Icon(Icons.calendar_month_outlined),
-        icon: const Icon(Icons.calendar_month),
-        title: "Booking",
-        activeColorPrimary: blueColor,
-        inactiveColorPrimary: Colors.grey,
+      PersistentTabConfig(
+        screen: screens[2],
+        item: ItemConfig(
+          icon: const Icon(Icons.calendar_month),
+          inactiveIcon: const Icon(Icons.calendar_month_outlined),
+          title: "Booking",
+          activeForegroundColor: blueColor,
+          inactiveForegroundColor: Colors.grey[400]!,
+          inactiveBackgroundColor: Colors.transparent,
+          textStyle: const TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+            color: Colors.white,
+          ),
+          iconSize: 28,
+          activeColorSecondary: Colors.blue[100],
+        ),
       ),
-      PersistentBottomNavBarItem(
-        contentPadding: 2,
-        iconSize: 30,
-        textStyle: const TextStyle(fontSize: 18),
-        inactiveIcon: const Icon(Icons.chat_outlined),
-        icon: const Icon(Icons.chat),
-        title: "Chats",
-        activeColorPrimary: blueColor,
-        inactiveColorPrimary: Colors.grey,
+      PersistentTabConfig(
+        screen: screens[3],
+        item: ItemConfig(
+          icon: const Icon(Icons.chat),
+          inactiveIcon: const Icon(Icons.chat_outlined),
+          title: "Chats",
+          activeForegroundColor: blueColor,
+          inactiveForegroundColor: Colors.grey[400]!,
+          inactiveBackgroundColor: Colors.transparent,
+          textStyle: const TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+            color: Colors.white,
+          ),
+          iconSize: 28,
+          activeColorSecondary: Colors.blue[100],
+        ),
       ),
-      PersistentBottomNavBarItem(
-        contentPadding: 2,
-        iconSize: 30,
-        textStyle: const TextStyle(fontSize: 18),
-        inactiveIcon: const Icon(Icons.person_2_outlined),
-        icon: const Icon(Icons.person),
-        title: "Profile",
-        activeColorPrimary: blueColor,
-        inactiveColorPrimary: Colors.grey,
+      PersistentTabConfig(
+        screen: screens[4],
+        item: ItemConfig(
+          icon: const Icon(Icons.person),
+          inactiveIcon: const Icon(Icons.person_2_outlined),
+          title: "Profile",
+          activeForegroundColor: blueColor,
+          inactiveForegroundColor: Colors.grey[400]!,
+          inactiveBackgroundColor: Colors.transparent,
+          textStyle: const TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+            color: Colors.white,
+          ),
+          iconSize: 28,
+          activeColorSecondary: Colors.blue[100],
+        ),
       ),
     ];
   }
@@ -137,50 +178,32 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // resizeToAvoidBottomInset: false,
-      body: Consumer<UserProvider>(builder: (context, userProvider, _) {
-        return userProvider.isLoading
-            ? const Center(
-                child: CircularProgressIndicator(),
-              )
-            : PersistentTabView(
-                context,
-                controller: _controller,
-                screens: _buildScreens(),
-                items: _navBarsItems(),
-                confineInSafeArea: true,
-                resizeToAvoidBottomInset: true,
-                backgroundColor: appbarColor,
-                navBarHeight: 70,
-                padding:
-                    const NavBarPadding.only(bottom: 10, left: 10, right: 10),
-                hideNavigationBarWhenKeyboardShows: true,
-                decoration: NavBarDecoration(
-                  borderRadius: BorderRadius.circular(10.0),
-                  colorBehindNavBar: appbarColor,
-                  boxShadow: [
-                    const BoxShadow(
-                      color: Colors.black12,
-                      blurRadius: 10,
-                      spreadRadius: 2,
-                    ),
-                  ],
-                ),
-                popAllScreensOnTapOfSelectedTab: true,
-                popActionScreens: PopActionScreensType.all,
-                itemAnimationProperties: const ItemAnimationProperties(
-                  duration: Duration(milliseconds: 200),
-                  curve: Curves.ease,
-                ),
-                screenTransitionAnimation: const ScreenTransitionAnimation(
-                  animateTabTransition: true,
-                  curve: Curves.ease,
-                  duration: Duration(milliseconds: 200),
-                ),
-                navBarStyle: NavBarStyle.style1,
-                hideNavigationBar: showNav,
-              );
-      }),
+      body: Consumer<UserProvider>(
+        builder: (context, userProvider, _) {
+          return userProvider.isLoading
+              ? const Center(child: CircularProgressIndicator())
+              : PersistentTabView(
+                  controller: _controller,
+                  tabs: _navBarsItems(),
+                  navBarBuilder: (navBarConfig) => Style2BottomNavBar(
+                    navBarConfig: navBarConfig,
+                  ),
+                  backgroundColor: backgroundColor,
+                  navBarOverlap: const NavBarOverlap.none(),
+                  margin: const EdgeInsets.only(bottom: 8),
+                  resizeToAvoidBottomInset: true,
+                  keepNavigatorHistory: true,
+                  avoidBottomPadding: true,
+                  stateManagement: true,
+                  handleAndroidBackButtonPress: true,
+                  hideNavigationBar: showNav,
+                  screenTransitionAnimation: const ScreenTransitionAnimation(
+                    curve: Curves.easeInOutCubic,
+                    duration: Duration(milliseconds: 600),
+                  ),
+                );
+        },
+      ),
     );
   }
 }

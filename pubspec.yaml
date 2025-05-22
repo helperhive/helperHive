@@ -39,8 +39,9 @@ dependencies:
   firebase_auth: ^4.19.6
   firebase_storage: ^11.7.6
   uuid: ^4.4.0
-  persistent_bottom_nav_bar: ^5.0.2
-  flutter_carousel_widget: ^2.2.0
+  # persistent_bottom_nav_bar: ^5.0.2
+  persistent_bottom_nav_bar_v2: ^6.0.1
+  # flutter_carousel_widget: ^2.2.0
   flutter_svg: ^2.0.10+1
   animated_text_kit: ^4.2.2
   intl: ^0.19.0

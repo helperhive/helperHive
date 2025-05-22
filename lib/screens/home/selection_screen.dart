@@ -1,5 +1,5 @@
 import "package:flutter/material.dart";
-import 'package:helperhive/screens/auth/screens/signup.dart';
+import 'package:helperhive/screens/auth/signup.dart';
 import 'package:lottie/lottie.dart';
 
 class SelectionScreen extends StatelessWidget {

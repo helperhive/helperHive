@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:helperhive/app/app_routes.dart';
 import 'package:helperhive/backend/auth/auth_methods.dart';
 import 'package:helperhive/constants/toast.dart';
-import 'package:helperhive/screens/auth/screens/forgot_password.dart';
-import 'package:helperhive/screens/auth/screens/signup.dart';
+import 'package:helperhive/screens/auth/forgot_password.dart';
+import 'package:helperhive/screens/auth/signup.dart';
 import 'package:helperhive/screens/auth/widgets/auth_button.dart';
 import 'package:helperhive/widgets/divider_text.dart';
 import 'package:lottie/lottie.dart';
 
-import '../widgets/input_field.dart';
+import 'widgets/input_field.dart';
 
 class LoginScreenNew extends StatefulWidget {
   final bool? isUser;
@@ -111,12 +111,12 @@ class _LoginScreenNewState extends State<LoginScreenNew> {
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Password is required';
-                      } else if (value.length < 8) {
-                        return 'Password must be at least 8 characters';
-                      } else if (!RegExp(r'[A-Z]').hasMatch(value)) {
-                        return 'Password must contain at least one uppercase letter';
-                      } else if (!RegExp(r'\d').hasMatch(value)) {
-                        return 'Password must contain at least one number';
+                        // } else if (value.length < 8) {
+                        //   return 'Password must be at least 8 characters';
+                        // } else if (!RegExp(r'[A-Z]').hasMatch(value)) {
+                        //   return 'Password must contain at least one uppercase letter';
+                        // } else if (!RegExp(r'\d').hasMatch(value)) {
+                        //   return 'Password must contain at least one number';
                       }
                       return null;
                     },

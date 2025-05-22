@@ -1,5 +1,5 @@
-import 'package:helperhive/screens/auth/screens/login.dart';
-import 'package:helperhive/screens/auth/screens/signup.dart';
+import 'package:helperhive/screens/auth/login.dart';
+import 'package:helperhive/screens/auth/signup.dart';
 import 'package:helperhive/screens/home/home_screen.dart';
 import 'package:helperhive/screens/home/onboarding_screen.dart';
 import 'package:helperhive/screens/home/selection_screen.dart';
