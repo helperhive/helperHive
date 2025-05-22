@@ -29,6 +29,7 @@ class BookingSlotScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
     UserProvider userProvider = Provider.of<UserProvider>(context);
     return Consumer<BookingProvider>(builder: (context, provider, _) {
       return Scaffold(
@@ -107,8 +108,9 @@ class BookingSlotScreen extends StatelessWidget {
                                 }
                               },
                               child: Container(
-                                padding: const EdgeInsets.all(10),
-                                width: 162,
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 10, vertical: 12),
+                                width: width / 2.4,
                                 decoration: BoxDecoration(
                                     border: Border.all(
                                       color: Colors.black,
@@ -119,13 +121,13 @@ class BookingSlotScreen extends StatelessWidget {
                                   children: [
                                     const Icon(Icons.access_time_outlined),
                                     const SizedBox(
-                                      width: 10,
+                                      width: 2,
                                     ),
                                     Text(
                                       DateTimeManager.convertDate(
                                           provider.selectedDate),
                                       style: const TextStyle(
-                                          fontSize: 16,
+                                          fontSize: 15,
                                           fontWeight: FontWeight.w500),
                                     ),
                                   ],
@@ -148,9 +150,8 @@ class BookingSlotScreen extends StatelessWidget {
                           GestureDetector(
                               // onTap: provider.setCalenderFormate,
                               child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 0),
-                            width: 162,
+                            padding: const EdgeInsets.only(left: 5),
+                            width: width / 2.4,
                             decoration: BoxDecoration(
                                 border: Border.all(
                                   color: Colors.black,
@@ -158,15 +159,14 @@ class BookingSlotScreen extends StatelessWidget {
                                 ),
                                 borderRadius: BorderRadius.circular(16)),
                             child: DropdownButton<IssueType>(
-                                // padding: const EdgeInsets.all(0),
                                 hint: const Row(
                                   children: [
                                     Icon(Icons
                                         .error_outline), // Placeholder icon
-                                    SizedBox(width: 8),
+                                    SizedBox(width: 4),
                                     Text(
                                       "Select Issue",
-                                      style: TextStyle(fontSize: 14),
+                                      style: TextStyle(fontSize: 15),
                                     ),
                                   ],
                                 ),
@@ -184,7 +184,7 @@ class BookingSlotScreen extends StatelessWidget {
                                           getIssueIcon(issue),
                                           color: getIssueColor(issue),
                                         ),
-                                        const SizedBox(width: 8),
+                                        const SizedBox(width: 4),
                                         Text(
                                           issue.toString(),
                                           style: TextStyle(
@@ -227,8 +227,9 @@ class BookingSlotScreen extends StatelessWidget {
                               provider.slotTimeSelect(context);
                             },
                             child: Container(
-                              padding: const EdgeInsets.all(10),
-                              width: 162,
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 12),
+                              width: width / 2.4,
                               decoration: BoxDecoration(
                                   border: Border.all(
                                     color: Colors.black,
@@ -247,7 +248,7 @@ class BookingSlotScreen extends StatelessWidget {
                                         ? 'Slot Timing'
                                         : provider.slotTime.format(context),
                                     style: const TextStyle(
-                                        fontSize: 16,
+                                        fontSize: 15,
                                         fontWeight: FontWeight.w500),
                                   ),
                                 ],
@@ -297,8 +298,9 @@ class BookingSlotScreen extends StatelessWidget {
                             onTap: () =>
                                 provider.slotAlternateTimeSelect(context),
                             child: Container(
-                              padding: const EdgeInsets.all(10),
-                              width: 162,
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 10, vertical: 12),
+                              width: width / 2.4,
                               decoration: BoxDecoration(
                                   border: Border.all(
                                     color: Colors.black,
@@ -309,7 +311,7 @@ class BookingSlotScreen extends StatelessWidget {
                                 children: [
                                   const Icon(Icons.access_time_outlined),
                                   const SizedBox(
-                                    width: 10,
+                                    width: 5,
                                   ),
                                   Text(
                                     provider.alternateSlotTime
@@ -319,7 +321,7 @@ class BookingSlotScreen extends StatelessWidget {
                                         : provider.alternateSlotTime
                                             .format(context),
                                     style: const TextStyle(
-                                        fontSize: 16,
+                                        fontSize: 15,
                                         fontWeight: FontWeight.w500),
                                   ),
                                 ],

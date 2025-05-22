@@ -11,10 +11,11 @@ class DiscountCarousel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 4.0),
       child: SizedBox(
-        height: 195, // Match original carousel height
+        height: height * .27, // Match original carousel height
         child: Swiper(
           itemCount: 5, // Number of DiscountCard items
           itemBuilder: (context, index) {

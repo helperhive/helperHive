@@ -10,13 +10,15 @@ class AllCategoriesCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return InkWell(
       onTap: onTap ?? () {},
       splashColor: Colors.blue.shade100,
       child: Column(
         children: [
           Container(
-            width: 110,
+            width: width * 0.4,
             decoration: BoxDecoration(
                 color: Colors.blue.shade50,
                 borderRadius: BorderRadius.circular(15),
@@ -33,15 +35,15 @@ class AllCategoriesCard extends StatelessWidget {
               children: [
                 Image.asset(
                   iconPath,
-                  width: 42,
-                  height: 42,
+                  width: width * 0.13,
+                  height: height * 0.05,
                 ),
                 const SizedBox(height: 5),
                 Text(
                   label,
                   textAlign: TextAlign.center,
                   style: const TextStyle(
-                      fontSize: 14,
+                      fontSize: 13,
                       fontWeight: FontWeight.bold,
                       color: Colors.black),
                 ),

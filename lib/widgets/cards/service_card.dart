@@ -24,6 +24,8 @@ class ServiceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8),
       child: Container(
@@ -38,7 +40,8 @@ class ServiceCard extends StatelessWidget {
                   spreadRadius: 2,
                   blurRadius: 8)
             ]),
-        height: 120,
+        height: height * 0.2,
+        width: width * 0.9,
         child: Padding(
           padding: const EdgeInsets.only(left: 4.0, right: 20),
           child: Row(
@@ -47,8 +50,8 @@ class ServiceCard extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8.0),
                 child: Image.asset(
                   servicePersonData.imageUrl,
-                  width: 110,
-                  height: 120,
+                  width: width * 0.25,
+                  height: height * 0.18,
                   fit: BoxFit.cover,
                 ),
               ),
